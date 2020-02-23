@@ -1,17 +1,16 @@
+/* eslint-disable react/display-name */
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createSwitchNavigator} from "react-navigation";
-import Home from "../views/Home";
-import Profile from "../views/Profile";
-import Single from "../views/Single";
-import Login from "../views/Login";
-import Upload from "../views/Upload";
-import UserFiles from "../views/UserFiles";
-import Update from "../views/Update";
-import AuthLoading from "../views/AuthLoading";
-import { Icon } from "native-base";
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {createStackNavigator} from 'react-navigation-stack';
+import Home from '../views/Home';
+import Profile from '../views/Profile';
+import Single from '../views/Single';
+import Upload from '../views/Upload';
+import AuthLoading from '../views/AuthLoading';
+import Login from '../views/Login';
+import MyFiles from '../views/MyFiles'
+import {Icon} from 'native-base';
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -29,29 +28,38 @@ const TabNavigator = createBottomTabNavigator(
         } else if (routeName === 'Profile') {
           iconName = 'person';
         } else if (routeName === 'Upload') {
-          iconName = 'cloud-upload'
+          iconName = 'add';
         }
 
         // You can return any component that you like here!
-        return <Icon style={{color: "#3F51B5"}}
-                     name={iconName}
-                     size={25}
+        return <Icon
+          name={iconName}
+          size={25}
         />;
       },
     }),
     tabBarOptions: {
-      showLabel: false
+      activeTintColor: '#000',
     },
-  }
+  },
 );
 
-const StackNavigator = createStackNavigator (
+TabNavigator.navigationOptions = ({navigation}) => {
+  const {routeName} = navigation.state.routes[navigation.state.index];
+  // You can do whatever you like here to pick the title based on the route name
+  const headerTitle = routeName;
+  return {
+    headerTitle,
+  };
+};
+
+const StackNavigator = createStackNavigator(
   // RouteConfigs
   {
     Home: {
       screen: TabNavigator,
       navigationOptions: {
-        headerShown: false, // this will hide the header
+        headerMode: 'none', // this will hide the header
       },
     },
     Single: {
@@ -61,23 +69,20 @@ const StackNavigator = createStackNavigator (
       screen: Login,
     },
     MyFiles: {
-      screen: UserFiles,
-    },
-    Update: {
-      screen: Update,
+      screen: MyFiles,
     }
   },
 );
 
-const Navigator = createSwitchNavigator (
+const Navigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoading,
     App: StackNavigator,
     Auth: Login,
   },
   {
-    initialRouteName: "AuthLoading",
-  }
+    initialRouteName: 'AuthLoading',
+  },
 );
 
 export default createAppContainer(Navigator);
