@@ -53,6 +53,22 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
   return await response.json();
 };
 
+const fetchPUT = async (endpoint = '', params = '', token = '') => {
+  const fetchOptions = {
+    method: 'PUT',
+    headers: {
+      'x-access-token': token,
+    },
+  };
+  const response = await fetch(apiUrl + endpoint + '/' + params,
+    fetchOptions);
+  if (!response.ok) {
+    throw new Error('fetchGET error: ' + response.status);
+  }
+  console.log('delete response: ', await response.json());
+  return await response.json();
+};
+
 const deletePost = async (id) => {
   try {
     const token =  await AsyncStorage.getItem('userToken');
@@ -62,6 +78,31 @@ const deletePost = async (id) => {
     console.log(e);
   }
 };
+
+const updatePost = async (data) => {
+  let formBody = [];
+  for (let property in data.data) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(data.data[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
+  try {
+    const token = await AsyncStorage.getItem('userToken');
+    const response = await fetch(apiUrl + data.fileId, {
+      method: "PUT",
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formBody,
+    });
+    return response.json();
+  } catch (e) {
+    console.log("update post error", e);
+  }
+};
+
 
 const isLiked = async(file_id) => {
   try {
@@ -160,6 +201,7 @@ export {
   isLiked,
   getAllUserMedia,
   deletePost,
+  updatePost,
 };
 
 /* END OF FILE */

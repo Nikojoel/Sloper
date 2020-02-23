@@ -1,53 +1,30 @@
-import React, {useState,} from 'react';
-import {Text, Button, Form, Body, Item, Container, Label,} from "native-base";
+import React, {useState, useEffect } from 'react';
+import {Text, Button, Form, Body, Item, Container, Label, Right, } from "native-base";
 import {Image, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
-import * as ImagePicker from "expo-image-picker";
+import {updatePost} from "../hooks/APIHooks";
 
-const Upload = (props) => {
+const Update = (props) => {
   const {
     inputs,
     valid,
     handleTextChange,
     handleTitleChange,
     validateInput,
-    handleUpload,
-    resetText,
   } = useUploadForm();
 
   const [image, setImage] = useState(null);
-
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    console.log("result", result);
-    if (!result.cancelled) {
-      setImage(result.uri);
-      console.log("image state:", image);
-    }
-  };
-
-  const clearForms = () => {
-    setImage(null);
-    resetText("title", "");
-    resetText("postText", "");
-  };
+  useEffect(() => {
+    setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
+  },[]);
+  console.log(props.navigation.state.params);
   const [loading, setLoading] = useState(false);
 
   return (
     <Container>
       {!loading ? (
         <Form>
-          <Item style={{borderColor: "transparent"}}>
-            <Body>
-              <Text style={{fontWeight: "bold", fontSize: 30,}}>Upload</Text>
-            </Body>
-          </Item>
           <Item style={{borderColor: "transparent"}}>
             <FormTextInput
               value={inputs.title}
@@ -69,25 +46,14 @@ const Upload = (props) => {
             />
 
           </Item>
-          <Button primary dark onPress={pickImage}>
-            <Body>
-              <Text style={{color: "white"}}>Select</Text>
-            </Body>
-          </Button>
           {!valid.title && image &&
           <Form>
-            <Button primary onPress={async () => {
+            <Button warning onPress={async () => {
               setLoading(true);
-              await handleUpload(image);
               props.navigation.replace("Home");
             }}>
               <Body>
-                <Text style={{color: "white"}}>Upload</Text>
-              </Body>
-            </Button>
-            <Button danger onPress={clearForms}>
-              <Body>
-                <Text style={{color: "white"}}>Delete</Text>
+                <Text style={{color: "white"}}>Update</Text>
               </Body>
             </Button>
           </Form>
@@ -95,7 +61,6 @@ const Upload = (props) => {
           {image &&
           <Item>
             <Body>
-              <Text style={{fontWeight: "bold", fontSize: 30,}}>Selected image</Text>
               <Image source={{uri: image}} style={styles.image}/>
             </Body>
           </Item>
@@ -113,6 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Upload;
-
-/* END OF FILE */
+export default Update;

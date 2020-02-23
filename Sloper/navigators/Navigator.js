@@ -11,6 +11,7 @@ import AuthLoading from '../views/AuthLoading';
 import Login from '../views/Login';
 import MyFiles from '../views/MyFiles'
 import {Icon} from 'native-base';
+import Update from "../views/Update";
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -70,6 +71,9 @@ const StackNavigator = createStackNavigator(
     },
     MyFiles: {
       screen: MyFiles,
+    },
+    Update: {
+      screen: Update,
     }
   },
 );

@@ -11,13 +11,17 @@ import {
   Text,
   Button
 } from "native-base";
-import {AsyncStorage} from 'react-native'
+import {
+  fetchGET,
+  postFavourite,
+  isLiked,
+  deletePost,
+} from '../hooks/APIHooks'
+import {ActivityIndicator, AsyncStorage} from 'react-native'
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
 import { Dimensions } from "react-native";
 import { Video } from "expo-av";
-import { fetchGET, postFavourite, isLiked, deletePost} from '../hooks/APIHooks'
-
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -32,7 +36,7 @@ const Single = props => {
   const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const user = await fetchGET('users', file.user_id, token)
+      const user = await fetchGET('users', file.user_id, token);
       setUser(user);
     }catch (e) {
       console.log(e)
@@ -54,9 +58,11 @@ const Single = props => {
     getUser();
     checkLicked();
   },[]);
+  const [loading, setLoading] = useState(false);
 
   return (
     <Container>
+      {!loading ? (
       <Content>
         <Card>
           <CardItem>
@@ -101,13 +107,20 @@ const Single = props => {
           </CardItem>
           {owner === file.user_id &&
           <CardItem>
-            <Button full onPress={ ()=> {deletePost(file.file_id)
+            <Button danger onPress={ ()=> {deletePost(file.file_id)
             }}>
               <Text>DELETE</Text>
+            </Button>
+            <Button warning onPress={ async ()=> {
+              setLoading(true);
+              props.navigation.replace("Update", file);
+            }}>
+              <Text>UPDATE</Text>
             </Button>
           </CardItem>}
         </Card>
       </Content>
+      ) : (<ActivityIndicator size="large" color="#0000ff"/>)}
     </Container>
   );
 };
