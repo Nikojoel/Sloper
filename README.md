@@ -7,6 +7,7 @@ The intent of this project is to create a React-Native media sharing application
 * [Hooks](https://reactjs.org/docs/hooks-reference.html)
 * [Ionicons](https://ionicons.com/)
 * [Expo](https://expo.io/learn)
+* [ESlint](https://eslint.org/)
 
 
 
