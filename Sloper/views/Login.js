@@ -202,7 +202,7 @@ const Login = (props) => {
               error={errors.confirmPassword}
             />
           </Item>
-          
+
           <Body>
           <Button rounded onPress={registerAsync}>
             <Text>Register</Text>

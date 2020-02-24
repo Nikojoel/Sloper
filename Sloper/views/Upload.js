@@ -4,6 +4,7 @@ import {Image, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
 import * as ImagePicker from "expo-image-picker";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 const Upload = (props) => {
   const {
@@ -41,6 +42,16 @@ const Upload = (props) => {
 
   return (
     <Container>
+      <MapView
+        style={{ flex: 1 }}
+        provider={PROVIDER_GOOGLE}
+        showsUserLocation
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421}}
+      />
       {!loading ? (
         <Form>
           <Item style={{borderColor: "transparent"}}>
