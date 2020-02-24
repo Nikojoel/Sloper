@@ -26,7 +26,6 @@ const Upload = (props) => {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log("result", result);
     if (!result.cancelled) {
       setImage(result.uri);
       console.log("image state:", image);

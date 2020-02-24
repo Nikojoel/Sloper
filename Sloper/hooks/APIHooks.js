@@ -132,9 +132,9 @@ const getAllMedia = () => {
   const [loading, setLoading] = useState(true);
   const fetchMedia = async () => {
     try {
-      const json = await fetchGET('media/all');
+      const json = await fetchGET('tags/sloper');
       // slice for only last 20
-      const result = await Promise.all(json.files.reverse().slice(0, 20).map(async (item) => {
+      const result = await Promise.all(json.map(async (item) => {
         return await fetchGET('media', item.file_id);
       }));
       setData(result);
@@ -173,8 +173,9 @@ const getAllUserMedia = () => {
 
 const uploadImage = async (data) => {
   const token = await AsyncStorage.getItem('userToken');
+
   try {
-    const response = await fetch('http://media.mw.metropolia.fi/wbma/media', {
+    const response = await fetch(apiUrl + 'media', {
       method: "POST",
       body: data,
       headers: {
@@ -182,7 +183,17 @@ const uploadImage = async (data) => {
         "x-access-token": token,
       },
     });
-
+    const responseData = await response.json();
+    const fileid = {
+      file_id: responseData.file_id,
+      tag: 'sloper'
+    }
+    console.log('data', data)
+    try {
+      const tagResponse = await fetchPOST('tags', fileid, token)
+    } catch (e) {
+      console.log('error in image tag', e.message)
+    }
   } catch (e) {
     console.log('upload image error: ', e.message);
   }
