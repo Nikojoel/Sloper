@@ -71,6 +71,9 @@ const useUploadForm = () => {
     } else {
       formData.append("description", inputs.postText);
     }
+    console.log("file: ",file);
+    console.log("name: ", filename);
+    console.log("type: ", type);
     await uploadImage(formData);
   };
 
