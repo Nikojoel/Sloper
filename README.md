@@ -8,8 +8,28 @@ The intent of this project is to create a React-Native media sharing application
 * [Ionicons](https://ionicons.com/)
 * [Expo](https://expo.io/learn)
 * [ESlint](https://eslint.org/)
+* [Validate.js](http://validatejs.org/)
 
+### Deployment
 
+### Routes
+ - GET /media/all
+    - All media from all users
+  - GET /media/user
+    - All media from specific user
+  - POST /media
+    - Upload new media
+  - DELETE /media/id
+    - Delete media
+  - PUT /media/id
+    - Update media
+  - GET /favourites/file/id
+    - Get favourites
+  - POST /favourites/file/id
+    - Post favourite
+  - DELETE /favourites/file/id
+    - Delete favourite
+  
 
 
 
