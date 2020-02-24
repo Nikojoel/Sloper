@@ -19,54 +19,50 @@ const Update = (props) => {
     setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
   },[]);
   console.log(props.navigation.state.params);
-  const [loading, setLoading] = useState(false);
 
   return (
     <Container>
-      {!loading ? (
         <Form>
           <Item style={{borderColor: "transparent"}}>
             <FormTextInput
               value={inputs.title}
-              placeholder='title'
+              placeholder='New title'
               onChangeText={handleTitleChange}
               onEndEditing={() => validateInput("title", inputs.title)}
             />
-
-            {valid.title &&
             <Label style={{color: "red"}}>{valid.title}</Label>
-            }
           </Item>
           <Item style={{borderColor: "transparent"}}>
 
             <FormTextInput
               value={inputs.postText}
-              placeholder='text'
+              placeholder='New text'
               onChangeText={handleTextChange}
             />
 
           </Item>
-          {!valid.title && image &&
           <Form>
             <Button warning onPress={async () => {
-              setLoading(true);
-              props.navigation.replace("Home");
+              await updatePost({
+                file_id: props.navigation.state.params.file_id,
+                data: {
+                  title: inputs.title,
+                  description: inputs.postText,
+                }
+              });
+              props.navigation.navigate("MyFiles", props.navigation.state.params.user_id);
             }}>
               <Body>
                 <Text style={{color: "white"}}>Update</Text>
               </Body>
             </Button>
           </Form>
-          }
-          {image &&
           <Item>
             <Body>
               <Image source={{uri: image}} style={styles.image}/>
             </Body>
           </Item>
-          }
         </Form>
-      ) : (<ActivityIndicator size="large" color="#0000ff"/>)}
     </Container>
   );
 };

@@ -52,13 +52,16 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
   console.log('delete response: ', await response.json());
   return await response.json();
 };
-
+/*
 const fetchPUT = async (endpoint = '', params = '', token = '') => {
+
   const fetchOptions = {
     method: 'PUT',
     headers: {
       'x-access-token': token,
+      "Content-Type": "application/x-www-form-urlencoded",
     },
+    body: formBody,
   };
   const response = await fetch(apiUrl + endpoint + '/' + params,
     fetchOptions);
@@ -68,7 +71,7 @@ const fetchPUT = async (endpoint = '', params = '', token = '') => {
   console.log('delete response: ', await response.json());
   return await response.json();
 };
-
+ */
 const deletePost = async (id) => {
   try {
     const token =  await AsyncStorage.getItem('userToken');
@@ -89,7 +92,7 @@ const updatePost = async (data) => {
   formBody = formBody.join("&");
   try {
     const token = await AsyncStorage.getItem('userToken');
-    const response = await fetch(apiUrl + data.fileId, {
+    const response = await fetch(apiUrl + "media/" + data.file_id, {
       method: "PUT",
       headers: {
         "x-access-token": token,

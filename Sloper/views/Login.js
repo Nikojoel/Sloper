@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   Container,
-  Header,
   Body,
   Title,
   Content,
@@ -13,14 +12,30 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {AsyncStorage,} from 'react-native';
+import { AsyncStorage, Dimensions, StyleSheet, } from 'react-native';
 import PropTypes from 'prop-types';
-import {fetchGET, fetchPOST} from '../hooks/APIHooks';
+import { fetchPOST } from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
+import { Video } from "expo-av";
 
 
 const Login = (props) => {
+  const styles = StyleSheet.create({
+    backgroundVideo: {
+      height: Dimensions.get("window").height,
+      width: Dimensions.get("window").width,
+      position: "absolute",
+      top: 0,
+      left: 0,
+      alignItems: "stretch",
+      bottom: 0,
+      right: 0
+    },
+    content: {
+      top: "30%"
+    }
+  });
   const [toggleForm, setToggleForm] = useState(true);
   const {
     handleUsernameChange,
@@ -92,15 +107,22 @@ const Login = (props) => {
 
   return (
     <Container>
-      <Header>
-        <Body><Title>MyApp</Title></Body>
-      </Header>
-      <Content>
-        {/* login form */}
+      <Video
+        source={require("../public/media/backgroundVideo.mp4")}
+        style={styles.backgroundVideo}
+        rate={1.0}
+        volume={1.0}
+        isMuted={true}
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+        onError={(e) => {console.log('video error', e)}}
+      />
+      <Content style={styles.content}>
         {toggleForm &&
         <Form>
           <Title>
-            <H2>Login</H2>
+           Login
           </Title>
           <Item>
             <FormTextInput
@@ -119,20 +141,20 @@ const Login = (props) => {
               onChangeText={handlePasswordChange}
             />
           </Item>
-          <Button full onPress={signInAsync}><Text>Sign in!</Text></Button>
-          <Button dark full onPress={() => {
+          <Body>
+          <Button rounded onPress={signInAsync}><Text>Sign in!</Text></Button>
+          <Button rounded dark onPress={() => {
             setToggleForm(false);
           }}>
             <Text>or Register</Text>
           </Button>
+          </Body>
         </Form>
         }
-
-        {/* register form */}
         {!toggleForm &&
         <Form>
           <Title>
-            <H2>Register</H2>
+            Register
           </Title>
           <Item>
             <FormTextInput
@@ -197,14 +219,16 @@ const Login = (props) => {
               error={errors.confirmPassword}
             />
           </Item>
-          <Button full onPress={registerAsync}>
+          <Body>
+          <Button rounded onPress={registerAsync}>
             <Text>Register!</Text>
           </Button>
-          <Button dark full onPress={() => {
+          <Button dark rounded onPress={() => {
             setToggleForm(true);
           }}>
             <Text>or Login</Text>
           </Button>
+          </Body>
         </Form>
         }
         {errors.fetch &&
