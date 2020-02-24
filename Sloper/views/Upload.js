@@ -24,8 +24,11 @@ const Upload = (props) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      exif: true,
     });
+    console.log('image', result);
     if (!result.cancelled) {
+
       setImage(result.uri);
       console.log("image state:", image);
     }
