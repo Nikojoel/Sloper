@@ -1,5 +1,5 @@
 # Sloper - React-Native media sharing application
-
+#### Unless you are using Metropolia's wifi - due to irregularites in Metropolia's firewall - you'll need to enable Metropolia VPN on your mobile device to make videos show on your device.
 ### Description
 The intent of this project is to create a React-Native media sharing application using ready made [BackEnd](http://media.mw.metropolia.fi/wbma/docs/)
 ### Feature specification
