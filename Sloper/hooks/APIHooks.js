@@ -52,9 +52,8 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
   console.log('delete response: ', await response.json());
   return await response.json();
 };
-/*
-const fetchPUT = async (endpoint = '', params = '', token = '') => {
 
+const fetchPUT = async (endpoint = '', params = '', token = '', formBody = '') => {
   const fetchOptions = {
     method: 'PUT',
     headers: {
@@ -66,12 +65,12 @@ const fetchPUT = async (endpoint = '', params = '', token = '') => {
   const response = await fetch(apiUrl + endpoint + '/' + params,
     fetchOptions);
   if (!response.ok) {
-    throw new Error('fetchGET error: ' + response.status);
+    throw new Error('fetchPUT error: ' + response.status);
   }
-  console.log('delete response: ', await response.json());
+  console.log('put response: ', await response.json());
   return await response.json();
 };
- */
+
 const deletePost = async (id) => {
   try {
     const token =  await AsyncStorage.getItem('userToken');
@@ -92,15 +91,8 @@ const updatePost = async (data) => {
   formBody = formBody.join("&");
   try {
     const token = await AsyncStorage.getItem('userToken');
-    const response = await fetch(apiUrl + "media/" + data.file_id, {
-      method: "PUT",
-      headers: {
-        "x-access-token": token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formBody,
-    });
-    return response.json();
+    const result = await fetchPUT('media', data.file_id, token, formBody);
+    console.log(result);
   } catch (e) {
     console.log("update post error", e);
   }
@@ -120,7 +112,7 @@ const isLiked = async(file_id) => {
 
 const postFavourite = async (file_id) => {
   const token =  await AsyncStorage.getItem('userToken');
-  if(await isLiked(file_id) === undefined) {
+  if (await isLiked(file_id) === undefined) {
     try {
       await fetchPOST('favourites', {file_id:file_id},token);
     } catch (e) {
@@ -182,7 +174,7 @@ const getAllUserMedia = () => {
 const uploadImage = async (data) => {
   const token = await AsyncStorage.getItem('userToken');
   try {
-    const response = await fetch ('http://media.mw.metropolia.fi/wbma/media', {
+    const response = await fetch('http://media.mw.metropolia.fi/wbma/media', {
       method: "POST",
       body: data,
       headers: {
@@ -190,6 +182,7 @@ const uploadImage = async (data) => {
         "x-access-token": token,
       },
     });
+
   } catch (e) {
     console.log('upload image error: ', e.message);
   }

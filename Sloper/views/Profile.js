@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Content,
@@ -9,11 +9,11 @@ import {
   Button,
   Icon,
 } from 'native-base';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
-import {fetchGET} from '../hooks/APIHooks';
+import { fetchGET } from '../hooks/APIHooks';
 import AsyncImage from '../components/AsyncImage';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -55,6 +55,7 @@ const Profile = (props) => {
   };
 
   console.log('ava', mediaURL + user.avatar);
+
   return (
     <Container>
       <Content>
@@ -82,14 +83,13 @@ const Profile = (props) => {
             </Body>
           </CardItem>
           <CardItem footer bordered>
-            <Body>
-              <Button full onPress={signOutAsync}>
+              <Button primary rounded onPress={() => {
+                props.navigation.navigate('MyFiles', {user: user})}}>
+                <Text>My posts</Text>
+              </Button>
+              <Button danger rounded onPress={signOutAsync}>
                 <Text>Logout</Text>
               </Button>
-              <Button full onPress={() => {props.navigation.navigate('MyFiles', {user: user})}}>
-                <Text>MyFiles</Text>
-              </Button>
-            </Body>
           </CardItem>
         </Card>
       </Content>

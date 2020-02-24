@@ -1,5 +1,5 @@
 import React, {useState,} from 'react';
-import {Text, Button, Form, Body, Item, Container, Label,} from "native-base";
+import {Text, Button, Form, Body, Item, Container, Label, Spinner} from "native-base";
 import {Image, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
@@ -101,7 +101,7 @@ const Upload = (props) => {
           </Item>
           }
         </Form>
-      ) : (<ActivityIndicator size="large" color="#0000ff"/>)}
+      ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
     </Container>
   );
 };

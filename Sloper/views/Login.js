@@ -21,21 +21,6 @@ import { Video } from "expo-av";
 
 
 const Login = (props) => {
-  const styles = StyleSheet.create({
-    backgroundVideo: {
-      height: Dimensions.get("window").height,
-      width: Dimensions.get("window").width,
-      position: "absolute",
-      top: 0,
-      left: 0,
-      alignItems: "stretch",
-      bottom: 0,
-      right: 0
-    },
-    content: {
-      top: "30%"
-    }
-  });
   const [toggleForm, setToggleForm] = useState(true);
   const {
     handleUsernameChange,
@@ -121,46 +106,44 @@ const Login = (props) => {
       <Content style={styles.content}>
         {toggleForm &&
         <Form>
-          <Title>
+          <Title style={styles.title}>
            Login
           </Title>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.username}
-              placeholder='username'
+              placeholder='Username'
               onChangeText={handleUsernameChange}
             />
           </Item>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.password}
-              placeholder='password'
+              placeholder='Password'
               secureTextEntry={true}
               onChangeText={handlePasswordChange}
             />
           </Item>
           <Body>
-          <Button rounded onPress={signInAsync}><Text>Sign in!</Text></Button>
-          <Button rounded dark onPress={() => {
-            setToggleForm(false);
-          }}>
-            <Text>or Register</Text>
-          </Button>
+          <Button rounded onPress={signInAsync}><Text>Sign in</Text></Button>
+            <Text style={styles.buttonText} onPress={() => {
+              setToggleForm(false);
+            }}>Not registered? Create an account</Text>
           </Body>
         </Form>
         }
         {!toggleForm &&
         <Form>
-          <Title>
+          <Title style={styles.title}>
             Register
           </Title>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.username}
-              placeholder='username'
+              placeholder='Username'
               onChangeText={handleUsernameChange}
               onEndEditing={() => {
                 checkAvail();
@@ -169,11 +152,11 @@ const Login = (props) => {
               error={errors.username}
             />
           </Item>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.email}
-              placeholder='email'
+              placeholder='Email'
               onChangeText={handleEmailChange}
               onEndEditing={() => {
                 validateField(validationProperties.email);
@@ -181,11 +164,11 @@ const Login = (props) => {
               error={errors.email}
             />
           </Item>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.full_name}
-              placeholder='fullname'
+              placeholder='Full name'
               onChangeText={handleFullnameChange}
               onEndEditing={() => {
                 validateField(validationProperties.full_name);
@@ -193,11 +176,11 @@ const Login = (props) => {
               error={errors.full_name}
             />
           </Item>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.password}
-              placeholder='password'
+              placeholder='Password'
               secureTextEntry={true}
               onChangeText={handlePasswordChange}
               onEndEditing={() => {
@@ -206,11 +189,11 @@ const Login = (props) => {
               error={errors.password}
             />
           </Item>
-          <Item>
+          <Item style={styles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.confirmPassword}
-              placeholder='confirm password'
+              placeholder='Confirm password'
               secureTextEntry={true}
               onChangeText={handleConfirmPasswordChange}
               onEndEditing={() => {
@@ -219,15 +202,14 @@ const Login = (props) => {
               error={errors.confirmPassword}
             />
           </Item>
+          
           <Body>
           <Button rounded onPress={registerAsync}>
-            <Text>Register!</Text>
+            <Text>Register</Text>
           </Button>
-          <Button dark rounded onPress={() => {
-            setToggleForm(true);
-          }}>
-            <Text>or Login</Text>
-          </Button>
+            <Text style={styles.buttonText} onPress={() => {
+              setToggleForm(true);
+            }}>Already registered? Sign in here</Text>
           </Body>
         </Form>
         }
@@ -244,6 +226,37 @@ const Login = (props) => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  backgroundVideo: {
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    alignItems: "stretch",
+    bottom: 0,
+    right: 0
+  },
+  content: {
+    top: "20%"
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 40,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 20,
+    textDecorationLine: 'underline'
+  },
+  form: {
+    borderColor: "transparent"
+  },
+
+});
 
 // proptypes here
 Login.propTypes = {
