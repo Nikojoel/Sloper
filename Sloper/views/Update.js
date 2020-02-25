@@ -18,7 +18,7 @@ const Update = (props) => {
   useEffect(() => {
     setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
   },[]);
-  console.log(props.navigation.state.params);
+
 
   return (
     <Container>

@@ -118,7 +118,7 @@ const useSignUpForm = () => {
     checkAvail();
 
     for (const [key, value] of Object.entries(fields)) {
-      console.log(key, value);
+
       validateField(value);
     }
 

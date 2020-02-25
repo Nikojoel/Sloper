@@ -49,7 +49,7 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
   if (!response.ok) {
     throw new Error('fetchGET error: ' + response.status);
   }
-  console.log('delete response: ', await response.json());
+
   return await response.json();
 };
 
@@ -67,7 +67,7 @@ const fetchPUT = async (endpoint = '', params = '', token = '', formBody = '') =
   if (!response.ok) {
     throw new Error('fetchPUT error: ' + response.status);
   }
-  console.log('put response: ', await response.json());
+
   return await response.json();
 };
 
@@ -75,7 +75,7 @@ const deletePost = async (id) => {
   try {
     const token =  await AsyncStorage.getItem('userToken');
     const result = fetchDELETE('media',id, token);
-    console.log(result);
+
   } catch (e) {
     console.log(e);
   }
@@ -92,7 +92,7 @@ const updatePost = async (data) => {
   try {
     const token = await AsyncStorage.getItem('userToken');
     const result = await fetchPUT('media', data.file_id, token, formBody);
-    console.log(result);
+
   } catch (e) {
     console.log("update post error", e);
   }
@@ -137,6 +137,7 @@ const getAllMedia = () => {
       const result = await Promise.all(json.map(async (item) => {
         return await fetchGET('media', item.file_id);
       }));
+
       setData(result);
       setLoading(false);
     } catch (e) {
@@ -173,6 +174,7 @@ const getAllUserMedia = () => {
 
 const uploadImage = async (data) => {
   const token = await AsyncStorage.getItem('userToken');
+
   try {
     const response = await fetch(apiUrl + 'media', {
       method: "POST",
@@ -186,17 +188,18 @@ const uploadImage = async (data) => {
     const fileid = {
       file_id: responseData.file_id,
       tag: 'sloper'
-    };
-    console.log('data', data);
+    }
+
     try {
       const tagResponse = await fetchPOST('tags', fileid, token)
     } catch (e) {
       console.log('error in image tag', e.message)
     }
   } catch (e) {
-    console.log('upload image error: ', e.message);
+    console.log('upload image error: ', e);
   }
 };
+
 
 export {
   getAllMedia,

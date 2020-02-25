@@ -71,8 +71,6 @@ const useUploadForm = () => {
     formData.append("file", {uri: file, name: filename, type});
     formData.append("title", inputs.title);
     formData.append("description", JSON.stringify(descriptionData));
-    console.log(formData.description);
-
     await uploadImage(formData);
   };
 

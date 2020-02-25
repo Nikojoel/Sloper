@@ -46,7 +46,7 @@ const Single = props => {
   const checkLicked = async () => {
     const status = await isLiked(file.file_id);
     setLiked(status);
-    console.log('liked? ',liked)
+
   };
 
   const putLike = async () => {
@@ -59,7 +59,8 @@ const Single = props => {
     checkLicked();
   },[]);
   const [loading, setLoading] = useState(false);
-
+  const description = JSON.parse(file.description)
+  console.log('single file', description.exif.DateTime)
   return (
     <Container>
       {!loading ? (

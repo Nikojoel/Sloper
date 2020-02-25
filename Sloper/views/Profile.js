@@ -54,9 +54,7 @@ const Profile = (props) => {
     props.navigation.navigate('Auth');
   };
 
-  console.log('ava', mediaURL + user.avatar);
-
-  return (
+   return (
     <Container>
       <Content>
         <Card>

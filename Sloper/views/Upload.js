@@ -27,12 +27,11 @@ const Upload = (props) => {
       quality: 1,
       exif: true,
     });
-    console.log('image', result);
+
     if (!result.cancelled) {
       setExif(result.exif);
       setImage(result.uri);
-      console.log("image state:", image);
-      console.log("exif: " , exif);
+
     }
   };
 

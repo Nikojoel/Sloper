@@ -50,9 +50,8 @@ const Login = (props) => {
   const signInAsync = async () => {
 
     try {
-      console.log(inputs);
-      const user = await fetchPOST('login', inputs);
-      console.log('Login', user);
+            const user = await fetchPOST('login', inputs);
+
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('user', JSON.stringify(user.user));
       props.navigation.navigate('App');
@@ -73,11 +72,11 @@ const Login = (props) => {
     }
 
     try {
-      console.log('sen inputs', inputs);
+
       const user = inputs;
       delete user.confirmPassword;
       const result = await fetchPOST('users', user);
-      console.log('register', result);
+
       signInAsync();
     } catch (e) {
       console.log('registerAsync error: ', e.message);
