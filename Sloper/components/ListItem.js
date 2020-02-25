@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ListItem as BaseListItem,
   Left,
@@ -8,15 +8,30 @@ import {
   Text,
   Thumbnail,
   H3,
+  Label,
 } from 'native-base';
 import PropTypes from 'prop-types';
+import nearestCities from 'find-nearest-cities';
 
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const ListItem = (props) => {
+    const [city, setCity] = useState(undefined);
     const allData = JSON.parse(props.singleMedia.description);
-    const exif = allData.exif;
     const description = allData.description;
+    const exif = allData.exif;
+
+    let temp = '';
+    if (!exif.GPSLatitude) {
+      temp = undefined;
+    } else {
+      const cities = nearestCities(exif.GPSLatitude, exif.GPSLongitude);
+      temp = cities[1].name;
+    }
+    useEffect(() => {
+      setCity(temp);
+    }, []);
+
   return (
     <BaseListItem thumbnail>
       <Left>
@@ -24,6 +39,9 @@ const ListItem = (props) => {
           square
           source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
         />
+        {city &&
+        <Label>Taken from {city}</Label>
+        }
       </Left>
       <Body>
         <H3 numberOfLines={1}>{props.singleMedia.title}</H3>

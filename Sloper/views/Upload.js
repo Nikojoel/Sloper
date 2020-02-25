@@ -27,11 +27,21 @@ const Upload = (props) => {
       quality: 1,
       exif: true,
     });
-
     if (!result.cancelled) {
-      setExif(result.exif);
-      setImage(result.uri);
-
+      if (exif === null) {
+        setExif(undefined);
+      } else {
+        setExif({
+          GPSLatitude: result.exif.GPSLatitude,
+          GPSLongitude: result.exif.GPSLongitude,
+          DateTime: result.exif.DateTime,
+          GPSAltitude: result.exif.GPSAltitude,
+        });
+        setImage(result.uri);
+        console.log(result.uri);
+        console.log(image);
+        console.log(exif);
+      }
     }
   };
 
@@ -51,7 +61,7 @@ const Upload = (props) => {
               <Text style={{fontWeight: "bold", fontSize: 30,}}>Upload</Text>
             </Body>
           </Item>
-          <Item style={{borderColor: "transparent"}}>
+          <Item style={{borderColor: "transparent", height: 50,}}>
             <FormTextInput
               value={inputs.title}
               placeholder='title'
@@ -63,7 +73,7 @@ const Upload = (props) => {
             <Label style={{color: "red"}}>{valid.title}</Label>
             }
           </Item>
-          <Item style={{borderColor: "transparent"}}>
+          <Item style={{borderColor: "transparent", height: 50,}}>
 
             <FormTextInput
               value={inputs.postText}

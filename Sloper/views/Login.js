@@ -12,12 +12,12 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import { AsyncStorage, Dimensions, StyleSheet, } from 'react-native';
+import {AsyncStorage, Dimensions, StyleSheet,} from 'react-native';
 import PropTypes from 'prop-types';
-import { fetchPOST } from '../hooks/APIHooks';
+import {fetchPOST} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
-import { Video } from "expo-av";
+import {Video} from "expo-av";
 
 
 const Login = (props) => {
@@ -48,10 +48,8 @@ const Login = (props) => {
   };
 
   const signInAsync = async () => {
-
     try {
-            const user = await fetchPOST('login', inputs);
-
+      const user = await fetchPOST('login', inputs);
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('user', JSON.stringify(user.user));
       props.navigation.navigate('App');
@@ -70,13 +68,10 @@ const Login = (props) => {
     if (!regValid) {
       return;
     }
-
     try {
-
       const user = inputs;
       delete user.confirmPassword;
       const result = await fetchPOST('users', user);
-
       signInAsync();
     } catch (e) {
       console.log('registerAsync error: ', e.message);
@@ -87,7 +82,6 @@ const Login = (props) => {
         }));
     }
   };
-
 
   return (
     <Container>
@@ -100,13 +94,15 @@ const Login = (props) => {
         resizeMode="cover"
         shouldPlay
         isLooping
-        onError={(e) => {console.log('video error', e)}}
+        onError={(e) => {
+          console.log('video error', e)
+        }}
       />
       <Content style={styles.content}>
         {toggleForm &&
         <Form>
           <Title style={styles.title}>
-           Login
+            Login
           </Title>
           <Item style={styles.form}>
             <FormTextInput
@@ -126,7 +122,7 @@ const Login = (props) => {
             />
           </Item>
           <Body>
-          <Button rounded onPress={signInAsync}><Text>Sign in</Text></Button>
+            <Button rounded onPress={signInAsync}><Text>Sign in</Text></Button>
             <Text style={styles.buttonText} onPress={() => {
               setToggleForm(false);
             }}>Not registered? Create an account</Text>
@@ -202,9 +198,9 @@ const Login = (props) => {
             />
           </Item>
           <Body>
-          <Button rounded onPress={registerAsync}>
-            <Text>Register</Text>
-          </Button>
+            <Button rounded onPress={registerAsync}>
+              <Text>Register</Text>
+            </Button>
             <Text style={styles.buttonText} onPress={() => {
               setToggleForm(true);
             }}>Already registered? Sign in here</Text>

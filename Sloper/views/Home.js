@@ -5,13 +5,6 @@ import PropTypes from 'prop-types';
 
 const Home = (props) => {
   const {navigation} = props;
-  /*try {
-    Exif.getExif('/images.jpg')
-      .then(msg => console.log('OK: ' + JSON.stringify(msg)))
-      .catch(msg => console.log('ERROR: ' + msg))
-  } catch (e) {
-    console.log('errorrrrr', e);
-  }*/
   return (
       <List navigation={navigation}></List>
   );
