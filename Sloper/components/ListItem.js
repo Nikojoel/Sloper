@@ -14,6 +14,9 @@ import PropTypes from 'prop-types';
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const ListItem = (props) => {
+    const allData = JSON.parse(props.singleMedia.description);
+    const exif = allData.exif;
+    const description = allData.description;
   return (
     <BaseListItem thumbnail>
       <Left>
@@ -24,7 +27,7 @@ const ListItem = (props) => {
       </Left>
       <Body>
         <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
-        <Text numberOfLines={1}>{props.singleMedia.description}</Text>
+        <Text numberOfLines={1}>{description}</Text>
       </Body>
       <Right>
         <Button onPress={

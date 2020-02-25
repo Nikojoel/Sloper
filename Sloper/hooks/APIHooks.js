@@ -132,7 +132,7 @@ const getAllMedia = () => {
   const [loading, setLoading] = useState(true);
   const fetchMedia = async () => {
     try {
-      const json = await fetchGET('tags/sloper');
+      const json = await fetchGET('tags/sloperTEST');
       // slice for only last 20
       const result = await Promise.all(json.map(async (item) => {
         return await fetchGET('media', item.file_id);
@@ -187,8 +187,8 @@ const uploadImage = async (data) => {
     const responseData = await response.json();
     const fileid = {
       file_id: responseData.file_id,
-      tag: 'sloper'
-    }
+      tag: 'sloperTEST'
+    };
 
     try {
       const tagResponse = await fetchPOST('tags', fileid, token)

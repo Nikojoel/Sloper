@@ -20,8 +20,9 @@ import {
 import {ActivityIndicator, AsyncStorage} from 'react-native'
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
-import { Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { Video } from "expo-av";
+import MapView from "react-native-maps";
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -59,8 +60,10 @@ const Single = props => {
     checkLicked();
   },[]);
   const [loading, setLoading] = useState(false);
-  const description = JSON.parse(file.description)
-  console.log('single file', description.exif.DateTime)
+  const allData = JSON.parse(file.description);
+  const exif = allData.exif;
+  const description = allData.description;
+  console.log(exif);
   return (
     <Container>
       {!loading ? (
@@ -88,22 +91,36 @@ const Single = props => {
                 isLooping
                 style={{ width: "100%", height: deviceHeight / 2 }}
                 onError={(e) => {console.log('video error', e)}}
-
               />
             )}
           </CardItem>
           <CardItem>
             <Left>
-              <Icon name="image" />
               <Body>
                 <H3>{file.title}</H3>
-                <Text>{file.description}</Text>
+                <Text>{description}</Text>
                 <Text>By {user.username}</Text>
+                <MapView style={styles.map}
+                         region= {{
+                           latitude: exif.GPSLatitude,
+                           longitude: exif.GPSLongitude,
+                           latitudeDelta: 0.7,
+                           longitudeDelta: 0.7,
+                         }}>
+                  <MapView.Marker
+                    coordinate={{
+                      latitude: exif.GPSLatitude,
+                      longitude: exif.GPSLongitude,
+                    }}
+                    title={"Date & Time"}
+                    description={exif.DateTime}
+                  />
+                </MapView>
               </Body>
             </Left>
             <Button transparent onPress={() => {putLike(file.file_id)}}>
-              {liked === undefined && <Icon name="heart" />}
-              {liked !== undefined && <Icon name="add"/>}
+              {liked === undefined && <Icon name="heart" style={{color: "red"}} />}
+              {liked !== undefined && <Icon name="heart" style={{color: "#3F51B5"}}/>}
             </Button>
           </CardItem>
           {owner === file.user_id &&
@@ -125,7 +142,12 @@ const Single = props => {
     </Container>
   );
 };
-
+const styles = StyleSheet.create( {
+  map: {
+    height: Dimensions.get('window').height * 0.5,
+    width: Dimensions.get('window').width * 0.75,
+  }
+});
 Single.propTypes = {
   navigation: PropTypes.object,
   file: PropTypes.object
