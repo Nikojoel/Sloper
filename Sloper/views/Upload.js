@@ -1,6 +1,6 @@
 import React, {useState,} from 'react';
 import {Text, Button, Form, Body, Item, Container, Label, Spinner} from "native-base";
-import {Image, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
+import {Image, Dimensions, StyleSheet, } from 'react-native';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
 import * as ImagePicker from "expo-image-picker";
@@ -17,6 +17,7 @@ const Upload = (props) => {
   } = useUploadForm();
 
   const [image, setImage] = useState(null);
+  const [exif, setExif] = useState(null);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -28,9 +29,10 @@ const Upload = (props) => {
     });
     console.log('image', result);
     if (!result.cancelled) {
-
+      setExif(result.exif);
       setImage(result.uri);
       console.log("image state:", image);
+      console.log("exif: " , exif);
     }
   };
 
@@ -80,7 +82,7 @@ const Upload = (props) => {
           <Form>
             <Button primary onPress={async () => {
               setLoading(true);
-              await handleUpload(image);
+              await handleUpload(image, exif);
               props.navigation.replace("Home");
             }}>
               <Body>

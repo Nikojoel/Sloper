@@ -173,7 +173,6 @@ const getAllUserMedia = () => {
 
 const uploadImage = async (data) => {
   const token = await AsyncStorage.getItem('userToken');
-
   try {
     const response = await fetch(apiUrl + 'media', {
       method: "POST",
@@ -187,8 +186,8 @@ const uploadImage = async (data) => {
     const fileid = {
       file_id: responseData.file_id,
       tag: 'sloper'
-    }
-    console.log('data', data)
+    };
+    console.log('data', data);
     try {
       const tagResponse = await fetchPOST('tags', fileid, token)
     } catch (e) {

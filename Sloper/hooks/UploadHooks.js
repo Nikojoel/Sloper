@@ -51,29 +51,28 @@ const useUploadForm = () => {
       }));
   };
 
-  const handleUpload = async (file) => {
+  const handleUpload = async (file, exifData) => {
     const filename = file.split('/').pop();
     const match = /\.(\w+)$/.exec(filename);
     let type = '';
     if (file.type !== 'video') {
       type = match ? `image/${match[1]}` : `image`;
-      if (type === 'image/jpg') {
+      if (type === 'image/jpg' || type === 'image/heic') {
         type = 'image/jpeg'
       } else {
         type = match ? `video/${match[1]}` : `video`;
       }
     }
     const formData = new FormData();
+    const descriptionData = {
+      description: inputs.postText,
+      exif: exifData,
+    };
     formData.append("file", {uri: file, name: filename, type});
     formData.append("title", inputs.title);
-    if (inputs.postText === undefined) {
-      formData.append("description", "");
-    } else {
-      formData.append("description", inputs.postText);
-    }
-    console.log("file: ",file);
-    console.log("name: ", filename);
-    console.log("type: ", type);
+    formData.append("description", JSON.stringify(descriptionData));
+    console.log(formData.description);
+
     await uploadImage(formData);
   };
 
