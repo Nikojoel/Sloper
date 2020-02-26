@@ -22,7 +22,7 @@ const ListItem = (props) => {
     const exif = allData.exif;
 
     let temp = '';
-    if (!exif.GPSLatitude) {
+    if (exif === undefined || exif.GPSLatitude === undefined) {
       temp = undefined;
     } else {
       const cities = nearestCities(exif.GPSLatitude, exif.GPSLongitude);
@@ -40,7 +40,7 @@ const ListItem = (props) => {
           source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
         />
         {city &&
-        <Label>Taken from {city}</Label>
+        <Label>Taken near {city}</Label>
         }
       </Left>
       <Body>

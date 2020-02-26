@@ -48,7 +48,6 @@ const Single = props => {
   const checkLicked = async () => {
     const status = await isLiked(file.file_id);
     setLiked(status);
-
   };
 
   const putLike = async () => {
@@ -82,6 +81,7 @@ const Single = props => {
                   source={{uri: mediaURL + file.filename}}
                 />
               )}
+
               {file.media_type === "video" && (
                 <Video
                   source={{uri: mediaURL + file.filename}}
@@ -97,6 +97,9 @@ const Single = props => {
                   }}
                 />
               )}
+              {exif.GPSLatitude !== undefined || file.media_type !== "video" &&
+                <Button><Text>See location</Text></Button>
+              }
             </CardItem>
             <CardItem>
               <Left>
@@ -104,29 +107,7 @@ const Single = props => {
                   <H3>{file.title}</H3>
                   <Text>{description}</Text>
                   <Text>By {user.username}</Text>
-                  {exif.GPSLatitude !== undefined ? (
-                    <CardItem>
-                      <MapView style={styles.map}
-                               region={{
-                                 latitude: exif.GPSLatitude,
-                                 longitude: exif.GPSLongitude,
-                                 latitudeDelta: 0.7,
-                                 longitudeDelta: 0.7,
-                               }}>
-                        <MapView.Marker
-                          coordinate={{
-                            latitude: exif.GPSLatitude,
-                            longitude: exif.GPSLongitude,
-                          }}
-                          title={"Date & Time"}
-                          description={exif.DateTime}
-                        />
-                        <Label>{exif.GPSAltitude} meters above the sea level</Label>
-                      </MapView>
-                    </CardItem>
-                  ) : (
-                    <Text>No location data for this image : (</Text>
-                  )}
+
                 </Body>
               </Left>
               <Button transparent onPress={() => {
