@@ -21,11 +21,12 @@ import {Form,
 import useUploadForm from '../hooks/UploadHooks'
 import useSignUpForm from '../hooks/LoginHooks'
 import * as ImagePicker from "expo-image-picker";
+import {fetchPUT} from '../hooks/APIHooks'
+import updateConstraints from '../constraints/Constraints'
 
 
 const UpdateUser = ({navigation}) => {
   const {userdata} = navigation.state.params
-  console.log(userdata)
   const { handleUpload } = useUploadForm();
   const {
     handleUsernameChange,
@@ -40,17 +41,11 @@ const UpdateUser = ({navigation}) => {
     errors,
     setErrors,
 
-  } = useSignUpForm();
+  } = useSignUpForm(updateConstraints);
 
  const validationProperties = {
     username: {username: inputs.username},
     email: {email: inputs.email},
-    full_name: {full_name: inputs.full_name},
-    password: {password: inputs.password},
-    confirmPassword: {
-      password: inputs.password,
-      confirmPassword: inputs.confirmPassword,
-    },
   };
 
   // Image picker from gallery
@@ -68,16 +63,17 @@ const UpdateUser = ({navigation}) => {
   };
 
   const updateProfileAsync = async () => {
-    const regValid = validateOnSend(validationProperties);
-    const token =  await AsyncStorage.getItem('userToken');
+    /*const regValid = validateOnSend(validationProperties);
+
     console.log('reg field errors', errors);
     if (!regValid) {
       return;
-    }
+    }*/
+    const token =  await AsyncStorage.getItem('userToken');
     try {
       const user = inputs;
-      delete user.confirmPassword;
-      const result = await fetchPUT('users',token = token, formBody = JSON.stringify(user));
+      //delete user.confirmPassword;
+      const result = await fetchPUT('users', token, user);
       console.log(await result);
    } catch (e) {
       console.log('registerAsync error: ', e.message);
@@ -88,7 +84,6 @@ const UpdateUser = ({navigation}) => {
         }));
     }
   };
-  console.log(avatarPic)
 
   return (
     <Container>
@@ -113,7 +108,10 @@ const UpdateUser = ({navigation}) => {
           {avatarPic && <Image source={{uri: avatarPic}} style={styles.image}></Image>}
         </Item>
         <Item>
-          <Button><Text>Update profile</Text></Button>
+          <Button onPress={async () => {
+            updateProfileAsync();
+            navigation.replace("Profile");
+          }}><Text>Update profile</Text></Button>
         </Item>
        </Form>
     </Content>

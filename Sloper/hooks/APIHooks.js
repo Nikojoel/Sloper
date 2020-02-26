@@ -53,16 +53,18 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
   return await response.json();
 };
 
-const fetchPUT = async (endpoint = '', params = '', token = '', formBody = '') => {
+const fetchPUT = async (endpoint = '', token = '', formBody = '') => {
+  console.log('endpoint: ' , endpoint )
   const fetchOptions = {
     method: 'PUT',
     headers: {
       'x-access-token': token,
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/json',
     },
-    body: formBody,
+    body: JSON.stringify(formBody),
   };
-  const response = await fetch(apiUrl + endpoint + '/' + params,
+  console.log(fetchOptions)
+  const response = await fetch(apiUrl + endpoint,
     fetchOptions);
   if (!response.ok) {
     throw new Error('fetchPUT error: ' + response.status);
@@ -211,6 +213,7 @@ export {
   getAllUserMedia,
   deletePost,
   updatePost,
+  fetchPUT
 };
 
 /* END OF FILE */

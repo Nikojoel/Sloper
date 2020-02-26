@@ -18,6 +18,7 @@ import {fetchPOST} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from "expo-av";
+import loginConstraints from '../constraints/Constraints'
 
 
 const Login = (props) => {
@@ -34,7 +35,7 @@ const Login = (props) => {
     inputs,
     errors,
     setErrors,
-  } = useSignUpForm();
+  } = useSignUpForm(loginConstraints);
 
   const validationProperties = {
     username: {username: inputs.username},

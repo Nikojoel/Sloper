@@ -78,7 +78,11 @@ const StackNavigator = createStackNavigator(
     },
     UpdateUser: {
       screen: UpdateUser
+    },
+    Profile: {
+      screen: Profile
     }
+
   },
 );
 
