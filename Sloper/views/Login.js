@@ -18,7 +18,7 @@ import {fetchPOST} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from "expo-av";
-import loginConstraints from '../constraints/Constraints'
+import loginConstraints from '../constraints/Constraints';
 
 
 const Login = (props) => {
@@ -87,7 +87,7 @@ const Login = (props) => {
   return (
     <Container>
       <Video
-        source={require("../public/media/backgroundVideo.mp4")}
+        source={require("../public/media/loginVideo.mp4")}
         style={styles.backgroundVideo}
         rate={1.0}
         volume={1.0}
