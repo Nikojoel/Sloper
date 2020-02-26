@@ -107,6 +107,7 @@ const useSignUpForm = (constraints = {}) => {
     inputs,
     errors,
     setErrors,
+    setInputs,
   };
 };
 

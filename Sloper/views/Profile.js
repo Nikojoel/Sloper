@@ -26,8 +26,6 @@ const Profile = (props) => {
   });
   const userToState = async () => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
-      console.log(token);
       const userFromStorage = await AsyncStorage.getItem('user');
       const uData = JSON.parse(userFromStorage);
       const avatarPic = await fetchGET('tags', 'avatar_' + uData.user_id);

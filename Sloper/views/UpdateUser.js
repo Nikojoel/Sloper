@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -40,8 +40,16 @@ const UpdateUser = ({navigation}) => {
     inputs,
     errors,
     setErrors,
+    setInputs
 
   } = useSignUpForm(updateConstraints);
+  useEffect(()=> {
+    setInputs({
+      username: userdata.username,
+      email: userdata.email,
+      full_name: userdata.full_name
+    })
+  },[])
 
  const validationProperties = {
     username: {username: inputs.username},
@@ -94,7 +102,7 @@ const UpdateUser = ({navigation}) => {
         <Item>
         <Label>Username:</Label>
         <Input
-          placeholder={userdata.username}
+          placeholder={inputs.username}
           onChangeText={handleUsernameChange}
         />
         </Item>
