@@ -26,7 +26,7 @@ const ListItem = (props) => {
       temp = undefined;
     } else {
       const cities = nearestCities(exif.GPSLatitude, exif.GPSLongitude);
-      temp = cities[1].name;
+      temp = cities[4].name;
     }
     useEffect(() => {
       setCity(temp);

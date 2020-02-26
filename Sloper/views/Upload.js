@@ -30,7 +30,6 @@ const Upload = (props) => {
     if (!result.cancelled) {
       setImage(result.uri);
       setExif(result.exif);
-      console.log(result.uri);
       console.log(image);
       console.log(exif);
     }
@@ -59,19 +58,16 @@ const Upload = (props) => {
               onChangeText={handleTitleChange}
               onEndEditing={() => validateInput("title", inputs.title)}
             />
-
             {valid.title &&
             <Label style={{color: "red"}}>{valid.title}</Label>
             }
           </Item>
           <Item style={{borderColor: "transparent", height: 50,}}>
-
             <FormTextInput
               value={inputs.postText}
               placeholder='text'
               onChangeText={handleTextChange}
             />
-
           </Item>
           <Button primary dark onPress={pickImage}>
             <Body>

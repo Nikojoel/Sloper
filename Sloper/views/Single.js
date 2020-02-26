@@ -10,7 +10,6 @@ import {
   Icon,
   Text,
   Button,
-  Label,
 } from "native-base";
 import {
   fetchGET,
@@ -35,6 +34,7 @@ const Single = props => {
   const file = navigation.state.params.file;
   const owner = navigation.state.params.user;
   const [user, setUser] = useState({});
+
   const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -61,10 +61,19 @@ const Single = props => {
   }, []);
 
   const [loading, setLoading] = useState(false);
+  const [avail, setAvail] = useState(false);
   const allData = JSON.parse(file.description);
   const exif = allData.exif;
   const description = allData.description;
-  console.log(exif);
+
+  if (exif !== undefined) {
+    if (exif.GPSLongitude !== undefined && exif.GPSLatitude !== undefined) {
+      useEffect(() => {
+        setAvail(true);
+      }, []);
+    }
+  }
+
   return (
     <Container>
       {!loading ? (
@@ -81,7 +90,6 @@ const Single = props => {
                   source={{uri: mediaURL + file.filename}}
                 />
               )}
-
               {file.media_type === "video" && (
                 <Video
                   source={{uri: mediaURL + file.filename}}
@@ -97,9 +105,6 @@ const Single = props => {
                   }}
                 />
               )}
-              {exif.GPSLatitude !== undefined || file.media_type !== "video" &&
-                <Button><Text>See location</Text></Button>
-              }
             </CardItem>
             <CardItem>
               <Left>
@@ -107,7 +112,25 @@ const Single = props => {
                   <H3>{file.title}</H3>
                   <Text>{description}</Text>
                   <Text>By {user.username}</Text>
-
+                  {avail ? (
+                    <MapView style={styles.map}
+                             region= {{
+                               latitude: exif.GPSLatitude,
+                               longitude: exif.GPSLongitude,
+                               latitudeDelta: 1,
+                               longitudeDelta: 1,
+                             }}>
+                      <MapView.Marker
+                        coordinate={{
+                          latitude: exif.GPSLatitude,
+                          longitude: exif.GPSLongitude,
+                        }}
+                        title={`${exif.GPSAltitude} meters above the sea level`}
+                      />
+                    </MapView>
+                  ) : (
+                    <Text>No GPS data available</Text>
+                  )}
                 </Body>
               </Left>
               <Button transparent onPress={() => {
