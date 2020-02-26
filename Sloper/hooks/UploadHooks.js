@@ -13,21 +13,7 @@ const constraints = {
 
 const useUploadForm = () => {
   const [inputs, setInputs] = useState({});
-  const [valid, setValid] = useState({});
-  const [uploading, setUploading] = useState({});
-
-  const validateInput = (attr, value) => {
-    const validated = validate({[attr]: value}, constraints);
-    let valResult = undefined;
-    if (validated) {
-      valResult = validated[attr][0];
-    }
-    setValid((valid) =>
-      ({
-        ...valid,
-        [attr]: valResult
-      }));
-  };
+  const [errors, setErrors] = useState({});
 
   const handleTitleChange = (text) => {
     setInputs((inputs) =>
@@ -74,15 +60,28 @@ const useUploadForm = () => {
     await uploadImage(formData, tag);
   };
 
+  const validateInput = (attr, value) => {
+    const validated = validate({[attr]: value}, constraints);
+    let valResult = undefined;
+    if (validated) {
+      valResult = validated[attr][0];
+    }
+    setErrors((errors) =>
+      ({
+        ...errors,
+        [attr]: valResult
+      }));
+  };
+
   return {
     handleTitleChange,
     handleTextChange,
     validateInput,
     handleUpload,
     inputs,
-    valid,
+    errors,
+    setErrors,
     resetText,
-    uploading,
   };
 };
 

@@ -1,6 +1,7 @@
 import React, {useState,} from 'react';
 import {Text, Button, Form, Body, Item, Container, Label, Spinner} from "native-base";
 import {Image, Dimensions, StyleSheet, } from 'react-native';
+import PropTypes from 'prop-types';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
 import * as ImagePicker from "expo-image-picker";
@@ -8,7 +9,8 @@ import * as ImagePicker from "expo-image-picker";
 const Upload = (props) => {
   const {
     inputs,
-    valid,
+    errors,
+    setErrors,
     handleTextChange,
     handleTitleChange,
     validateInput,
@@ -40,6 +42,7 @@ const Upload = (props) => {
     resetText("title", "");
     resetText("postText", "");
   };
+
   const [loading, setLoading] = useState(false);
 
   return (
@@ -51,21 +54,21 @@ const Upload = (props) => {
               <Text style={{fontWeight: "bold", fontSize: 30,}}>Upload</Text>
             </Body>
           </Item>
-          <Item style={{borderColor: "transparent", height: 50,}}>
+          <Item style={{borderColor: "transparent"}}>
             <FormTextInput
               value={inputs.title}
-              placeholder='title'
+              placeholder='Title'
               onChangeText={handleTitleChange}
-              onEndEditing={() => validateInput("title", inputs.title)}
+              onEndEditing={() => {
+                validateInput("title", inputs.title);
+              }}
+              error={errors.title}
             />
-            {valid.title &&
-            <Label style={{color: "red"}}>{valid.title}</Label>
-            }
           </Item>
-          <Item style={{borderColor: "transparent", height: 50,}}>
+          <Item style={{borderColor: "transparent"}}>
             <FormTextInput
               value={inputs.postText}
-              placeholder='text'
+              placeholder='Description'
               onChangeText={handleTextChange}
             />
           </Item>
@@ -110,7 +113,10 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").width * 0.85,
   },
 });
-
+// proptypes here
+Upload.propTypes = {
+  navigation: PropTypes.object,
+};
 export default Upload;
 
 /* END OF FILE */

@@ -84,7 +84,6 @@ const useSignUpForm = (constraints = {}) => {
     checkAvail();
 
     for (const [key, value] of Object.entries(fields)) {
-
       validateField(value);
     }
 
