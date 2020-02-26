@@ -18,7 +18,7 @@ import {fetchPOST} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from "expo-av";
-import loginConstraints from '../constraints/Constraints';
+import {loginConstraints} from '../constraints/Constraints';
 
 
 const Login = (props) => {

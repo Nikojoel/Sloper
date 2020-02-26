@@ -48,7 +48,7 @@ const UpdateUser = ({navigation}) => {
       ...inputs,
       username: userdata.username,
       email: userdata.email,
-      full_name: userdata.full_name
+
     })
   },[])
 
@@ -72,12 +72,11 @@ const UpdateUser = ({navigation}) => {
   };
 
   const updateProfileAsync = async () => {
-    /*const regValid = validateOnSend(validationProperties);
-
+    const regValid = validateOnSend(validationProperties);
     console.log('reg field errors', errors);
     if (!regValid) {
       return;
-    }*/
+    }
     const token =  await AsyncStorage.getItem('userToken');
     try {
       const user = inputs;
@@ -115,6 +114,20 @@ const UpdateUser = ({navigation}) => {
         <Input
           placeholder={userdata.email}
           onChangeText={handleEmailChange}
+        />
+        </Item>
+        <Item>
+        <Label>Password:</Label>
+        <Input
+          placeholder='password'
+          onChangeText={handlePasswordChange}
+        />
+        </Item>
+        <Item>
+        <Label>Confirm Password: </Label>
+        <Input
+          placeholder='Confirm password'
+          onChangeText={handleConfirmPasswordChange}
         />
         </Item>
         <Item>
