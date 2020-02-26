@@ -45,6 +45,7 @@ const UpdateUser = ({navigation}) => {
   } = useSignUpForm(updateConstraints);
   useEffect(()=> {
     setInputs({
+      ...inputs,
       username: userdata.username,
       email: userdata.email,
       full_name: userdata.full_name
@@ -102,7 +103,7 @@ const UpdateUser = ({navigation}) => {
         <Item>
         <Label>Username:</Label>
         <Input
-          placeholder={inputs.username}
+          placeholder={userdata.username}
           onChangeText={handleUsernameChange}
         />
         </Item>
