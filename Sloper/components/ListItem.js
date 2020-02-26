@@ -48,8 +48,7 @@ const ListItem = (props) => {
         <Text numberOfLines={1}>{description}</Text>
       </Body>
       <Right>
-        <Button onPress={
-          () => {
+        <Button onPress={() => {
             props.navigation.push('Single', {file: props.singleMedia, user: props.user});
           }
         }>

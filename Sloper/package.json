@@ -10,9 +10,6 @@
   "dependencies": {
     "@react-native-community/masked-view": "0.1.5",
     "exif": "^0.6.0",
-    "exif-js": "^2.3.0",
-    "exifr": "^3.0.1",
-    "exifreader": "^2.13.1",
     "expo": "~36.0.0",
     "expo-av": "~8.0.0",
     "expo-constants": "~8.0.0",
