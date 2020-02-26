@@ -136,8 +136,8 @@ const Single = props => {
               <Button transparent onPress={() => {
                 putLike(file.file_id)
               }}>
-                {liked === undefined && <Icon name="heart" style={{color: "red"}}/>}
-                {liked !== undefined && <Icon name="heart" style={{color: "#3F51B5"}}/>}
+                {liked === undefined && <Icon name="heart" style={{color: "#3F51B5"}}/>}
+                {liked !== undefined && <Icon name="heart" style={{color: "red"}}/>}
               </Button>
             </CardItem>
             {owner === file.user_id &&

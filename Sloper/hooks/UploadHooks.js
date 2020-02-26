@@ -1,7 +1,8 @@
 import { useState, } from "react";
 import validate from "validate.js";
 import { uploadImage } from "./APIHooks";
-
+import {uploadConstraints} from '../constraints/Constraints';
+/*
 const constraints = {
   title: {
     length: {
@@ -10,6 +11,7 @@ const constraints = {
     }
   },
 };
+ */
 
 const useUploadForm = () => {
   const [inputs, setInputs] = useState({});
@@ -38,30 +40,39 @@ const useUploadForm = () => {
   };
 
   const handleUpload = async (file, exifData, tag ) => {
-    const filename = file.split('/').pop();
-    const match = /\.(\w+)$/.exec(filename);
-    let type = '';
-    if (file.type !== 'video') {
-      type = match ? `image/${match[1]}` : `image`;
-      if (type === 'image/jpg' || type === 'image/heic') {
-        type = 'image/jpeg'
-      } else {
-        type = match ? `video/${match[1]}` : `video`;
+    try {
+      const filename = file.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename);
+      let type = '';
+      if (file.type !== 'video') {
+        type = match ? `image/${match[1]}` : `image`;
+        if (type === 'image/jpg' || type === 'image/heic') {
+          type = 'image/jpeg'
+        } else {
+          type = match ? `video/${match[1]}` : `video`;
+        }
       }
+      const formData = new FormData();
+      const descriptionData = {
+        description: inputs.postText,
+        exif: exifData,
+      };
+      formData.append("file", {uri: file, name: filename, type});
+      formData.append("title", inputs.title);
+      formData.append("description", JSON.stringify(descriptionData));
+      await uploadImage(formData, tag);
+    } catch (e) {
+      console.log("upload error", e);
+      setErrors((errors) =>
+        ({
+          ...errors,
+          fetch: e.message,
+        }));
     }
-    const formData = new FormData();
-    const descriptionData = {
-      description: inputs.postText,
-      exif: exifData,
-    };
-    formData.append("file", {uri: file, name: filename, type});
-    formData.append("title", inputs.title);
-    formData.append("description", JSON.stringify(descriptionData));
-    await uploadImage(formData, tag);
   };
 
   const validateInput = (attr, value) => {
-    const validated = validate({[attr]: value}, constraints);
+    const validated = validate({[attr]: value}, uploadConstraints);
     let valResult = undefined;
     if (validated) {
       valResult = validated[attr][0];
@@ -69,7 +80,8 @@ const useUploadForm = () => {
     setErrors((errors) =>
       ({
         ...errors,
-        [attr]: valResult
+        [attr]: valResult,
+        fetch: undefined
       }));
   };
 

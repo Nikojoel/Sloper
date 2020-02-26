@@ -51,10 +51,19 @@ const updateConstraints = {
       message: 'not valid.',
     },
   },
+};
 
+const uploadConstraints = {
+  title: {
+    length: {
+      minimum: 5,
+      message: "^Minimum 5 characters",
+    }
+  },
 };
 
 export {
   loginConstraints,
   updateConstraints,
+  uploadConstraints,
 };

@@ -1,5 +1,13 @@
-import React, {useState,} from 'react';
-import {Text, Button, Form, Body, Item, Container, Label, Spinner} from "native-base";
+import React, {useState, } from 'react';
+import {
+  Text,
+  Button,
+  Form,
+  Body,
+  Item,
+  Container,
+  Spinner,
+  Badge, } from "native-base";
 import {Image, Dimensions, StyleSheet, } from 'react-native';
 import PropTypes from 'prop-types';
 import FormTextInput from "../components/FormTextInput";
@@ -36,7 +44,7 @@ const Upload = (props) => {
       console.log(exif);
     }
   };
-
+  console.log(errors.title, errors.fetch);
   const clearForms = () => {
     setImage(null);
     resetText("title", "");
@@ -79,9 +87,22 @@ const Upload = (props) => {
           </Button>
           <Form>
             <Button primary onPress={async () => {
-              setLoading(true);
-              await handleUpload(image, exif, 'sloperTEST');
-              props.navigation.replace("Home");
+              if (!image) {
+                setErrors((errors) =>
+                  ({
+                    ...errors,
+                    fetch: "Choose an image before uploading"
+                  }));
+              } else {
+                setLoading(true);
+                setErrors((errors) =>
+                  ({
+                    ...errors,
+                    fetch: undefined,
+                  }));
+                await handleUpload(image, exif, 'sloperTEST');
+                props.navigation.replace("Home");
+              }
             }}>
               <Body>
                 <Text style={{color: "white"}}>Upload</Text>
@@ -103,6 +124,11 @@ const Upload = (props) => {
           }
         </Form>
       ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
+      {errors.fetch &&
+          <Body>
+            <Badge><Text>{errors.fetch}</Text></Badge>
+          </Body>
+      }
     </Container>
   );
 };
