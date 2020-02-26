@@ -75,6 +75,8 @@ const UpdateUser = ({navigation}) => {
       //delete user.confirmPassword;
       const result = await fetchPUT('users', token, user);
       console.log(await result);
+      await AsyncStorage.clear()
+
    } catch (e) {
       console.log('registerAsync error: ', e.message);
       setErrors((errors) =>
@@ -100,7 +102,7 @@ const UpdateUser = ({navigation}) => {
         <Label>Email</Label>
         <Input
           placeholder={userdata.email}
-          onChangeText={handleUsernameChange}
+          onChangeText={handleEmailChange}
         />
         </Item>
         <Item>
@@ -109,8 +111,8 @@ const UpdateUser = ({navigation}) => {
         </Item>
         <Item>
           <Button onPress={async () => {
-            updateProfileAsync();
-            navigation.replace("Profile");
+            await updateProfileAsync();
+            navigation.navigate('AuthLoading');
           }}><Text>Update profile</Text></Button>
         </Item>
        </Form>
