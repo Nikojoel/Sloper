@@ -172,7 +172,7 @@ const getAllUserMedia = () => {
   return [data, loading];
 };
 
-const uploadImage = async (data) => {
+const uploadImage = async (data, tag) => {
   const token = await AsyncStorage.getItem('userToken');
 
   try {
@@ -187,7 +187,7 @@ const uploadImage = async (data) => {
     const responseData = await response.json();
     const fileid = {
       file_id: responseData.file_id,
-      tag: 'sloperTEST'
+      tag: tag
     };
 
     try {

@@ -51,7 +51,7 @@ const useUploadForm = () => {
       }));
   };
 
-  const handleUpload = async (file, exifData) => {
+  const handleUpload = async (file, exifData, tag) => {
     const filename = file.split('/').pop();
     const match = /\.(\w+)$/.exec(filename);
     let type = '';
@@ -71,7 +71,7 @@ const useUploadForm = () => {
     formData.append("file", {uri: file, name: filename, type});
     formData.append("title", inputs.title);
     formData.append("description", JSON.stringify(descriptionData));
-    await uploadImage(formData);
+    await uploadImage(formData, tag);
   };
 
   return {

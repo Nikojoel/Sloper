@@ -81,7 +81,7 @@ const Upload = (props) => {
           <Form>
             <Button primary onPress={async () => {
               setLoading(true);
-              await handleUpload(image, exif);
+              await handleUpload(image, exif, 'sloperTEST');
               props.navigation.replace("Home");
             }}>
               <Body>
