@@ -135,7 +135,7 @@ const getAllMedia = () => {
     try {
       const json = await fetchGET('tags/sloperTEST');
       // slice for only last 20
-      const result = await Promise.all(json.map(async (item) => {
+      const result = await Promise.all(json.reverse().slice(0, 10).map(async (item) => {
         return await fetchGET('media', item.file_id);
       }));
 
