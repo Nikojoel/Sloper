@@ -32,6 +32,7 @@ const loginConstraints = {
     },
   },
 };
+
 const updateConstraints = {
   username: {
     presence: {

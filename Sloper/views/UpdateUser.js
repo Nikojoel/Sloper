@@ -22,10 +22,11 @@ import useUploadForm from '../hooks/UploadHooks'
 import useSignUpForm from '../hooks/LoginHooks'
 import * as ImagePicker from "expo-image-picker";
 import {fetchPUT, uploadImage} from '../hooks/APIHooks'
-import updateConstraints from '../constraints/Constraints'
+import {updateConstraints} from '../constraints/Constraints'
 
 
 const UpdateUser = ({navigation}) => {
+
   const {userdata} = navigation.state.params
   const { handleUpload } = useUploadForm();
   const {
@@ -44,12 +45,8 @@ const UpdateUser = ({navigation}) => {
 
   } = useSignUpForm(updateConstraints);
   useEffect(()=> {
-    setInputs({
-      ...inputs,
-      username: userdata.username,
-      email: userdata.email,
 
-    })
+
   },[])
 
  const validationProperties = {
@@ -87,6 +84,7 @@ const UpdateUser = ({navigation}) => {
       }
       await fetchPUT('users', token, user);
       await AsyncStorage.clear()
+      navigation.navigate('AuthLoading');
 
    } catch (e) {
       console.log('registerAsync error: ', e.message);
@@ -107,6 +105,7 @@ const UpdateUser = ({navigation}) => {
         <Input
           placeholder={userdata.username}
           onChangeText={handleUsernameChange}
+          onEndEditing={() => validateField(validationProperties.username)}
         />
         </Item>
         <Item>
@@ -137,7 +136,7 @@ const UpdateUser = ({navigation}) => {
         <Item>
           <Button onPress={async () => {
             await updateProfileAsync();
-            navigation.navigate('AuthLoading');
+
           }}><Text>Update profile</Text></Button>
         </Item>
        </Form>

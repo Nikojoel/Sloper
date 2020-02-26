@@ -66,7 +66,7 @@ const Login = (props) => {
   const registerAsync = async () => {
     const regValid = validateOnSend(validationProperties);
     console.log('reg field errors', errors);
-    if (!regValid) {
+    if (regValid != {}) {
       return;
     }
     try {
