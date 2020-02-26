@@ -28,12 +28,12 @@ const Profile = (props) => {
     try {
       const userFromStorage = await AsyncStorage.getItem('user');
       const uData = JSON.parse(userFromStorage);
-      const avatarPic = await fetchGET('tags', 'avatar_' + uData.user_id);
+      const avatarPic = await fetchGET('tags', 'sloper_avatar_' + uData.user_id);
       let avPic = '';
       if (avatarPic.length === 0) { // if avatar is not set
         avPic = 'https://placekitten.com/1024/1024';
       } else {
-        avPic = mediaURL + avatarPic[0].filename;
+        avPic = mediaURL + avatarPic[avatarPic.length -1].filename;
       }
       setUser((user) => (
         {

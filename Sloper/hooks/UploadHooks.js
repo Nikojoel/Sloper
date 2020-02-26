@@ -37,7 +37,7 @@ const useUploadForm = () => {
       }));
   };
 
-  const handleUpload = async (file, exifData, tag) => {
+  const handleUpload = async (file, exifData, tag ) => {
     const filename = file.split('/').pop();
     const match = /\.(\w+)$/.exec(filename);
     let type = '';

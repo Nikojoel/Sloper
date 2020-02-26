@@ -21,7 +21,7 @@ import {Form,
 import useUploadForm from '../hooks/UploadHooks'
 import useSignUpForm from '../hooks/LoginHooks'
 import * as ImagePicker from "expo-image-picker";
-import {fetchPUT} from '../hooks/APIHooks'
+import {fetchPUT, uploadImage} from '../hooks/APIHooks'
 import updateConstraints from '../constraints/Constraints'
 
 
@@ -82,8 +82,11 @@ const UpdateUser = ({navigation}) => {
     try {
       const user = inputs;
       //delete user.confirmPassword;
-      const result = await fetchPUT('users', token, user);
-      console.log(await result);
+      console.log('avatarpic', avatarPic)
+      if (avatarPic != undefined) {
+      await handleUpload(avatarPic, null, 'sloper_avatar_' + userdata.user_id)
+      }
+      await fetchPUT('users', token, user);
       await AsyncStorage.clear()
 
    } catch (e) {

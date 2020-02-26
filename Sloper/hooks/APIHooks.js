@@ -44,6 +44,7 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
       'x-access-token': token,
     },
   };
+console.log('delete path: ', apiUrl + endpoint + '/' + params)
   const response = await fetch(apiUrl + endpoint + '/' + params,
     fetchOptions);
   if (!response.ok) {
@@ -54,8 +55,7 @@ const fetchDELETE = async (endpoint = '', params = '', token = '') => {
 };
 
 const fetchPUT = async (endpoint = '', token = '', formBody = '') => {
-  console.log('endpoint: ' , endpoint )
-  const fetchOptions = {
+   const fetchOptions = {
     method: 'PUT',
     headers: {
       'x-access-token': token,
@@ -63,7 +63,6 @@ const fetchPUT = async (endpoint = '', token = '', formBody = '') => {
     },
     body: JSON.stringify(formBody),
   };
-  console.log(fetchOptions)
   const response = await fetch(apiUrl + endpoint,
     fetchOptions);
   if (!response.ok) {
@@ -191,9 +190,8 @@ const uploadImage = async (data, tag) => {
       file_id: responseData.file_id,
       tag: tag
     };
-
     try {
-      const tagResponse = await fetchPOST('tags', fileid, token)
+      await fetchPOST('tags', fileid, token)
     } catch (e) {
       console.log('error in image tag', e.message)
     }
