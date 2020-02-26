@@ -12,6 +12,7 @@ import Login from '../views/Login';
 import MyFiles from '../views/MyFiles'
 import {Icon} from 'native-base';
 import Update from "../views/Update";
+import UpdateUser from '../views/UpdateUser';
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -74,6 +75,9 @@ const StackNavigator = createStackNavigator(
     },
     Update: {
       screen: Update,
+    },
+    UpdateUser: {
+      screen: UpdateUser
     }
   },
 );

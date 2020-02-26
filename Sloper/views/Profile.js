@@ -88,6 +88,9 @@ const Profile = (props) => {
               <Button danger rounded onPress={signOutAsync}>
                 <Text>Logout</Text>
               </Button>
+              <Button primary rounded onPress={() => props.navigation.navigate('UpdateUser')}>
+                <Text>Edit</Text>
+              </Button>
           </CardItem>
         </Card>
       </Content>
