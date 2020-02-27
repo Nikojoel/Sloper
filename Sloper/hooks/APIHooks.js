@@ -103,7 +103,6 @@ const getAllMedia = () => {
             const file = await fetchAPI("GET", "media", item.file_id);
             const favourites = await fetchAPI('GET', 'favourites/file', item.file_id);
             file.favCount = favourites.length
-            console.log(file)
             return await file
           })
       );
