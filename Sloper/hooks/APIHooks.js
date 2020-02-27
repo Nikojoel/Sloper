@@ -100,7 +100,11 @@ const getAllMedia = () => {
           .reverse()
           .slice(0, 10)
           .map(async item => {
-            return await fetchAPI("GET", "media", item.file_id);
+            const file = await fetchAPI("GET", "media", item.file_id);
+            const favourites = await fetchAPI('GET', 'favourites/file', item.file_id);
+            file.favCount = favourites.length
+            console.log(file)
+            return await file
           })
       );
       setData(result);
