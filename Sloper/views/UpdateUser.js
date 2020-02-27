@@ -45,7 +45,10 @@ const UpdateUser = ({navigation}) => {
 
   } = useSignUpForm(updateConstraints);
   useEffect(()=> {
-
+    setInputs({
+      username: userdata.username,
+      email: userdata.email
+    })
 
   },[])
 
@@ -58,7 +61,7 @@ const UpdateUser = ({navigation}) => {
  const [avatarPic, setAvatarPic] = useState(undefined)
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1
