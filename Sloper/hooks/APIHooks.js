@@ -20,9 +20,11 @@ const fetchAPI = async (
     }
   };
   if (method != "GET") {
+    if(type != "multipart/form-data"){
     options.body = JSON.stringify(data);
-  }
+    } else { options.body = data}
 
+  }
   const response = await fetch(apiUrl + endpoint + "/" + params, options);
   const json = await response.json();
   if (response.status === 400 || response.status === 401) {
@@ -33,27 +35,6 @@ const fetchAPI = async (
   }
   return json;
 };
-
-
-/*const fetchPOST = async (endpoint = "", data = {}, token = "") => {
-  const fetchOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-access-token": token
-    },
-    body: JSON.stringify(data)
-  };
-  const response = await fetch(apiUrl + endpoint, fetchOptions);
-  const json = await response.json();
-  if (response.status === 400 || response.status === 401) {
-    const message = Object.values(json).join();
-    throw new Error(message);
-  } else if (response.status > 299) {
-    throw new Error("fetchPOST error: " + response.status);
-  }
-  return json;
-};*/
 
 const fetchDELETE = async (endpoint = "", params = "", token = "") => {
   const fetchOptions = {
@@ -116,7 +97,6 @@ const updatePost = async data => {
 const isLiked = async file_id => {
   try {
     const arr = await fetchAPI("GET", "favourites/file", file_id);
-    //const arr = await fetchGET('favourites/file', file_id);
     const userFromStorage = await AsyncStorage.getItem("user");
     const user = JSON.parse(userFromStorage);
     return arr.find(it => it.user_id === user.user_id);
@@ -148,18 +128,14 @@ const getAllMedia = () => {
   const fetchMedia = async () => {
     try {
       const json = await fetchAPI("GET", "tags/sloperTEST");
-      //const json = await fetchGET('tags/sloperTEST');
-      // slice for only last 20
       const result = await Promise.all(
         json
           .reverse()
           .slice(0, 10)
           .map(async item => {
             return await fetchAPI("GET", "media", item.file_id);
-            //return await fetchGET('media', item.file_id);
           })
       );
-
       setData(result);
       setLoading(false);
     } catch (e) {
@@ -178,13 +154,10 @@ const getAllUserMedia = () => {
   const fetchMedia = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-
       const json = await fetchAPI((endpoint = "media/user"), (token = token));
-      // const json = await fetchGET('media/user', '', token);
       const result = await Promise.all(
         json.map(async item => {
           return await fetchAPI((endpoint = "media"), (params = item.file_id));
-          //return await fetchGET('media', item.file_id);
         })
       );
       setData(result);
@@ -201,19 +174,10 @@ const getAllUserMedia = () => {
 
 const uploadImage = async (data, tag) => {
   const token = await AsyncStorage.getItem("userToken");
-
   try {
-    const response = await fetch(apiUrl + "media", {
-      method: "POST",
-      body: data,
-      headers: {
-        "content-type": "multipart/form-data",
-        "x-access-token": token
-      }
-    });
-    const responseData = await response.json();
+    const response = await fetchAPI('POST', 'media', undefined, token, data, 'form')
     const fileid = {
-      file_id: responseData.file_id,
+      file_id: response.file_id,
       tag: tag
     };
     try {
