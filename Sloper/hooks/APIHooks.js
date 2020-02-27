@@ -36,23 +36,7 @@ const fetchAPI = async (
   return json;
 };
 
-const fetchDELETE = async (endpoint = "", params = "", token = "") => {
-  const fetchOptions = {
-    method: "DELETE",
-    headers: {
-      "x-access-token": token
-    }
-  };
-  console.log("delete path: ", apiUrl + endpoint + "/" + params);
-  const response = await fetch(apiUrl + endpoint + "/" + params, fetchOptions);
-  if (!response.ok) {
-    throw new Error("fetchGET error: " + response.status);
-  }
-
-  return await response.json();
-};
-
-const fetchPUT = async (endpoint = "", token = "", formBody = "") => {
+/*const fetchPUT = async (endpoint = "", token = "", formBody = "") => {
   const fetchOptions = {
     method: "PUT",
     headers: {
@@ -67,12 +51,12 @@ const fetchPUT = async (endpoint = "", token = "", formBody = "") => {
   }
 
   return await response.json();
-};
+};*/
 
 const deletePost = async id => {
   try {
     const token = await AsyncStorage.getItem("userToken");
-    const result = fetchDELETE("media", id, token);
+    const result = fetchAPI('DELETE', "media", id, token);
   } catch (e) {
     console.log(e);
   }
@@ -88,7 +72,7 @@ const updatePost = async data => {
   formBody = formBody.join("&");
   try {
     const token = await AsyncStorage.getItem("userToken");
-    const result = await fetchPUT("media", data.file_id, token, formBody);
+    const result = await fetchAPI('PUT',"media", data.file_id, token, formBody);
   } catch (e) {
     console.log("update post error", e);
   }
@@ -115,7 +99,7 @@ const postFavourite = async file_id => {
     }
   } else {
     try {
-      await fetchDELETE("favourites/file", file_id, token);
+      await fetchAPI('DELETE',"favourites/file", file_id, token);
     } catch (e) {
       console.log(e.message);
     }
@@ -198,7 +182,6 @@ export {
   getAllUserMedia,
   deletePost,
   updatePost,
-  fetchPUT,
   fetchAPI
 };
 

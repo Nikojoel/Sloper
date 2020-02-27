@@ -14,7 +14,7 @@ import {
 } from 'native-base';
 import {AsyncStorage, Dimensions, StyleSheet,} from 'react-native';
 import PropTypes from 'prop-types';
-import {fetchPOST} from '../hooks/APIHooks';
+import {fetchAPI} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from "expo-av";
@@ -50,7 +50,7 @@ const Login = (props) => {
 
   const signInAsync = async () => {
     try {
-      const user = await fetchPOST('login', inputs);
+      const user = await fetchAPI('POST', 'login', undefined,undefined,  inputs);
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('user', JSON.stringify(user.user));
       props.navigation.navigate('App');
@@ -72,7 +72,7 @@ const Login = (props) => {
     try {
       const user = inputs;
       delete user.confirmPassword;
-      const result = await fetchPOST('users', user);
+      const result = await fetchAPI('POST', 'users',undefined,undefined, user);
       signInAsync();
     } catch (e) {
       console.log('registerAsync error: ', e.message);

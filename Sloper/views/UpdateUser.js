@@ -21,7 +21,7 @@ import {Form,
 import useUploadForm from '../hooks/UploadHooks'
 import useSignUpForm from '../hooks/LoginHooks'
 import * as ImagePicker from "expo-image-picker";
-import {fetchPUT, uploadImage} from '../hooks/APIHooks'
+import {fetchAPI, uploadImage} from '../hooks/APIHooks'
 import {updateConstraints} from '../constraints/Constraints'
 
 
@@ -90,7 +90,7 @@ const UpdateUser = ({navigation}) => {
       if (avatarPic != undefined) {
       await handleUpload(avatarPic, null, 'sloper_avatar_' + userdata.user_id)
       }
-      await fetchPUT('users', token, user);
+      await fetchAPI('PUT','users',undefined , token, user);
       await AsyncStorage.clear()
       navigation.navigate('AuthLoading');
 

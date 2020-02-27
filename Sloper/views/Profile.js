@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 import { AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
-import { fetchGET } from '../hooks/APIHooks';
+import { fetchAPI } from '../hooks/APIHooks';
 import AsyncImage from '../components/AsyncImage';
 import { Dimensions } from 'react-native';
 
@@ -28,7 +28,7 @@ const Profile = (props) => {
     try {
       const userFromStorage = await AsyncStorage.getItem('user');
       const uData = JSON.parse(userFromStorage);
-      const avatarPic = await fetchGET('tags', 'sloper_avatar_' + uData.user_id);
+      const avatarPic = await fetchAPI('GET', 'tags', 'sloper_avatar_' + uData.user_id);
       let avPic = '';
       if (avatarPic.length === 0) { // if avatar is not set
         avPic = 'https://placekitten.com/1024/1024';

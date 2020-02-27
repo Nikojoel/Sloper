@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import validate from 'validate.js';
-import { fetchGET } from './APIHooks';
+import { fetchAPI } from './APIHooks';
 
 
 const useSignUpForm = (constraints = {}) => {
@@ -65,7 +65,7 @@ const useSignUpForm = (constraints = {}) => {
   const checkAvail = async () => {
     const text = inputs.username;
     try {
-      const result = await fetchGET('users/username', text);
+      const result = await fetchAPI('GET','users/username', text);
       if (!result.available) {
         setErrors((errors) =>
           ({
