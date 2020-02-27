@@ -36,23 +36,6 @@ const fetchAPI = async (
   return json;
 };
 
-/*const fetchPUT = async (endpoint = "", token = "", formBody = "") => {
-  const fetchOptions = {
-    method: "PUT",
-    headers: {
-      "x-access-token": token,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(formBody)
-  };
-  const response = await fetch(apiUrl + endpoint, fetchOptions);
-  if (!response.ok) {
-    throw new Error("fetchPUT error: " + response.status);
-  }
-
-  return await response.json();
-};*/
-
 const deletePost = async id => {
   try {
     const token = await AsyncStorage.getItem("userToken");
