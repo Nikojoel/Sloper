@@ -55,6 +55,8 @@ const Single = props => {
   }
   const [comments, commentsLoading] = getComments(file.file_id);
 
+
+  // TODO input fields for actual comment posting + listview to see comments
   const placeholderComment = {
     file_id: file.file_id,
     comment: 'helvetin hieno kommentti'};
