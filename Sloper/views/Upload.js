@@ -28,6 +28,7 @@ const Upload = (props) => {
 
   const [image, setImage] = useState(null);
   const [exif, setExif] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -44,14 +45,12 @@ const Upload = (props) => {
       console.log(exif);
     }
   };
-  console.log(errors.title, errors.fetch);
+
   const clearForms = () => {
     setImage(null);
     resetText("title", "");
     resetText("postText", "");
   };
-
-  const [loading, setLoading] = useState(false);
 
   return (
     <Container>
