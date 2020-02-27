@@ -102,7 +102,13 @@ const getAllMedia = () => {
           .map(async item => {
             const file = await fetchAPI("GET", "media", item.file_id);
             const favourites = await fetchAPI('GET', 'favourites/file', item.file_id);
+            const ratings = await fetchAPI('GET', 'ratings/file', item.file_id)
+            let rating = 0.0
+            for(it in ratings) {
+              rating += ratings[it].rating
+            }
             file.favCount = favourites.length
+            file.rating = rating / (ratings.length + 1)
             return await file
           })
       );
