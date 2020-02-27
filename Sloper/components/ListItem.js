@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ListItem as BaseListItem,
   Left,
@@ -11,26 +11,28 @@ import {
   Label,
 } from 'native-base';
 import PropTypes from 'prop-types';
-import nearestCities from 'find-nearest-cities';
+import nearbyCities from "nearby-big-cities";
 
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const ListItem = (props) => {
-    const [city, setCity] = useState(undefined);
-    const allData = JSON.parse(props.singleMedia.description);
-    const description = allData.description;
-    const exif = allData.exif;
+  const [city, setCity] = useState(undefined);
+  const allData = JSON.parse(props.singleMedia.description);
+  const description = allData.description;
+  const exif = allData.exif;
 
-    let temp = '';
-    if (exif === undefined || exif.GPSLatitude === undefined) {
-      temp = undefined;
-    } else {
-      const cities = nearestCities(exif.GPSLatitude, exif.GPSLongitude);
-      temp = cities[4].name;
-    }
-    useEffect(() => {
-      setCity(temp);
-    }, []);
+  let temp = '';
+  if (exif === undefined || exif.GPSLatitude === undefined) {
+    temp = undefined;
+  } else {
+    const query = {latitude: exif.GPSLatitude, longitude: exif.GPSLongitude};
+    const cities = nearbyCities(query);
+    temp = cities[0].name;
+  }
+
+  useEffect(() => {
+    setCity(temp);
+  }, []);
 
   return (
     <BaseListItem thumbnail>
@@ -49,8 +51,8 @@ const ListItem = (props) => {
       </Body>
       <Right>
         <Button onPress={() => {
-            props.navigation.push('Single', {file: props.singleMedia, user: props.user});
-          }
+          props.navigation.push('Single', {file: props.singleMedia, user: props.user});
+        }
         }>
           <Text>View</Text>
         </Button>
