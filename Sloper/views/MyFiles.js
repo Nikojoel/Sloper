@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   List as BaseList,
   Container,
   Spinner,
+  Text,
 } from 'native-base';
 import ListItem from '../components/ListItem';
 import { getAllUserMedia } from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
-import {ActivityIndicator} from "react-native";
 
 const MyFiles = (props) => {
   const user = props.navigation.state.params.user.userdata.user_id;
@@ -16,9 +16,11 @@ const MyFiles = (props) => {
   useEffect(()=> {
     setMedia(data);
   },[loading]);
-
   return (
     <Container>
+      {data.length === 0 &&
+        <Text>You have no files</Text>
+      }
       {!loading ? (
         <BaseList
         dataArray={media}

@@ -22,7 +22,7 @@ const ListItem = (props) => {
   const exif = allData.exif;
 
   let temp = '';
-  if (exif === undefined || exif.GPSLatitude === undefined) {
+  if (exif === undefined || exif.GPSLatitude === undefined || exif.GPSLatitude === null) {
     temp = undefined;
   } else {
     const query = {latitude: exif.GPSLatitude, longitude: exif.GPSLongitude};
