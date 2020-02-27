@@ -35,6 +35,25 @@ const Single = props => {
   const owner = navigation.state.params.user;
   const [user, setUser] = useState({});
 
+  const getComments = (id) => {
+    const [comments, setComments] = useState();
+    const [commentsLoading, setCommentsLoading] = useState(true);
+    const fetchComments = async (id) => {
+      try {
+      const result = await fetchAPI('GET', 'comments/file', id)
+      setComments(result);
+      setCommentsLoading(false);
+      } catch (e) {
+        console.log('comments loading error ', e)
+      }
+    };
+    useEffect(()=> {
+      fetchComments(id)
+    }, []);
+    return [comments, commentsLoading];
+  }
+  const [comments, commentsLoading] = getComments(file.file_id);
+
   const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
