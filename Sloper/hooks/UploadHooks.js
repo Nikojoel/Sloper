@@ -2,16 +2,6 @@ import { useState, } from "react";
 import validate from "validate.js";
 import { uploadImage } from "./APIHooks";
 import {uploadConstraints} from '../constraints/Constraints';
-/*
-const constraints = {
-  title: {
-    length: {
-      minimum: 5,
-      message: "^Minimum 5 characters",
-    }
-  },
-};
- */
 
 const useUploadForm = () => {
   const [inputs, setInputs] = useState({});

@@ -12,7 +12,7 @@ import {
   Button,
 } from "native-base";
 import {
-  fetchGET,
+  fetchAPI,
   postFavourite,
   isLiked,
   deletePost,
@@ -38,7 +38,7 @@ const Single = props => {
   const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const user = await fetchGET('users', file.user_id, token);
+      const user = await fetchAPI('GET', 'users', file.user_id, token);
       setUser(user);
     } catch (e) {
       console.log(e)
