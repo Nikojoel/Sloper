@@ -7,11 +7,13 @@ const useSignUpForm = (constraints = {}) => {
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
   const handleUsernameChange = (text) => {
+
     setInputs((inputs) =>
       ({
         ...inputs,
         username: text,
       }));
+      console.log(inputs.username);
   };
 
   const handlePasswordChange = (text) => {

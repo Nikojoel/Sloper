@@ -72,9 +72,14 @@ const UpdateUser = ({navigation}) => {
   };
 
   const updateProfileAsync = async () => {
+    console.log('inputs:', inputs)
     const regValid = validateOnSend(validationProperties);
     console.log('reg field errors', errors);
+
+    console.log(regValid)
+
     if (!regValid) {
+      console.log('not valid');
       return;
     }
     const token =  await AsyncStorage.getItem('userToken');
@@ -109,6 +114,7 @@ const UpdateUser = ({navigation}) => {
           placeholder={userdata.username}
           onChangeText={handleUsernameChange}
           onEndEditing={() => validateField(validationProperties.username)}
+
         />
         </Item>
         <Item>
