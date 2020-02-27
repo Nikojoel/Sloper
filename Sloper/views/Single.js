@@ -10,6 +10,7 @@ import {
   Icon,
   Text,
   Button,
+
 } from "native-base";
 import {
   fetchAPI,
@@ -36,7 +37,7 @@ const Single = props => {
   const [user, setUser] = useState({});
 
   const getComments = (id) => {
-    const [comments, setComments] = useState();
+    const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
     const fetchComments = async (id) => {
       try {
@@ -53,6 +54,20 @@ const Single = props => {
     return [comments, commentsLoading];
   }
   const [comments, commentsLoading] = getComments(file.file_id);
+
+  const placeholderComment = {
+    file_id: file.file_id,
+    comment: 'helvetin hieno kommentti'};
+  const postComment = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const result = await fetchAPI('POST', 'comments', undefined, token, placeholderComment )
+      console.log('posting comment response' , await result);
+      console.log(comments)
+    } catch (e) {
+      console.log('posting comment error', e)
+    }
+  }
 
   const getUser = async () => {
     try {
@@ -158,6 +173,9 @@ const Single = props => {
                 {liked === undefined && <Icon name="heart" style={{color: "#3F51B5"}}/>}
                 {liked !== undefined && <Icon name="heart" style={{color: "red"}}/>}
               </Button>
+              <Button warning onPress={async () => await postComment()}>
+                <Text>postComment</Text>
+              </Button>
             </CardItem>
             {owner === file.user_id &&
             <CardItem>
@@ -172,6 +190,7 @@ const Single = props => {
               }}>
                 <Text>UPDATE</Text>
               </Button>
+
             </CardItem>}
           </Card>
         </Content>

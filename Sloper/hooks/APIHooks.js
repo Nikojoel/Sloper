@@ -25,6 +25,7 @@ const fetchAPI = async (
     } else { options.body = data}
 
   }
+
   const response = await fetch(apiUrl + endpoint + "/" + params, options);
   const json = await response.json();
   if (response.status === 400 || response.status === 401) {
