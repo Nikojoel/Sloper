@@ -13,6 +13,8 @@ import {
   List,
   ListItem,
   Item,
+  Form,
+  Input, Label,
 } from "native-base";
 import {
   fetchAPI,
@@ -26,6 +28,7 @@ import AsyncImage from "../components/AsyncImage";
 import {Dimensions, StyleSheet} from "react-native";
 import {Video} from "expo-av";
 import MapView from "react-native-maps";
+import useCommentForm from "../hooks/CommentHooks";
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -37,6 +40,7 @@ const Single = props => {
   const file = navigation.state.params.file;
   const owner = navigation.state.params.user;
   const [user, setUser] = useState({});
+  const {inputs, handleCommentChange} = useCommentForm();
 
   const getComments = (id) => {
     const [comments, setComments] = useState([]);
@@ -47,11 +51,11 @@ const Single = props => {
         const comments = await fetchAPI('GET', 'comments/file', id);
         await Promise.all(
           comments.map(async i => {
-            const user = await fetchAPI('GET', 'users', i.user_id, token)
+            const user = await fetchAPI('GET', 'users', i.user_id, token);
             i.username = user.username;
 
           })
-        )
+        );
         setComments(comments);
         setCommentsLoading(false);
 
@@ -73,34 +77,27 @@ const Single = props => {
   const commentList = c.map(comment => {
     return (
     <ListItem key={comment.comment_id}>
+      <H3>{comment.username}</H3>
       <Text>{comment.comment}</Text>
     </ListItem>);
   });
 
-  // TODO input fields for actual comment posting + listview to see comments
-  const placeholderComment = {
-    file_id: file.file_id,
-    comment: 'helvetin hieno kommentti'
-  };
   const postComment = async () => {
     try {
+      const usr = await AsyncStorage.getItem('user')
+      const userParsed = await JSON.parse(usr)
       const token = await AsyncStorage.getItem('userToken');
-      const result = await fetchAPI('POST', 'comments', undefined, token, placeholderComment);
+      const result = await fetchAPI('POST', 'comments', undefined, token, {file_id: file.file_id, comment: inputs.comment});
       console.log('posting comment response', await result);
-      setC((c) => ([...c, {comment: placeholderComment.comment,
-                  comment_id: result.comment_id}
+      setC((c) => ([...c, {comment: inputs.comment,
+                  comment_id: result.comment_id,
+                  username: userParsed.username}
       ]))
-
     } catch (e) {
       console.log('posting comment error', e)
     }
   };
-  /*setErrors((errors) =>
-  ({
-    ...errors,
-    [attr]: valResult,
-    fetch: undefined
-  }));*/
+
   const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -205,11 +202,24 @@ const Single = props => {
                 {liked === undefined && <Icon name="heart" style={{color: "#3F51B5"}}/>}
                 {liked !== undefined && <Icon name="heart" style={{color: "red"}}/>}
               </Button>
-              <Button warning onPress={async () => await postComment()}>
-                <Text>postComment</Text>
-              </Button>
             </CardItem>
+            <Form>
+              <Item>
+                <Input
+                  placeholder="Write a comment"
+                  onChangeText={handleCommentChange}
+                  value={inputs.comment}
+                />
+                <Button warning rounded onPress={async () => {
+                  handleCommentChange("");
+                  await postComment()}
+                }>
+                  <Text>Comment</Text>
+                </Button>
+              </Item>
+            </Form>
             <Item>
+              <H3>Comments</H3>
               <List>
                 {commentList}
               </List>
