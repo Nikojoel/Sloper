@@ -47,15 +47,21 @@ const Single = props => {
     const [commentsLoading, setCommentsLoading] = useState(true);
     const fetchComments = async (id) => {
       try {
+        const usr = await AsyncStorage.getItem('user')
+        const userParsed = await JSON.parse(usr)
         const token = await AsyncStorage.getItem("userToken");
         const comments = await fetchAPI('GET', 'comments/file', id);
+        const rating = await fetchAPI('GET', 'ratings/file', id );
         await Promise.all(
           comments.map(async i => {
             const user = await fetchAPI('GET', 'users', i.user_id, token);
             i.username = user.username;
-
           })
         );
+        for(i in rating) {
+          if(i.user_id === userParsed.user_id) comments.myRating = i.rating;
+          console.log('myrating is: ', myRating)
+        }
         setComments(comments);
         setCommentsLoading(false);
 
