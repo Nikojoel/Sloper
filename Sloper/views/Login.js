@@ -105,7 +105,7 @@ const Login = (props) => {
         <Form>
           <Body>
           <Text style={loginStyles.title}>
-            Tässä hieno ja sykähdyttävä teksti mut sen halusin sanoo et moro ja moro
+            The night is dark and full of terror, be a sloper and make no error
           </Text>
           </Body>
           <Item style={loginStyles.form}>
@@ -126,7 +126,7 @@ const Login = (props) => {
             />
           </Item>
           <Body>
-            <Button style={loginStyles.signIn} rounded onPress={signInAsync}><Text>Sign in</Text></Button>
+            <Button style={loginStyles.signInOrRegister} rounded onPress={signInAsync}><Text>Sign in</Text></Button>
             <Button style={loginStyles.buttonText} rounded onPress={() => {
               setToggleForm(false);
             }}><Text>Not registered? Create an account</Text></Button>
@@ -135,6 +135,9 @@ const Login = (props) => {
         }
         {!toggleForm &&
         <Form>
+          <Text style={loginStyles.title}>
+            Become a sloper
+          </Text>
           <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
@@ -199,7 +202,7 @@ const Login = (props) => {
             />
           </Item>
           <Body>
-            <Button style={loginStyles.registerIn} rounded onPress={registerAsync}>
+            <Button style={loginStyles.signInOrRegister} rounded onPress={registerAsync}>
               <Text>Register</Text>
             </Button>
             <Button rounded style={loginStyles.buttonText} onPress={() => {

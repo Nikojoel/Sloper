@@ -30,17 +30,33 @@ const loginStyles = StyleSheet.create({
     marginTop: 20,
     textDecorationLine: 'underline',
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
+    borderColor: 'grey',
+    borderWidth: 1,
   },
   form: {
     borderColor: 'transparent',
   },
-  signIn: {
+  signInOrRegister: {
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
-  },
-  registerIn: {
-    backgroundColor: 'rgba(52, 52, 52, 0.5)',
+    marginTop: 15,
   },
 });
 
-export {loginStyles};
+const formStyles = StyleSheet.create({
+  border: {
+    borderColor: 'black',
+    color: 'white',
+    backgroundColor: 'rgba(52, 52, 52, 0.4)',
+    borderRadius: 25,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    fontSize: 15,
+    marginTop: 5,
+  },
+  form: {
+    borderColor: 'transparent',
+  },
+});
+
+export {loginStyles, formStyles};
 

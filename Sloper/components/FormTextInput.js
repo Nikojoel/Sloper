@@ -8,14 +8,14 @@ import {
   Body,
 } from 'native-base';
 import PropTypes from 'prop-types';
-import {Dimensions, StyleSheet} from 'react-native';
+import {formStyles} from "../styles/Style";
 
 const FormTextInput = (props) => {
   const {error, ...otherProps} = props;
   return (
     <Body>
-      <Item style={styles.form}>
-        <Input style={styles.border}
+      <Item style={formStyles.form}>
+        <Input style={formStyles.border}
           {...otherProps}
         />
       </Item>
@@ -25,20 +25,7 @@ const FormTextInput = (props) => {
     </Body>
   );
 };
-const styles = StyleSheet.create({
-  border: {
-    borderColor: 'black',
-    backgroundColor: 'white',
-    borderRadius: 25,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    fontSize: 15,
-    marginTop: 5,
-  },
-  form: {
-    borderColor: 'transparent',
-  },
-});
+
 
 FormTextInput.propTypes = {
   success: PropTypes.bool,
