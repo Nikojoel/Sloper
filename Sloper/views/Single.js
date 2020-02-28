@@ -41,17 +41,20 @@ const Single = props => {
   const getComments = (id) => {
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
-    const token = AsyncStorage.getItem("userToken");
     const fetchComments = async (id) => {
       try {
+        const token = await AsyncStorage.getItem("userToken");
         const comments = await fetchAPI('GET', 'comments/file', id);
-        /*const result = await Promise.all(
+        await Promise.all(
           comments.map(async i => {
             const user = await fetchAPI('GET', 'users', i.user_id, token)
+            i.username = user.username;
+            return user
           })
-        )*/
+        )
         setComments(comments);
         setCommentsLoading(false);
+
       } catch (e) {
         console.log('comments loading error ', e)
       }
