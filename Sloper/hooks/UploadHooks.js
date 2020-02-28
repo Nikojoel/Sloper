@@ -53,11 +53,6 @@ const useUploadForm = () => {
       await uploadImage(formData, tag);
     } catch (e) {
       console.log("upload error", e);
-      setErrors((errors) =>
-        ({
-          ...errors,
-          fetch: e.message,
-        }));
     }
   };
 

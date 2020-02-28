@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   Container,
   Content,
@@ -10,7 +10,9 @@ import {
   Icon,
   Text,
   Button,
-
+  List,
+  ListItem,
+  Item,
 } from "native-base";
 import {
   fetchAPI,
@@ -18,7 +20,7 @@ import {
   isLiked,
   deletePost,
 } from '../hooks/APIHooks'
-import {ActivityIndicator, AsyncStorage} from 'react-native'
+import {ActivityIndicator, AsyncStorage, ListView} from 'react-native'
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
 import {Dimensions, StyleSheet} from "react-native";
@@ -41,35 +43,42 @@ const Single = props => {
     const [commentsLoading, setCommentsLoading] = useState(true);
     const fetchComments = async (id) => {
       try {
-      const result = await fetchAPI('GET', 'comments/file', id)
-      setComments(result);
-      setCommentsLoading(false);
+        const result = await fetchAPI('GET', 'comments/file', id);
+        setComments(result);
+        setCommentsLoading(false);
       } catch (e) {
         console.log('comments loading error ', e)
       }
     };
-    useEffect(()=> {
+    useEffect(() => {
       fetchComments(id)
     }, []);
     return [comments, commentsLoading];
-  }
+  };
   const [comments, commentsLoading] = getComments(file.file_id);
 
+  const commentList = comments.map(comment => {
+    return (
+    <ListItem key={comment.comment_id}>
+      <Text>{comment.comment}</Text>
+    </ListItem>);
+  });
 
   // TODO input fields for actual comment posting + listview to see comments
   const placeholderComment = {
     file_id: file.file_id,
-    comment: 'helvetin hieno kommentti'};
+    comment: 'helvetin hieno kommentti'
+  };
   const postComment = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const result = await fetchAPI('POST', 'comments', undefined, token, placeholderComment )
-      console.log('posting comment response' , await result);
+      const result = await fetchAPI('POST', 'comments', undefined, token, placeholderComment);
+      console.log('posting comment response', await result);
       console.log(comments)
     } catch (e) {
       console.log('posting comment error', e)
     }
-  }
+  };
 
   const getUser = async () => {
     try {
@@ -150,7 +159,7 @@ const Single = props => {
                   <Text>By {user.username}</Text>
                   {avail ? (
                     <MapView style={styles.map}
-                             region= {{
+                             region={{
                                latitude: exif.GPSLatitude,
                                longitude: exif.GPSLongitude,
                                latitudeDelta: 1,
@@ -179,6 +188,11 @@ const Single = props => {
                 <Text>postComment</Text>
               </Button>
             </CardItem>
+            <Item>
+              <List>
+                {commentList}
+              </List>
+            </Item>
             {owner === file.user_id &&
             <CardItem>
               <Button danger onPress={() => {
@@ -192,7 +206,6 @@ const Single = props => {
               }}>
                 <Text>UPDATE</Text>
               </Button>
-
             </CardItem>}
           </Card>
         </Content>
