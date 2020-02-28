@@ -135,8 +135,13 @@ const getAllUserMedia = () => {
       const result = await Promise.all(
         json.map(async item => {
           return await fetchAPI('GET', "media", item.file_id);
-        })
+      })
       );
+      const favs = await fetchAPI('GET', 'favourites', undefined, token);
+      const favFiles = await Promise.all(favs.map(async i => {
+        return await fetchAPI('GET', "media", i.file_id);
+      }))
+      result.favourites = favFiles
       setData(result);
       setLoading(false);
     } catch (e) {
