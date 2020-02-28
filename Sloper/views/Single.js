@@ -49,7 +49,7 @@ const Single = props => {
           comments.map(async i => {
             const user = await fetchAPI('GET', 'users', i.user_id, token)
             i.username = user.username;
-            return user
+
           })
         )
         setComments(comments);
