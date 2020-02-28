@@ -109,7 +109,8 @@ const getAllMedia = () => {
               rating += ratings[it].rating
             }
             file.favCount = favourites.length
-            file.rating = rating / (ratings.length + 1)
+            file.rating = rating / (ratings.length)
+            console.log(ratings.length)
             return await file
           })
       );
