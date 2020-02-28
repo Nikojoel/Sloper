@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {MediaProvider} from './contexts/MediaContext';
 import Navigator from './navigators/Navigator';
 import * as Expo from 'expo';

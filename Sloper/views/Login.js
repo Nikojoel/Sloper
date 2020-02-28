@@ -12,13 +12,14 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {AsyncStorage, Dimensions, StyleSheet,} from 'react-native';
+import {AsyncStorage, Dimensions, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {fetchAPI} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
-import {Video} from "expo-av";
+import {Video} from 'expo-av';
 import {loginConstraints} from '../constraints/Constraints';
+import {loginStyles} from "../styles/Style";
 
 
 const Login = (props) => {
@@ -50,7 +51,7 @@ const Login = (props) => {
 
   const signInAsync = async () => {
     try {
-      const user = await fetchAPI('POST', 'login', undefined,undefined,  inputs);
+      const user = await fetchAPI('POST', 'login', undefined, undefined, inputs);
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('user', JSON.stringify(user.user));
       props.navigation.navigate('App');
@@ -72,7 +73,7 @@ const Login = (props) => {
     try {
       const user = inputs;
       delete user.confirmPassword;
-      const result = await fetchAPI('POST', 'users',undefined,undefined, user);
+      const result = await fetchAPI('POST', 'users', undefined, undefined, user);
       signInAsync();
     } catch (e) {
       console.log('registerAsync error: ', e.message);
@@ -87,8 +88,8 @@ const Login = (props) => {
   return (
     <Container>
       <Video
-        source={require("../public/media/loginVideo.mp4")}
-        style={styles.backgroundVideo}
+        source={require('../public/media/loginVideo.mp4')}
+        style={loginStyles.backgroundVideo}
         rate={1.0}
         volume={1.0}
         isMuted={true}
@@ -96,16 +97,18 @@ const Login = (props) => {
         shouldPlay
         isLooping
         onError={(e) => {
-          console.log('video error', e)
+          console.log('video error', e);
         }}
       />
-      <Content style={styles.content}>
+      <Content style={loginStyles.content}>
         {toggleForm &&
         <Form>
-          <Title style={styles.title}>
-            Login
+          <Body>
+          <Title style={loginStyles.title}>
+            Tässä hieno ja sykähdyttävä teksti mut sen halusin sanoo et moro ja moro
           </Title>
-          <Item style={styles.form}>
+          </Body>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.username}
@@ -113,7 +116,7 @@ const Login = (props) => {
               onChangeText={handleUsernameChange}
             />
           </Item>
-          <Item style={styles.form}>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.password}
@@ -123,19 +126,19 @@ const Login = (props) => {
             />
           </Item>
           <Body>
-            <Button rounded onPress={signInAsync}><Text>Sign in</Text></Button>
-            <Text style={styles.buttonText} onPress={() => {
+            <Button style={loginStyles.signIn} rounded onPress={signInAsync}><Text>Sign in</Text></Button>
+            <Button style={loginStyles.buttonText} rounded onPress={() => {
               setToggleForm(false);
-            }}>Not registered? Create an account</Text>
+            }}><Text>Not registered? Create an account</Text></Button>
           </Body>
         </Form>
         }
         {!toggleForm &&
         <Form>
-          <Title style={styles.title}>
+          <Title style={loginStyles.title}>
             Register
           </Title>
-          <Item style={styles.form}>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.username}
@@ -148,7 +151,7 @@ const Login = (props) => {
               error={errors.username}
             />
           </Item>
-          <Item style={styles.form}>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.email}
@@ -160,7 +163,7 @@ const Login = (props) => {
               error={errors.email}
             />
           </Item>
-          <Item style={styles.form}>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.full_name}
@@ -172,7 +175,7 @@ const Login = (props) => {
               error={errors.full_name}
             />
           </Item>
-          <Item style={styles.form}>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.password}
@@ -185,7 +188,7 @@ const Login = (props) => {
               error={errors.password}
             />
           </Item>
-          <Item style={styles.form}>
+          <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'
               value={inputs.confirmPassword}
@@ -199,12 +202,12 @@ const Login = (props) => {
             />
           </Item>
           <Body>
-            <Button rounded onPress={registerAsync}>
+            <Button style={loginStyles.registerIn} rounded onPress={registerAsync}>
               <Text>Register</Text>
             </Button>
-            <Text style={styles.buttonText} onPress={() => {
+            <Button rounded style={loginStyles.buttonText} onPress={() => {
               setToggleForm(true);
-            }}>Already registered? Sign in here</Text>
+            }}><Text>Already registered? Sign in here</Text></Button>
           </Body>
         </Form>
         }
@@ -221,37 +224,6 @@ const Login = (props) => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundVideo: {
-    height: Dimensions.get("window").height,
-    width: Dimensions.get("window").width,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    alignItems: "stretch",
-    bottom: 0,
-    right: 0
-  },
-  content: {
-    top: "20%"
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 40,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginTop: 20,
-    textDecorationLine: 'underline'
-  },
-  form: {
-    borderColor: "transparent"
-  },
-
-});
 
 // proptypes here
 Login.propTypes = {

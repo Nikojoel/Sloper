@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Home = (props) => {
   const {navigation} = props;
   return (
-      <List navigation={navigation}/>
+    <List navigation={navigation}/>
   );
 };
 

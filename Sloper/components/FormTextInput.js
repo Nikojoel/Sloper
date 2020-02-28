@@ -4,16 +4,16 @@ import {
   Content,
   Badge,
   Item,
-  Text
+  Text,
+  Body,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import {Dimensions, StyleSheet} from 'react-native';
 
 const FormTextInput = (props) => {
-
   const {error, ...otherProps} = props;
   return (
-    <Content>
+    <Body>
       <Item style={styles.form}>
         <Input style={styles.border}
           {...otherProps}
@@ -22,7 +22,7 @@ const FormTextInput = (props) => {
       {error &&
       <Badge><Text>{error}</Text></Badge>
       }
-    </Content>
+    </Body>
   );
 };
 const styles = StyleSheet.create({
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   form: {
-    borderColor: "transparent",
-  }
+    borderColor: 'transparent',
+  },
 });
 
 FormTextInput.propTypes = {
