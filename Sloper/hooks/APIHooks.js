@@ -131,10 +131,10 @@ const getAllUserMedia = () => {
   const fetchMedia = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-      const json = await fetchAPI((endpoint = "media/user"), (token = token));
+      const json = await fetchAPI('GET', "media/user", undefined,token);
       const result = await Promise.all(
         json.map(async item => {
-          return await fetchAPI((endpoint = "media"), (params = item.file_id));
+          return await fetchAPI('GET', "media", item.file_id);
         })
       );
       setData(result);
