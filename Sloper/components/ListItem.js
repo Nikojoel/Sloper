@@ -9,6 +9,7 @@ import {
   Thumbnail,
   H3,
   Label,
+  Icon,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import nearbyCities from "nearby-big-cities";
@@ -20,6 +21,7 @@ const ListItem = (props) => {
   const allData = JSON.parse(props.singleMedia.description);
   const description = allData.description;
   const exif = allData.exif;
+  console.log(props.singleMedia);
 
   let temp = '';
   if (exif === undefined || exif.GPSLatitude === undefined || exif.GPSLatitude === null) {
@@ -42,12 +44,16 @@ const ListItem = (props) => {
           source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
         />
         {city &&
-        <Label>Taken near {city}</Label>
+        <Icon name="location">Taken near {city}</Icon>
         }
       </Left>
       <Body>
         <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
         <Text numberOfLines={1}>{description}</Text>
+        <Icon name="heart"/>
+        <Text>{props.singleMedia.favCount}</Text>
+        <Icon name="star"/>
+        <Text>{props.singleMedia.rating}</Text>
       </Body>
       <Right>
         <Button onPress={() => {
