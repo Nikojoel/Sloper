@@ -42,6 +42,7 @@ const Single = props => {
   const owner = navigation.state.params.user;
   const [user, setUser] = useState({});
   const {inputs, handleCommentChange} = useCommentForm();
+  const [star, setStar] = useState(0);
 
   const getComments = (id) => {
     const [comments, setComments] = useState([]);
@@ -66,6 +67,7 @@ const Single = props => {
             break;
           };
         }
+        setStar(comments.myRating);
         setComments(comments);
         setCommentsLoading(false);
 
@@ -156,7 +158,6 @@ const Single = props => {
 
   const [loading, setLoading] = useState(false);
   const [avail, setAvail] = useState(false);
-  const [star, setStar] = useState(0);
   const allData = JSON.parse(file.description);
   const exif = allData.exif;
   const description = allData.description;
@@ -168,7 +169,7 @@ const Single = props => {
       }, []);
     }
   }
-
+  console.log(comments.myRating);
   return (
     <Container>
       {!loading ? (

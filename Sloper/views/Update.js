@@ -30,16 +30,13 @@ const Update = (props) => {
               onChangeText={handleTitleChange}
               onEndEditing={() => validateInput("title", inputs.title)}
             />
-            <Label style={{color: "red"}}>{valid.title}</Label>
-          </Item>
+        </Item>
           <Item style={{borderColor: "transparent"}}>
-
             <FormTextInput
               value={inputs.postText}
               placeholder='New text'
               onChangeText={handleTextChange}
             />
-
           </Item>
           <Form>
             <Button warning onPress={async () => {
