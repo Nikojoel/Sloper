@@ -36,6 +36,18 @@ const MyFiles = (props) => {
         />}
       />
       ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
+      <Footer>
+        <FooterTab>
+          <Button vertical light>
+            <Icon name="person"/>
+            <Text>My Files</Text>
+          </Button>
+          <Button vertical light>
+            <Icon name="heart" />
+            <Text>My Favourites</Text>
+          </Button>
+        </FooterTab>
+      </Footer>
     </Container>
   );
 };
