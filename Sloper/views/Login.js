@@ -19,7 +19,7 @@ import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from 'expo-av';
 import {loginConstraints} from '../constraints/Constraints';
-import {loginStyles} from "../styles/Style";
+import {formStyles, loginStyles} from "../styles/Style";
 
 
 const Login = (props) => {
@@ -110,6 +110,7 @@ const Login = (props) => {
           </Body>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.username}
               placeholder='Username'
@@ -118,6 +119,7 @@ const Login = (props) => {
           </Item>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.password}
               placeholder='Password'
@@ -140,6 +142,7 @@ const Login = (props) => {
           </Text>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.username}
               placeholder='Username'
@@ -153,6 +156,7 @@ const Login = (props) => {
           </Item>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.email}
               placeholder='Email'
@@ -165,6 +169,7 @@ const Login = (props) => {
           </Item>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.full_name}
               placeholder='Full name'
@@ -177,6 +182,7 @@ const Login = (props) => {
           </Item>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.password}
               placeholder='Password'
@@ -190,6 +196,7 @@ const Login = (props) => {
           </Item>
           <Item style={loginStyles.form}>
             <FormTextInput
+              style={formStyles.border}
               autoCapitalize='none'
               value={inputs.confirmPassword}
               placeholder='Confirm password'

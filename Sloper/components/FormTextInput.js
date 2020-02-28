@@ -15,7 +15,7 @@ const FormTextInput = (props) => {
   return (
     <Body>
       <Item style={formStyles.form}>
-        <Input style={formStyles.border}
+        <Input
           {...otherProps}
         />
       </Item>
