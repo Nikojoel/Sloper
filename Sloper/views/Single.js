@@ -65,8 +65,12 @@ const Single = props => {
     return [comments, commentsLoading];
   };
   const [comments, commentsLoading] = getComments(file.file_id);
+  const [c, setC] = useState([]);
+  useEffect(()=> {
+    setC(comments);
+  },[commentsLoading])
 
-  const commentList = comments.map(comment => {
+  const commentList = c.map(comment => {
     return (
     <ListItem key={comment.comment_id}>
       <Text>{comment.comment}</Text>
@@ -83,12 +87,20 @@ const Single = props => {
       const token = await AsyncStorage.getItem('userToken');
       const result = await fetchAPI('POST', 'comments', undefined, token, placeholderComment);
       console.log('posting comment response', await result);
-      console.log(comments)
+      setC((c) => ([...c, {comment: placeholderComment.comment,
+                  comment_id: result.comment_id}
+      ]))
+
     } catch (e) {
       console.log('posting comment error', e)
     }
   };
-
+  /*setErrors((errors) =>
+  ({
+    ...errors,
+    [attr]: valResult,
+    fetch: undefined
+  }));*/
   const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
