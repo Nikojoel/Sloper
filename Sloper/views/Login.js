@@ -104,9 +104,9 @@ const Login = (props) => {
         {toggleForm &&
         <Form>
           <Body>
-          <Title style={loginStyles.title}>
+          <Text style={loginStyles.title}>
             Tässä hieno ja sykähdyttävä teksti mut sen halusin sanoo et moro ja moro
-          </Title>
+          </Text>
           </Body>
           <Item style={loginStyles.form}>
             <FormTextInput
@@ -135,9 +135,6 @@ const Login = (props) => {
         }
         {!toggleForm &&
         <Form>
-          <Title style={loginStyles.title}>
-            Register
-          </Title>
           <Item style={loginStyles.form}>
             <FormTextInput
               autoCapitalize='none'

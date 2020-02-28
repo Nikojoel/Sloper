@@ -15,8 +15,13 @@ const loginStyles = StyleSheet.create({
     top: '20%',
   },
   title: {
+    color: 'grey',
+    margin: 40,
+    fontSize: 30,
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 40,
+    textTransform: 'uppercase',
+    letterSpacing: 3,
   },
   buttonText: {
     color: 'white',
