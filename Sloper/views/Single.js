@@ -29,6 +29,7 @@ import {Dimensions, StyleSheet} from "react-native";
 import {Video} from "expo-av";
 import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
+import StarRating from 'react-native-star-rating';
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -155,6 +156,7 @@ const Single = props => {
 
   const [loading, setLoading] = useState(false);
   const [avail, setAvail] = useState(false);
+  const [star, setStar] = useState(0);
   const allData = JSON.parse(file.description);
   const exif = allData.exif;
   const description = allData.description;
@@ -171,6 +173,15 @@ const Single = props => {
     <Container>
       {!loading ? (
         <Content>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            rating={star}
+            selectedStar={(rating) => {
+              setStar(rating);
+              postRating(rating);
+            }}
+          />
           <Card>
             <CardItem>
               {file.media_type === "image" && (
@@ -254,13 +265,6 @@ const Single = props => {
                 {commentList}
               </List>
             </Item>
-            <Item>
-            <Button danger onPress={() => {
-               postRating(3)
-              }}>
-                <Text>rating</Text>
-              </Button>
-              </Item>
             {owner === file.user_id &&
             <CardItem>
               <Button danger onPress={() => {

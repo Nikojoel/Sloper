@@ -21,7 +21,6 @@ const ListItem = (props) => {
   const allData = JSON.parse(props.singleMedia.description);
   const description = allData.description;
   const exif = allData.exif;
-  console.log(props.singleMedia);
 
   let temp = '';
   if (exif === undefined || exif.GPSLatitude === undefined || exif.GPSLatitude === null) {
@@ -44,7 +43,7 @@ const ListItem = (props) => {
           source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
         />
         {city &&
-        <Icon name="location">Taken near {city}</Icon>
+        <Icon name="person">Taken near {city}</Icon>
         }
       </Left>
       <Body>

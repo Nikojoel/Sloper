@@ -48,7 +48,7 @@ const MyFiles = (props) => {
             user={user}
           />}
         />
-          <Footer>
+          <Footer >
             <FooterTab>
               <Button vertical light onPress={() => {
                 changeMedia();
