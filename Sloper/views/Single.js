@@ -58,9 +58,12 @@ const Single = props => {
             i.username = user.username;
           })
         );
-        for(i in rating) {
-          if(i.user_id === userParsed.user_id) comments.myRating = i.rating;
-          console.log('myrating is: ', myRating)
+
+        for(const x in rating) {
+          if(rating[x].user_id === userParsed.user_id) {
+            comments.myRating = rating[x].rating;
+            break;
+          };
         }
         setComments(comments);
         setCommentsLoading(false);
@@ -103,6 +106,27 @@ const Single = props => {
       console.log('posting comment error', e)
     }
   };
+
+  const postRating = async (rating) => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+       if(comments.myRating !== undefined) {
+        try {
+          await fetchAPI('DELETE','ratings/file', file.file_id, token);
+        } catch (e){
+          console.log('error deleting user rating', e)
+        }
+      }
+            const data = {
+        file_id: file.file_id,
+        rating: rating
+      }
+      const response = await fetchAPI('POST', 'ratings', undefined, token, data)
+      console.log('rating response', response)
+    } catch (e) {
+      console.log('posting rating error', e)
+    }
+  }
 
   const getUser = async () => {
     try {
@@ -230,6 +254,13 @@ const Single = props => {
                 {commentList}
               </List>
             </Item>
+            <Item>
+            <Button danger onPress={() => {
+               postRating(3)
+              }}>
+                <Text>rating</Text>
+              </Button>
+              </Item>
             {owner === file.user_id &&
             <CardItem>
               <Button danger onPress={() => {
