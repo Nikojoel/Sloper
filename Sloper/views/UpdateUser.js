@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -23,11 +23,13 @@ import useSignUpForm from '../hooks/LoginHooks'
 import * as ImagePicker from "expo-image-picker";
 import {fetchAPI, uploadImage} from '../hooks/APIHooks'
 import {updateConstraints} from '../constraints/Constraints'
+import { UserContext } from '../contexts/UserContext';
 
 
 const UpdateUser = ({navigation}) => {
 
-  const {userdata} = navigation.state.params
+  const [{user, token}, setUser] = useContext(UserContext);
+  //const {userdata} = navigation.state.params
   const { handleUpload } = useUploadForm();
   const {
     handleUsernameChange,
@@ -46,8 +48,8 @@ const UpdateUser = ({navigation}) => {
   } = useSignUpForm(updateConstraints);
   useEffect(()=> {
     setInputs({
-      username: userdata.username,
-      email: userdata.email
+      username: user.username,
+      email: user.email
     })
 
   },[])
@@ -82,15 +84,15 @@ const UpdateUser = ({navigation}) => {
       console.log('not valid');
       return;
     }
-    const token =  await AsyncStorage.getItem('userToken');
+    //const token =  await AsyncStorage.getItem('userToken');
     try {
-      const user = inputs;
+      const update = inputs;
       //delete user.confirmPassword;
       console.log('avatarpic', avatarPic)
       if (avatarPic != undefined) {
-      await handleUpload(avatarPic, null, 'sloper_avatar_' + userdata.user_id)
+      await handleUpload(avatarPic, null, 'sloper_avatar_' + user.user_id)
       }
-      await fetchAPI('PUT','users',undefined , token, user);
+      await fetchAPI('PUT','users',undefined , token, update);
       await AsyncStorage.clear()
       navigation.navigate('AuthLoading');
 
@@ -111,7 +113,7 @@ const UpdateUser = ({navigation}) => {
         <Item>
         <Label>Username:</Label>
         <Input
-          placeholder={userdata.username}
+          placeholder={user.username}
           onChangeText={handleUsernameChange}
           onEndEditing={() => validateField(validationProperties.username)}
 
@@ -120,7 +122,7 @@ const UpdateUser = ({navigation}) => {
         <Item>
         <Label>Email</Label>
         <Input
-          placeholder={userdata.email}
+          placeholder={user.email}
           onChangeText={handleEmailChange}
         />
         </Item>
