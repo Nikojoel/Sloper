@@ -56,9 +56,21 @@ const Login = (props) => {
       const user = await fetchAPI('POST', 'login', undefined, undefined, inputs);
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('user', JSON.stringify(user.user));
+      try {
+        const avatarPic = await fetchAPI('GET', 'tags', 'sloper_avatar_' + user.user.user_id);
+      let avPic = '';
+      if (avatarPic.length === 0) { // if avatar is not set
+        avPic = 'https://placekitten.com/1024/1024';
+      } else {
+        avPic = mediaURL + avatarPic[avatarPic.length -1].filename;
+      }
+      user.user.avPic = avPic;
+      } catch (e) {
+        console.log('setting profile picture error');
+      }
       await setUser(user);
 
-      await props.navigation.navigate('App');
+      props.navigation.navigate('App');
     } catch (e) {
       console.log('signInAsync error: ' + e.message);
       setErrors((errors) =>
