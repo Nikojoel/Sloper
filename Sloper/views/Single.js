@@ -54,12 +54,11 @@ const Single = props => {
   const { inputs, handleCommentChange } = useCommentForm();
   const [star, setStar] = useState(0);
 
-  const modifyContext = (context, file, data) => {
+  const modifyContext = async (context, file, data) => {
       const modifyData = file => ({
         ...file,
         ...data
       });
-
       const newData = [
         ...context.filter(i => i !== file),
         modifyData(file)
@@ -210,20 +209,20 @@ const Single = props => {
   };
 
   const putLike = async () => {
-    await postFavourite(file.file_id);
     if(liked !== undefined ) {
+      setLiked(undefined)
       const newData = {
        favCount: file.favCount - 1,
       };
-      modifyContext(media, file, newData);
-      setLiked(undefined)
+      await modifyContext(media, file, newData);
     } else {
+      setLiked(true);
       const newData = {
         favCount: file.favCount + 1,
        };
-       modifyContext(media, file, newData);
-      setLiked(true);
+       await modifyContext(media, file, newData);
     }
+    await postFavourite(file.file_id);
 
   };
 
