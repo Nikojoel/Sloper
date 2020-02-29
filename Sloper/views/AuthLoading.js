@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -6,13 +6,21 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { UserContext } from '../contexts/UserContext'
 
 const bootstrapAsync = async (props) => {
+  const [user, setUser] = useContext(UserContext);
   const getToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    props.navigation.navigate(userToken ? 'App' : 'Auth');
+    if(userToken) {
+        const userFromAsync = await AsyncStorage.getItem('user');
+        const user = await JSON.parse(userFromAsync);
+        await setUser(user);
+        await props.navigation.navigate('App');
+    } else {
+      props.navigation.navigate('Auth');
+    }
+
   };
   useEffect(() => {
     getToken();

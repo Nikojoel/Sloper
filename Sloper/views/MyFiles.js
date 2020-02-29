@@ -17,12 +17,9 @@ import { UserContext } from "../contexts/UserContext";
 
 
 const MyFiles = (props) => {
-  const [user, setUser] = useContext(UserContext);
-  const user_id = props.navigation.state.params.user.userdata.user_id;
+  const [{user}, setUser] = useContext(UserContext);
   const [media, setMedia] = useState({});
   const [data, loading] = getAllUserMedia();
-
-  console.log('my user', user);
 
   useEffect(() => {
     setMedia(data);
@@ -38,7 +35,7 @@ const MyFiles = (props) => {
           renderItem={({item}) => <ListItem
             navigation={props.navigation}
             singleMedia={item}
-            user={user_id}
+            user={user.user_id}
           />}
         />
           <Footer >

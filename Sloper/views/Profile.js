@@ -53,13 +53,13 @@ const Profile = (props) => {
           </CardItem>
           <CardItem footer bordered>
               <Button primary rounded onPress={() => {
-                props.navigation.navigate('MyFiles', {user: user})}}>
+                props.navigation.navigate('MyFiles')}}>
                 <Text>My posts</Text>
               </Button>
               <Button danger rounded onPress={signOutAsync}>
                 <Text>Logout</Text>
               </Button>
-              <Button primary rounded onPress={() => props.navigation.navigate('UpdateUser', user)}>
+              <Button primary rounded onPress={() => props.navigation.navigate('UpdateUser')}>
                 <Text>Edit</Text>
               </Button>
           </CardItem>
