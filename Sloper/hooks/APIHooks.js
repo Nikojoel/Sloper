@@ -99,7 +99,7 @@ const getAllMedia = () => {
       const result = await Promise.all(
         json
           .reverse()
-          .slice(0, 10)
+          .slice(0, 20)
           .map(async item => {
             const file = await fetchAPI("GET", "media", item.file_id);
             const favourites = await fetchAPI('GET', 'favourites/file', item.file_id);
@@ -110,7 +110,6 @@ const getAllMedia = () => {
             }
             file.favCount = favourites.length
             file.rating = rating / (ratings.length)
-            console.log(ratings.length)
             return await file
           })
       );

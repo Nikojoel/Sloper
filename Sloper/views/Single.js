@@ -22,7 +22,7 @@ import {
   isLiked,
   deletePost,
 } from '../hooks/APIHooks'
-import {ActivityIndicator, AsyncStorage, ListView} from 'react-native'
+import {ActivityIndicator, AsyncStorage, ListView, BackHandler} from 'react-native'
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
 import {Dimensions, StyleSheet} from "react-native";
@@ -30,20 +30,53 @@ import {Video} from "expo-av";
 import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
 import StarRating from 'react-native-star-rating';
+import {RefreshContext} from '../contexts/RefreshContext';
+import {MediaContext} from '../contexts/MediaContext';
 
 const deviceHeight = Dimensions.get("window").height;
 
 const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
 
+
 const Single = props => {
+  const [media, setMedia] = useContext(MediaContext);
   const [liked, setLiked] = useState();
   const {navigation} = props;
   const file = navigation.state.params.file;
   const owner = navigation.state.params.user;
+  const [refresh, setRefresh] = useContext(RefreshContext);
   const [user, setUser] = useState({});
   const {inputs, handleCommentChange} = useCommentForm();
 
+  const modifyContext = (context, file , data) => {
+    if([...context.filter(i => i === file)]){
+      const modifyData = (file) => ({
+        ...file,
+        ...data
+      })
+      console.log(file);
+      const newData = [...context.filter(i => i !== file), modifyData(file)]
+      setMedia(newData.sort((a,b)=> {return new Date(b.time_added) - new Date(a.time_added)}))
+     };
+  }
+
+
+
+  useEffect(()=> {
+    BackHandler.addEventListener("hardwareBackPress", reloadData);
+    return () => {
+    BackHandler.removeEventListener("hardwareBackPress", reloadData);
+    }
+
+  })
+
+  const reloadData = () => {
+    modifyContext(media, file, {favCount: file.favCount + 10});
+
+  }
+
   const getComments = (id) => {
+
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
     const fetchComments = async (id) => {

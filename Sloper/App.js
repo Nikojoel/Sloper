@@ -25,6 +25,7 @@ const App = () => {
   }
   return (
     <MediaProvider>
+
       <Navigator/>
     </MediaProvider>
   );
