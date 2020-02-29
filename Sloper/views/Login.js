@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Container,
   Body,
@@ -20,9 +20,11 @@ import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from 'expo-av';
 import {loginConstraints} from '../constraints/Constraints';
 import {formStyles, loginStyles} from "../styles/Style";
+import { UserContext } from "../contexts/UserContext";
 
 
 const Login = (props) => {
+  const [user, setUser] = useContext(UserContext);
   const [toggleForm, setToggleForm] = useState(true);
   const {
     handleUsernameChange,
@@ -54,7 +56,9 @@ const Login = (props) => {
       const user = await fetchAPI('POST', 'login', undefined, undefined, inputs);
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('user', JSON.stringify(user.user));
-      props.navigation.navigate('App');
+      await setUser(user);
+
+      await props.navigation.navigate('App');
     } catch (e) {
       console.log('signInAsync error: ' + e.message);
       setErrors((errors) =>

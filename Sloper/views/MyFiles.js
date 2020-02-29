@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   List as BaseList,
   Container,
@@ -13,11 +13,16 @@ import {
 import ListItem from '../components/ListItem';
 import {getAllUserMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
+import { UserContext } from "../contexts/UserContext";
+
 
 const MyFiles = (props) => {
-  const user = props.navigation.state.params.user.userdata.user_id;
+  const [user, setUser] = useContext(UserContext);
+  const user_id = props.navigation.state.params.user.userdata.user_id;
   const [media, setMedia] = useState({});
   const [data, loading] = getAllUserMedia();
+
+  console.log('my user', user);
 
   useEffect(() => {
     setMedia(data);
@@ -33,7 +38,7 @@ const MyFiles = (props) => {
           renderItem={({item}) => <ListItem
             navigation={props.navigation}
             singleMedia={item}
-            user={user}
+            user={user_id}
           />}
         />
           <Footer >

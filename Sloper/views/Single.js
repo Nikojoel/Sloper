@@ -53,18 +53,16 @@ const Single = props => {
   const [star, setStar] = useState(0);
 
   const modifyContext = async (context, file, data) => {
-      const modifyData = file => ({
-        ...file,
-        ...data
-      });
-      const newData = [
-        ...context.filter(i => i !== file),
-        modifyData(file)
-      ].sort((a, b) => {
+    const modifyData = file => ({
+      ...file,
+      ...data
+    });
+    const newData = [...context.filter(i => i !== file), modifyData(file)].sort(
+      (a, b) => {
         return new Date(b.time_added) - new Date(a.time_added);
-      });
-      setMedia(newData);
-
+      }
+    );
+    setMedia(newData);
   };
 
   useEffect(() => {
@@ -79,8 +77,8 @@ const Single = props => {
       favCount: file.favCount + 1,
       ratingTot: file.rating + 5,
       ratingNum: file.ratingNum + 1,
-      rating: (file.ratingTot + 5)  / (file.ratingNum + 1)
-    }
+      rating: (file.ratingTot + 5) / (file.ratingNum + 1)
+    };
     modifyContext(media, file, newData);
   };
 
@@ -152,7 +150,6 @@ const Single = props => {
           username: userParsed.username
         }
       ]);
-
     } catch (e) {
       console.log("posting comment error", e);
     }
@@ -182,9 +179,9 @@ const Single = props => {
       const newRating = {
         ratingTot: file.rating + rating,
         ratingNum: file.ratingNum + 1,
-        rating: (file.ratingTot + rating)  / (file.ratingNum + 1)
-      }
-      modifyContext(media, file, newRating)
+        rating: (file.ratingTot + rating) / (file.ratingNum + 1)
+      };
+      modifyContext(media, file, newRating);
       console.log("rating response", response);
     } catch (e) {
       console.log("posting rating error", e);
@@ -207,21 +204,20 @@ const Single = props => {
   };
 
   const putLike = async () => {
-    if(liked !== undefined ) {
-      setLiked(undefined)
+    if (liked !== undefined) {
+      setLiked(undefined);
       const newData = {
-       favCount: file.favCount - 1,
+        favCount: file.favCount - 1
       };
       await modifyContext(media, file, newData);
     } else {
       setLiked(true);
       const newData = {
-        favCount: file.favCount + 1,
-       };
-       await modifyContext(media, file, newData);
+        favCount: file.favCount + 1
+      };
+      await modifyContext(media, file, newData);
     }
     await postFavourite(file.file_id);
-
   };
 
   useEffect(() => {
@@ -355,8 +351,10 @@ const Single = props => {
                   danger
                   onPress={() => {
                     deletePost(file.file_id);
-                    setMedia([...media.filter(i => i.file_id !== file.file_id)])
-                    props.navigation.navigate('Home');
+                    setMedia([
+                      ...media.filter(i => i.file_id !== file.file_id)
+                    ]);
+                    props.navigation.navigate("Home");
                   }}
                 >
                   <Text>DELETE</Text>
