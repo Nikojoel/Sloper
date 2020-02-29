@@ -2,13 +2,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Container, Item, List as BaseList, Spinner,} from 'native-base';
 import ListItem from './ListItem';
 import {MediaContext} from '../contexts/MediaContext';
-import {RefreshContext} from '../contexts/RefreshContext';
 import {getAllMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
 
 const List = (props) => {
   const [media, setMedia] = useContext(MediaContext);
-  const [refresh, setRefresh] = useContext(RefreshContext);
   let [data, loading] = getAllMedia();
   useEffect(() => {
     const sortedData = [...data].sort()
@@ -21,7 +19,6 @@ const List = (props) => {
       {!loading ? (
         <BaseList
           dataArray={media}
-          removeClippedSubviews={true}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => <ListItem
             navigation={props.navigation}

@@ -36,7 +36,6 @@ import { Video } from "expo-av";
 import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
 import StarRating from "react-native-star-rating";
-import { RefreshContext } from "../contexts/RefreshContext";
 import { MediaContext } from "../contexts/MediaContext";
 
 const deviceHeight = Dimensions.get("window").height;
@@ -49,7 +48,6 @@ const Single = props => {
   const { navigation } = props;
   const file = navigation.state.params.file;
   const owner = navigation.state.params.user;
-  const [refresh, setRefresh] = useContext(RefreshContext);
   const [user, setUser] = useState({});
   const { inputs, handleCommentChange } = useCommentForm();
   const [star, setStar] = useState(0);
@@ -357,6 +355,8 @@ const Single = props => {
                   danger
                   onPress={() => {
                     deletePost(file.file_id);
+                    setMedia([...media.filter(i => i.file_id !== file.file_id)])
+                    props.navigation.replace('MyFiles');
                   }}
                 >
                   <Text>DELETE</Text>
