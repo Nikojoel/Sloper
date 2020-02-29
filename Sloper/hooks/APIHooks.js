@@ -111,9 +111,11 @@ const getAllMedia = () => {
             for(it in ratings) {
               rating += ratings[it].rating
             }
-            file.favCount = favourites.length
-            file.rating = rating / (ratings.length)
-            return await file
+            file.favCount = favourites.length;
+            file.ratingTot = rating;
+            file.ratingNum = ratings.length;
+            file.rating = rating / (ratings.length);
+            return await file;
           })
       );
       setData(result);

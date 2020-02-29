@@ -5,13 +5,11 @@ const MediaContext = React.createContext([{}, () => {}]);
 
 const mediaArray = [];
 
-
-
 const MediaProvider = (props) => {
 
   const [media, setMedia] = useState(mediaArray);
 
-    return (
+  return (
     <MediaContext.Provider value={[media, setMedia]}>
       {props.children}
     </MediaContext.Provider>
