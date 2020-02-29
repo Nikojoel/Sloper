@@ -52,7 +52,11 @@ const ListItem = (props) => {
         <Icon name="heart"/>
         <Text>{props.singleMedia.favCount}</Text>
         <Icon name="star"/>
-        <Text>{props.singleMedia.rating}</Text>
+        {isNaN(props.singleMedia.rating) ? (
+          <Text>0</Text>
+        ) : (
+          <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
+        )}
       </Body>
       <Right>
         <Button onPress={() => {

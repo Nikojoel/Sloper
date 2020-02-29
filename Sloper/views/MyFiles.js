@@ -18,22 +18,10 @@ const MyFiles = (props) => {
   const user = props.navigation.state.params.user.userdata.user_id;
   const [media, setMedia] = useState({});
   const [data, loading] = getAllUserMedia();
-  const [toggle, setToggle] = useState({});
 
   useEffect(() => {
     setMedia(data);
-    setToggle(true);
   }, [loading]);
-
-  const changeMedia = () => {
-    if (!toggle) {
-      setMedia(data);
-      setToggle(true);
-    } else {
-      setMedia(data.favourites);
-      setToggle(false);
-    }
-  };
 
   return (
     <Container>
@@ -51,13 +39,13 @@ const MyFiles = (props) => {
           <Footer >
             <FooterTab>
               <Button vertical light onPress={() => {
-                changeMedia();
+                setMedia(data);
               }}>
                 <Icon name="person"/>
                 <Text>My Files</Text>
               </Button>
               <Button vertical light onPress={() => {
-                changeMedia();
+                setMedia(data.favourites);
               }}>
                 <Icon name="heart"/>
                 <Text>My Favourites</Text>

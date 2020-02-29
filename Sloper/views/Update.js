@@ -8,7 +8,6 @@ import {updatePost} from "../hooks/APIHooks";
 const Update = (props) => {
   const {
     inputs,
-    valid,
     handleTextChange,
     handleTitleChange,
     validateInput,
@@ -19,7 +18,7 @@ const Update = (props) => {
     setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
   },[]);
 
-
+  console.log(props.navigation.state);
   return (
     <Container>
         <Form>
@@ -30,16 +29,13 @@ const Update = (props) => {
               onChangeText={handleTitleChange}
               onEndEditing={() => validateInput("title", inputs.title)}
             />
-            <Label style={{color: "red"}}>{valid.title}</Label>
-          </Item>
+        </Item>
           <Item style={{borderColor: "transparent"}}>
-
             <FormTextInput
               value={inputs.postText}
               placeholder='New text'
               onChangeText={handleTextChange}
             />
-
           </Item>
           <Form>
             <Button warning onPress={async () => {

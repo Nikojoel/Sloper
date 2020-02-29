@@ -47,6 +47,7 @@ const deletePost = async id => {
 };
 
 const updatePost = async data => {
+  /*
   let formBody = [];
   for (let property in data.data) {
     let encodedKey = encodeURIComponent(property);
@@ -54,9 +55,11 @@ const updatePost = async data => {
     formBody.push(encodedKey + "=" + encodedValue);
   }
   formBody = formBody.join("&");
+
+   */
   try {
     const token = await AsyncStorage.getItem("userToken");
-    const result = await fetchAPI('PUT',"media", data.file_id, token, formBody);
+    const result = await fetchAPI('PUT',"media", data.file_id, token, data);
   } catch (e) {
     console.log("update post error", e);
   }
