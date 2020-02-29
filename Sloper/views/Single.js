@@ -356,7 +356,7 @@ const Single = props => {
                   onPress={() => {
                     deletePost(file.file_id);
                     setMedia([...media.filter(i => i.file_id !== file.file_id)])
-                    props.navigation.replace('MyFiles');
+                    props.navigation.navigate('Home');
                   }}
                 >
                   <Text>DELETE</Text>
