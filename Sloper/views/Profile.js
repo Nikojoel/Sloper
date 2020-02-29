@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Container,
   Content,
@@ -11,43 +11,14 @@ import {
 } from 'native-base';
 import { AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
-import { fetchAPI } from '../hooks/APIHooks';
 import AsyncImage from '../components/AsyncImage';
 import { Dimensions } from 'react-native';
+import { UserContext} from '../contexts/UserContext';
 
 const deviceHeight = Dimensions.get('window').height;
 
-const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
-
 const Profile = (props) => {
-  const [user, setUser] = useState({
-    userdata: {},
-    avatar: 'https://',
-  });
-  const userToState = async () => {
-    try {
-      const userFromStorage = await AsyncStorage.getItem('user');
-      const uData = JSON.parse(userFromStorage);
-      const avatarPic = await fetchAPI('GET', 'tags', 'sloper_avatar_' + uData.user_id);
-      let avPic = '';
-      if (avatarPic.length === 0) { // if avatar is not set
-        avPic = 'https://placekitten.com/1024/1024';
-      } else {
-        avPic = mediaURL + avatarPic[avatarPic.length -1].filename;
-      }
-      setUser((user) => (
-        {
-          userdata: uData,
-          avatar: avPic,
-        }));
-    } catch (e) {
-      console.log('Profile error: ', e.message);
-    }
-  };
-
-  useEffect(() => {
-    userToState();
-  }, []);
+  const [{user}, setUser] = useContext(UserContext);
 
   const signOutAsync = async () => {
     await AsyncStorage.clear();
@@ -60,7 +31,7 @@ const Profile = (props) => {
         <Card>
           <CardItem header bordered>
             <Icon name='person'/>
-            <Text>Username: {user.userdata.username}</Text>
+            <Text>Username: {user.username}</Text>
           </CardItem>
           <CardItem>
             <Body>
@@ -76,8 +47,8 @@ const Profile = (props) => {
           </CardItem>
           <CardItem>
             <Body>
-              <Text>Fullname: {user.userdata.full_name}</Text>
-              <Text numberOfLines={1}>email: {user.userdata.email}</Text>
+              <Text>Fullname: {user.full_name}</Text>
+              <Text numberOfLines={1}>email: {user.email}</Text>
             </Body>
           </CardItem>
           <CardItem footer bordered>
