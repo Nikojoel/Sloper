@@ -43,7 +43,8 @@ const ListItem = (props) => {
           source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
         />
         {city &&
-        <Icon name="person">Taken near {city}</Icon>
+        <Text>Taken near {city}</Text>
+
         }
       </Left>
       <Body>

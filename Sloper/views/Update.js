@@ -18,7 +18,6 @@ const Update = (props) => {
     setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
   },[]);
 
-  console.log(props.navigation.state);
   return (
     <Container>
         <Form>
@@ -39,12 +38,9 @@ const Update = (props) => {
           </Item>
           <Form>
             <Button warning onPress={async () => {
-              await updatePost({
-                file_id: props.navigation.state.params.file_id,
-                data: {
+              await updatePost(props.navigation.state.params, {
                   title: inputs.title,
                   description: inputs.postText,
-                }
               });
               props.navigation.navigate("MyFiles", props.navigation.state.params.user_id);
             }}>

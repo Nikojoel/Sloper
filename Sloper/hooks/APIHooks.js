@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+import {useState, useEffect} from "react";
+import {AsyncStorage} from "react-native";
 
 const apiUrl = "http://media.mw.metropolia.fi/wbma/";
 
@@ -20,9 +20,11 @@ const fetchAPI = async (
     }
   };
   if (method != "GET") {
-    if(type != "multipart/form-data"){
-    options.body = JSON.stringify(data);
-    } else { options.body = data}
+    if (type != "multipart/form-data") {
+      options.body = JSON.stringify(data);
+    } else {
+      options.body = data
+    }
 
   }
 
@@ -46,20 +48,42 @@ const deletePost = async id => {
   }
 };
 
-const updatePost = async data => {
-  /*
+const updatePost = async (data, newData) => {
+  console.log("data", data);
+  const descData = JSON.parse(data.description);
+  descData.description = newData.description;
+  const descriptionData = {
+    description: descData.description,
+    exif: descData.exif,
+  };
+  console.log("descdata", descData);
+  const formData = data;
+  formData.title = newData.title;
+  formData.description = JSON.stringify(descriptionData);
+  console.log("formdata", formData);
+
   let formBody = [];
-  for (let property in data.data) {
+  const encode = {
+    title: formData.title,
+    description: formData.description,
+  };
+  for (let property in encode) {
     let encodedKey = encodeURIComponent(property);
-    let encodedValue = encodeURIComponent(data.data[property]);
+    let encodedValue = encodeURIComponent(encode[property]);
     formBody.push(encodedKey + "=" + encodedValue);
   }
   formBody = formBody.join("&");
-
-   */
+  console.log(formBody);
   try {
     const token = await AsyncStorage.getItem("userToken");
-    const result = await fetchAPI('PUT',"media", data.file_id, token, data);
+    const result = await fetch(apiUrl + "media/" + data.file_id, {
+      method: "PUT",
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formBody,
+    });
   } catch (e) {
     console.log("update post error", e);
   }
@@ -80,13 +104,13 @@ const postFavourite = async file_id => {
   const token = await AsyncStorage.getItem("userToken");
   if ((await isLiked(file_id)) === undefined) {
     try {
-      await fetchAPI('POST', 'favourites', undefined , token, { file_id: file_id });
+      await fetchAPI('POST', 'favourites', undefined, token, {file_id: file_id});
     } catch (e) {
       console.log(e.message);
     }
   } else {
     try {
-      await fetchAPI('DELETE',"favourites/file", file_id, token);
+      await fetchAPI('DELETE', "favourites/file", file_id, token);
     } catch (e) {
       console.log(e.message);
     }
@@ -108,7 +132,7 @@ const getAllMedia = () => {
             const favourites = await fetchAPI('GET', 'favourites/file', item.file_id);
             const ratings = await fetchAPI('GET', 'ratings/file', item.file_id)
             let rating = 0.0
-            for(it in ratings) {
+            for (it in ratings) {
               rating += ratings[it].rating
             }
             file.favCount = favourites.length;
@@ -136,11 +160,11 @@ const getAllUserMedia = () => {
   const fetchMedia = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-      const json = await fetchAPI('GET', "media/user", undefined,token);
+      const json = await fetchAPI('GET', "media/user", undefined, token);
       const result = await Promise.all(
         json.map(async item => {
           return await fetchAPI('GET', "media", item.file_id);
-      })
+        })
       );
       const favs = await fetchAPI('GET', 'favourites', undefined, token);
       const favFiles = await Promise.all(favs.map(async i => {
