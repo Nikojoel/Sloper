@@ -48,8 +48,6 @@ const Single = props => {
   const [liked, setLiked] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  //const [{user}, setUser] = useContext(UserContext);
-  const owner = navigation.state.params.user;
   const [user, setUser] = useState({});
   const { inputs, handleCommentChange } = useCommentForm();
   const [star, setStar] = useState(0);
@@ -286,7 +284,7 @@ const Single = props => {
                 <Body>
                   <H3>{file.title}</H3>
                   <Text>{description}</Text>
-                  <Text>By {owner}</Text>
+                  <Text>By {user.username}</Text>
                   {avail ? (
                     <MapView
                       style={styles.map}
