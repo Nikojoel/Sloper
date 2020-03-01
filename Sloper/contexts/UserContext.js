@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-const UserContext = React.createContext()
+const UserContext = React.createContext();
 
-const UserProvider = (props) => {
-
+const UserProvider = props => {
   const [user, setUser] = useState();
 
   return (
@@ -15,10 +14,7 @@ const UserProvider = (props) => {
 };
 
 UserContext.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
-export {
-  UserContext,
-  UserProvider
-};
+export { UserContext, UserProvider };
