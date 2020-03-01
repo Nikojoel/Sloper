@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react";
-import {AsyncStorage} from "react-native";
+import { useState, useEffect } from "react";
+import { AsyncStorage } from "react-native";
 
 const apiUrl = "http://media.mw.metropolia.fi/wbma/";
 
@@ -23,9 +23,8 @@ const fetchAPI = async (
     if (type != "multipart/form-data") {
       options.body = JSON.stringify(data);
     } else {
-      options.body = data
+      options.body = data;
     }
-
   }
 
   const response = await fetch(apiUrl + endpoint + "/" + params, options);
@@ -42,21 +41,36 @@ const fetchAPI = async (
 const deletePost = async id => {
   try {
     const token = await AsyncStorage.getItem("userToken");
-    const result = fetchAPI('DELETE', "media", id, token);
+    const result = fetchAPI("DELETE", "media", id, token);
   } catch (e) {
     console.log(e);
   }
 };
 
 const updatePost = async (data, newData) => {
-  const descData = JSON.parse(data.description);
-  descData.description = newData.description;
-  const descriptionData = {
-    description: descData.description,
-    exif: descData.exif,
+  const descData = await JSON.parse(data.description);
+  const description = {
+    description: newData.description,
+    exif: descData.exif
   };
-
-  const formData = data;
+  const updateData = {
+    title: newData.title,
+    description: JSON.stringify(description)
+  };
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+    const result = await fetchAPI(
+      "PUT",
+      "media",
+      data.file_id,
+      token,
+      updateData
+    );
+    console.log(result);
+  } catch (e) {
+    console.log("update file error", e);
+  }
+  /*const formData = data;
   formData.title = newData.title;
   formData.description = JSON.stringify(descriptionData);
 
@@ -85,7 +99,7 @@ const updatePost = async (data, newData) => {
     });
   } catch (e) {
     console.log("update post error", e);
-  }
+  }*/
 };
 
 const isLiked = async file_id => {
@@ -103,13 +117,15 @@ const postFavourite = async file_id => {
   const token = await AsyncStorage.getItem("userToken");
   if ((await isLiked(file_id)) === undefined) {
     try {
-      await fetchAPI('POST', 'favourites', undefined, token, {file_id: file_id});
+      await fetchAPI("POST", "favourites", undefined, token, {
+        file_id: file_id
+      });
     } catch (e) {
       console.log(e.message);
     }
   } else {
     try {
-      await fetchAPI('DELETE', "favourites/file", file_id, token);
+      await fetchAPI("DELETE", "favourites/file", file_id, token);
     } catch (e) {
       console.log(e.message);
     }
@@ -128,16 +144,20 @@ const getAllMedia = () => {
           .slice(0, 20)
           .map(async item => {
             const file = await fetchAPI("GET", "media", item.file_id);
-            const favourites = await fetchAPI('GET', 'favourites/file', item.file_id);
-            const ratings = await fetchAPI('GET', 'ratings/file', item.file_id)
-            let rating = 0.0
+            const favourites = await fetchAPI(
+              "GET",
+              "favourites/file",
+              item.file_id
+            );
+            const ratings = await fetchAPI("GET", "ratings/file", item.file_id);
+            let rating = 0.0;
             for (it in ratings) {
-              rating += ratings[it].rating
+              rating += ratings[it].rating;
             }
             file.favCount = favourites.length;
             file.ratingTot = rating;
             file.ratingNum = ratings.length;
-            file.rating = rating / (ratings.length);
+            file.rating = rating / ratings.length;
             return await file;
           })
       );
@@ -159,17 +179,19 @@ const getAllUserMedia = () => {
   const fetchMedia = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-      const json = await fetchAPI('GET', "media/user", undefined, token);
+      const json = await fetchAPI("GET", "media/user", undefined, token);
       const result = await Promise.all(
         json.map(async item => {
-          return await fetchAPI('GET', "media", item.file_id);
+          return await fetchAPI("GET", "media", item.file_id);
         })
       );
-      const favs = await fetchAPI('GET', 'favourites', undefined, token);
-      const favFiles = await Promise.all(favs.map(async i => {
-        return await fetchAPI('GET', "media", i.file_id);
-      }))
-      result.favourites = favFiles
+      const favs = await fetchAPI("GET", "favourites", undefined, token);
+      const favFiles = await Promise.all(
+        favs.map(async i => {
+          return await fetchAPI("GET", "media", i.file_id);
+        })
+      );
+      result.favourites = favFiles;
       setData(result);
       setLoading(false);
     } catch (e) {
@@ -185,13 +207,20 @@ const getAllUserMedia = () => {
 const uploadImage = async (data, tag) => {
   const token = await AsyncStorage.getItem("userToken");
   try {
-    const response = await fetchAPI('POST', 'media', undefined, token, data, 'form')
+    const response = await fetchAPI(
+      "POST",
+      "media",
+      undefined,
+      token,
+      data,
+      "form"
+    );
     const fileid = {
       file_id: response.file_id,
       tag: tag
     };
     try {
-      await fetchAPI('POST', "tags", undefined, token, fileid);
+      await fetchAPI("POST", "tags", undefined, token, fileid);
     } catch (e) {
       console.log("error in image tag", e.message);
     }
