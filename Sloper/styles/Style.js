@@ -1,9 +1,12 @@
 import {Dimensions, StyleSheet} from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const loginStyles = StyleSheet.create({
   backgroundVideo: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    height: windowHeight,
+    width: windowWidth,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -58,5 +61,12 @@ const formStyles = StyleSheet.create({
   },
 });
 
-export {loginStyles, formStyles};
+const listStyles = StyleSheet.create({
+  asyncImage: {
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.4,
+  },
+});
+
+export {loginStyles, formStyles, listStyles};
 

@@ -12,7 +12,10 @@ import {
   Icon,
 } from 'native-base';
 import PropTypes from 'prop-types';
-import nearbyCities from "nearby-big-cities";
+import nearbyCities from 'nearby-big-cities';
+import AsyncImage from '../components/AsyncImage';
+import {TouchableOpacity} from 'react-native';
+import {listStyles} from '../styles/Style';
 
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -36,17 +39,21 @@ const ListItem = (props) => {
   }, []);
 
   return (
-    <BaseListItem thumbnail>
-      <Left>
-        <Thumbnail
-          square
-          source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
-        />
+    <BaseListItem>
+      <Body>
+        <TouchableOpacity onPress={() => {
+          props.navigation.push('Single', {file: props.singleMedia, user: props.user});
+        }
+        }>
+          <Body>
+            <AsyncImage style={listStyles.asyncImage}
+                        source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
+            />
+          </Body>
+        </TouchableOpacity>
         {city &&
         <Icon name="person">Taken near {city}</Icon>
         }
-      </Left>
-      <Body>
         <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
         <Text numberOfLines={1}>{description}</Text>
         <Icon name="heart"/>
@@ -58,14 +65,6 @@ const ListItem = (props) => {
           <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
         )}
       </Body>
-      <Right>
-        <Button onPress={() => {
-          props.navigation.push('Single', {file: props.singleMedia, user: props.user});
-        }
-        }>
-          <Text>View</Text>
-        </Button>
-      </Right>
     </BaseListItem>
   );
 };
