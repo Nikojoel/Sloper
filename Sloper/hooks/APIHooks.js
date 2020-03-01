@@ -107,7 +107,7 @@ const isLiked = async file_id => {
     const arr = await fetchAPI("GET", "favourites/file", file_id);
     const userFromStorage = await AsyncStorage.getItem("user");
     const user = JSON.parse(userFromStorage);
-    return arr.find(it => it.user_id === user.user_id);
+    return arr.find(it => it.user_id === user.user.user_id);
   } catch (e) {
     console.log(e.message);
   }
@@ -121,13 +121,13 @@ const postFavourite = async file_id => {
         file_id: file_id
       });
     } catch (e) {
-      console.log(e.message);
+      console.log('post fav',e.message);
     }
   } else {
     try {
       await fetchAPI("DELETE", "favourites/file", file_id, token);
     } catch (e) {
-      console.log(e.message);
+      console.log('del fav',  e.message);
     }
   }
 };

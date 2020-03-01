@@ -48,9 +48,9 @@ const Single = props => {
   const [liked, setLiked] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  const [{user}, setUser] = useContext(UserContext);
-  //const owner = navigation.state.params.user;
-  //const [user, setUser] = useState({});
+  //const [{user}, setUser] = useContext(UserContext);
+  const owner = navigation.state.params.user;
+  const [user, setUser] = useState({});
   const { inputs, handleCommentChange } = useCommentForm();
   const [star, setStar] = useState(0);
 
@@ -190,7 +190,7 @@ const Single = props => {
     }
   };
 
-  /*const getUser = async () => {
+  const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
       const user = await fetchAPI("GET", "users", file.user_id, token);
@@ -198,7 +198,7 @@ const Single = props => {
     } catch (e) {
       console.log(e);
     }
-  };*/
+  };
 
   const checkLicked = async () => {
     const status = await isLiked(file.file_id);
@@ -223,6 +223,7 @@ const Single = props => {
   };
 
   useEffect(() => {
+    getUser();
      checkLicked();
   }, []);
 
@@ -285,7 +286,7 @@ const Single = props => {
                 <Body>
                   <H3>{file.title}</H3>
                   <Text>{description}</Text>
-                  <Text>By {user.username}</Text>
+                  <Text>By {owner}</Text>
                   {avail ? (
                     <MapView
                       style={styles.map}
