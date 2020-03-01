@@ -65,12 +65,12 @@ const Single = props => {
     setMedia(newData);
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", reloadData);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", reloadData);
     };
-  });
+  });*/
 
   const reloadData = () => {
     const newData = {
