@@ -37,6 +37,7 @@ import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
 import StarRating from "react-native-star-rating";
 import { MediaContext } from "../contexts/MediaContext";
+import { UserContext } from "../contexts/UserContext";
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -47,8 +48,9 @@ const Single = props => {
   const [liked, setLiked] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  const owner = navigation.state.params.user;
-  const [user, setUser] = useState({});
+  const [{user}, setUser] = useContext(UserContext);
+  //const owner = navigation.state.params.user;
+  //const [user, setUser] = useState({});
   const { inputs, handleCommentChange } = useCommentForm();
   const [star, setStar] = useState(0);
 
@@ -221,7 +223,7 @@ const Single = props => {
   };
 
   useEffect(() => {
-    getUser();
+    //getUser();
     checkLicked();
   }, []);
 
@@ -345,7 +347,7 @@ const Single = props => {
               <H3>Comments</H3>
               <List>{commentList}</List>
             </Item>
-            {owner === file.user_id && (
+            {user.user_id === file.user_id && (
               <CardItem>
                 <Button
                   danger
