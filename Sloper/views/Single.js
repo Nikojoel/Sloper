@@ -190,7 +190,7 @@ const Single = props => {
     }
   };
 
-  const getUser = async () => {
+  /*const getUser = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
       const user = await fetchAPI("GET", "users", file.user_id, token);
@@ -198,7 +198,7 @@ const Single = props => {
     } catch (e) {
       console.log(e);
     }
-  };
+  };*/
 
   const checkLicked = async () => {
     const status = await isLiked(file.file_id);
@@ -223,8 +223,7 @@ const Single = props => {
   };
 
   useEffect(() => {
-    //getUser();
-    checkLicked();
+     checkLicked();
   }, []);
 
   const [loading, setLoading] = useState(false);
