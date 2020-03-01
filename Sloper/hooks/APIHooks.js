@@ -49,31 +49,30 @@ const deletePost = async id => {
 };
 
 const updatePost = async (data, newData) => {
-  console.log("data", data);
   const descData = JSON.parse(data.description);
   descData.description = newData.description;
   const descriptionData = {
     description: descData.description,
     exif: descData.exif,
   };
-  console.log("descdata", descData);
+
   const formData = data;
   formData.title = newData.title;
   formData.description = JSON.stringify(descriptionData);
-  console.log("formdata", formData);
 
   let formBody = [];
   const encode = {
     title: formData.title,
     description: formData.description,
   };
+
   for (let property in encode) {
     let encodedKey = encodeURIComponent(property);
     let encodedValue = encodeURIComponent(encode[property]);
     formBody.push(encodedKey + "=" + encodedValue);
   }
   formBody = formBody.join("&");
-  console.log(formBody);
+
   try {
     const token = await AsyncStorage.getItem("userToken");
     const result = await fetch(apiUrl + "media/" + data.file_id, {

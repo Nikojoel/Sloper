@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
-import {Text, Button, Form, Body, Item, Container, Label, Right, } from "native-base";
-import {Image, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
+import {Text, Button, Form, Body, Item, Container,} from "native-base";
+import {Image, Dimensions, StyleSheet,} from 'react-native';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
 import {updatePost} from "../hooks/APIHooks";
