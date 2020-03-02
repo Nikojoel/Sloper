@@ -81,7 +81,6 @@ const getAllMedia = () => {
       const result = await Promise.all(
         json
           .reverse()
-          .slice(0, 20)
           .map(async item => {
             const file = await fetchAPI("GET", "media", item.file_id);
             const favourites = await fetchAPI(
@@ -169,13 +168,14 @@ const uploadImage = async (data, tag) => {
   }
 };
 
+
 export {
   getAllMedia,
   uploadImage,
   getAllUserMedia,
   deletePost,
   updatePost,
-  fetchAPI
+  fetchAPI,
 };
 
 /* END OF FILE */

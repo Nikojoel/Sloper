@@ -9,11 +9,14 @@ import {
   Button,
   FooterTab,
   H3,
+  Tab,
+  Tabs,
+  TabHeading,
 } from 'native-base';
 import ListItem from '../components/ListItem';
 import {getAllUserMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
-import { UserContext } from "../contexts/UserContext";
+import {UserContext} from "../contexts/UserContext";
 
 
 const MyFiles = (props) => {
@@ -29,30 +32,37 @@ const MyFiles = (props) => {
     <Container>
       {!loading ? (
         <Container>
-        <BaseList
-          dataArray={media}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => <ListItem
-            navigation={props.navigation}
-            singleMedia={item}
-            user={user.user_id}
-          />}
-        />
-          <Footer >
-            <FooterTab>
-              <Button vertical light onPress={() => {
+          <BaseList
+            dataArray={media}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item}) => <ListItem
+              navigation={props.navigation}
+              singleMedia={item}
+              user={user.user_id}
+            />}
+          />
+          <Footer>
+            <Footer hasTabs/>
+            <Tabs onChangeTab={(from) => {
+              if (from.i === 0) {
                 setMedia(data);
-              }}>
-                <Icon name="person"/>
-                <Text>My Files</Text>
-              </Button>
-              <Button vertical light onPress={() => {
+              } else if (from.i === 1) {
                 setMedia(data.favourites);
-              }}>
-                <Icon name="heart"/>
-                <Text>My Favourites</Text>
-              </Button>
-            </FooterTab>
+              }
+            }}>
+              <Tab heading={
+                <TabHeading style={{backgroundColor: 'red'}}>
+                  <Icon name="person"/>
+                  <Text>My Files</Text>
+                </TabHeading>}>
+              </Tab>
+              <Tab heading={
+                <TabHeading style={{backgroundColor: 'red'}}>
+                  <Icon name="heart"/>
+                  <Text>My Favourites</Text>
+                </TabHeading>}>
+              </Tab>
+            </Tabs>
           </Footer>
         </Container>
       ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
