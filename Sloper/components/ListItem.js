@@ -72,11 +72,12 @@ const ListItem = (props) => {
               )}
             </CardItem>
           </Body>
-          <Right>
+          <Left>
             {city &&
-            <Icon name="locate"><Text>{city}</Text></Icon>
+            <Icon name="locate"/>
             }
-          </Right>
+              <Text>{city}</Text>
+          </Left>
         </CardItem>
       </Card>
     </BaseListItem>

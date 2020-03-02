@@ -43,7 +43,7 @@ import StarRating from 'react-native-star-rating';
 import {MediaContext} from '../contexts/MediaContext';
 import {UserContext} from '../contexts/UserContext';
 import {modifyContext} from '../hooks/ContextHooks';
-import {singleStyles} from '../styles/Style';
+import {listStyles, singleStyles} from '../styles/Style';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -321,9 +321,9 @@ const Single = (props) => {
               </Right>
             </CardItem>
             <CardItem>
-            <Left>
-              <Text style={singleStyles.description}>{description}</Text>
-            </Left>
+              <Left>
+                <Text style={singleStyles.description}>{description}</Text>
+              </Left>
             </CardItem>
             <CardItem>
               <Left>
@@ -332,27 +332,6 @@ const Single = (props) => {
                 </Body>
               </Left>
             </CardItem>
-            {avail ? (
-              <MapView
-                style={styles.map}
-                region={{
-                  latitude: exif.GPSLatitude,
-                  longitude: exif.GPSLongitude,
-                  latitudeDelta: 1,
-                  longitudeDelta: 1,
-                }}
-              >
-                <MapView.Marker
-                  coordinate={{
-                    latitude: exif.GPSLatitude,
-                    longitude: exif.GPSLongitude,
-                  }}
-                  title={`${exif.GPSAltitude} meters above the sea level`}
-                />
-              </MapView>
-            ) : (
-              <Text>No GPS data available</Text>
-            )}
             <StarRating
               disabled={false}
               maxStars={5}
@@ -362,6 +341,31 @@ const Single = (props) => {
                 postRating(rating);
               }}
             />
+            <CardItem>
+              {avail ? (
+                <Body>
+                  <MapView
+                    style={listStyles.asyncImage}
+                    region={{
+                      latitude: exif.GPSLatitude,
+                      longitude: exif.GPSLongitude,
+                      latitudeDelta: 1,
+                      longitudeDelta: 1,
+                    }}
+                  >
+                    <MapView.Marker
+                      coordinate={{
+                        latitude: exif.GPSLatitude,
+                        longitude: exif.GPSLongitude,
+                      }}
+                      title={`${exif.GPSAltitude} meters above the sea level`}
+                    />
+                  </MapView>
+                </Body>
+              ) : (
+                <Text>No GPS data available</Text>
+              )}
+            </CardItem>
             <Form>
               <Item>
                 <Input
@@ -418,12 +422,7 @@ const Single = (props) => {
     </Container>
   );
 };
-const styles = StyleSheet.create({
-  map: {
-    height: Dimensions.get('window').height * 0.5,
-    width: Dimensions.get('window').width * 0.75,
-  },
-});
+
 Single.propTypes = {
   navigation: PropTypes.object,
   file: PropTypes.object,
