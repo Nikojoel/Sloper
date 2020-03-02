@@ -19,10 +19,11 @@ import {
 } from "native-base";
 import {
   fetchAPI,
-  postFavourite,
-  isLiked,
+
   deletePost
 } from "../hooks/APIHooks";
+import {postFavourite,
+  checkFavourite,} from '../hooks/FavouriteHooks'
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -200,13 +201,13 @@ const Single = props => {
   };
 
   const checkLicked = async () => {
-    const status = await isLiked(file.file_id);
+    const status = await checkFavourite(file.file_id);
     setLiked(status);
   };
 
   const putLike = async () => {
-    if (liked !== undefined) {
-      setLiked(undefined);
+    if (liked) {
+      setLiked(false);
       const newData = {
         favCount: file.favCount - 1
       };
@@ -218,12 +219,12 @@ const Single = props => {
       };
       await modifyContext(media, setMedia, file, newData);
     }
-    await postFavourite(file.file_id);
+    await postFavourite(file.file_id, liked);
   };
 
   useEffect(() => {
     getUser();
-     checkLicked();
+    checkLicked();
   }, []);
 
   const [loading, setLoading] = useState(false);
@@ -312,13 +313,13 @@ const Single = props => {
               <Button
                 transparent
                 onPress={() => {
-                  putLike(file.file_id);
+                  putLike();
                 }}
               >
-                {liked === undefined && (
+                {!liked && (
                   <Icon name="heart" style={{ color: "#3F51B5" }} />
                 )}
-                {liked !== undefined && (
+                {liked  && (
                   <Icon name="heart" style={{ color: "red" }} />
                 )}
               </Button>

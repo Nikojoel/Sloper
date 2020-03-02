@@ -70,66 +70,6 @@ const updatePost = async (data, newData) => {
   } catch (e) {
     console.log("update file error", e);
   }
-  /*const formData = data;
-  formData.title = newData.title;
-  formData.description = JSON.stringify(descriptionData);
-
-  let formBody = [];
-  const encode = {
-    title: formData.title,
-    description: formData.description,
-  };
-
-  for (let property in encode) {
-    let encodedKey = encodeURIComponent(property);
-    let encodedValue = encodeURIComponent(encode[property]);
-    formBody.push(encodedKey + "=" + encodedValue);
-  }
-  formBody = formBody.join("&");
-
-  try {
-    const token = await AsyncStorage.getItem("userToken");
-    const result = await fetch(apiUrl + "media/" + data.file_id, {
-      method: "PUT",
-      headers: {
-        "x-access-token": token,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: formBody,
-    });
-  } catch (e) {
-    console.log("update post error", e);
-  }*/
-};
-
-const isLiked = async file_id => {
-  try {
-    const arr = await fetchAPI("GET", "favourites/file", file_id);
-    const userFromStorage = await AsyncStorage.getItem("user");
-    const user = JSON.parse(userFromStorage);
-    return arr.find(it => it.user_id === user.user.user_id);
-  } catch (e) {
-    console.log(e.message);
-  }
-};
-
-const postFavourite = async file_id => {
-  const token = await AsyncStorage.getItem("userToken");
-  if ((await isLiked(file_id)) === undefined) {
-    try {
-      await fetchAPI("POST", "favourites", undefined, token, {
-        file_id: file_id
-      });
-    } catch (e) {
-      console.log('post fav',e.message);
-    }
-  } else {
-    try {
-      await fetchAPI("DELETE", "favourites/file", file_id, token);
-    } catch (e) {
-      console.log('del fav',  e.message);
-    }
-  }
 };
 
 const getAllMedia = () => {
@@ -232,8 +172,6 @@ const uploadImage = async (data, tag) => {
 export {
   getAllMedia,
   uploadImage,
-  postFavourite,
-  isLiked,
   getAllUserMedia,
   deletePost,
   updatePost,
