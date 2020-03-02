@@ -16,7 +16,8 @@ import {
 import ListItem from '../components/ListItem';
 import {getAllUserMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
-import {UserContext} from "../contexts/UserContext";
+import {UserContext} from '../contexts/UserContext';
+import {listStyles} from '../styles/Style';
 
 
 const MyFiles = (props) => {
@@ -31,7 +32,7 @@ const MyFiles = (props) => {
   return (
     <Container>
       {!loading ? (
-        <Container>
+        <Container style={listStyles.baseList}>
           <BaseList
             dataArray={media}
             keyExtractor={(item, index) => index.toString()}
@@ -65,7 +66,7 @@ const MyFiles = (props) => {
             </Tabs>
           </Footer>
         </Container>
-      ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
+      ) : (<Spinner size="large" color="#0000ff" style={{top: '40%'}}/>)}
     </Container>
   );
 };

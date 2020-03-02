@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Container,
   Content,
@@ -15,46 +15,47 @@ import {
   Item,
   Form,
   Input,
-  Label
-} from "native-base";
+  Label,
+} from 'native-base';
 import {
   fetchAPI,
 
-  deletePost
-} from "../hooks/APIHooks";
+  deletePost,
+} from '../hooks/APIHooks';
 import {postFavourite,
-  checkFavourite,} from '../hooks/FavouriteHooks'
+  checkFavourite} from '../hooks/FavouriteHooks';
 import {
   ActivityIndicator,
   AsyncStorage,
   ListView,
-  BackHandler
-} from "react-native";
-import PropTypes from "prop-types";
-import AsyncImage from "../components/AsyncImage";
-import { Dimensions, StyleSheet } from "react-native";
-import { Video } from "expo-av";
-import MapView from "react-native-maps";
-import useCommentForm from "../hooks/CommentHooks";
-import StarRating from "react-native-star-rating";
-import { MediaContext } from "../contexts/MediaContext";
-import { UserContext } from "../contexts/UserContext";
-import { modifyContext} from '../hooks/ContextHooks';
+  BackHandler,
+} from 'react-native';
+import PropTypes from 'prop-types';
+import AsyncImage from '../components/AsyncImage';
+import {Dimensions, StyleSheet} from 'react-native';
+import {Video} from 'expo-av';
+import MapView from 'react-native-maps';
+import useCommentForm from '../hooks/CommentHooks';
+import StarRating from 'react-native-star-rating';
+import {MediaContext} from '../contexts/MediaContext';
+import {UserContext} from '../contexts/UserContext';
+import {modifyContext} from '../hooks/ContextHooks';
+import {listStyles} from '../styles/Style';
 
-const deviceHeight = Dimensions.get("window").height;
+const deviceHeight = Dimensions.get('window').height;
 
-const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
+const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-const Single = props => {
+const Single = (props) => {
   const [media, setMedia] = useContext(MediaContext);
   const [liked, setLiked] = useState();
-  const { navigation } = props;
+  const {navigation} = props;
   const file = navigation.state.params.file;
   const [user, setUser] = useState({});
-  const { inputs, handleCommentChange } = useCommentForm();
+  const {inputs, handleCommentChange} = useCommentForm();
   const [star, setStar] = useState(0);
 
-  /*const modifyContext = async (context,setContext, file, data) => {
+  /* const modifyContext = async (context,setContext, file, data) => {
     const modifyData = file => ({
       ...file,
       ...data
@@ -67,7 +68,7 @@ const Single = props => {
     setContext(newData);
   };*/
 
-  /*useEffect(() => {
+  /* useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", reloadData);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", reloadData);
@@ -79,26 +80,26 @@ const Single = props => {
       favCount: file.favCount + 1,
       ratingTot: file.rating + 5,
       ratingNum: file.ratingNum + 1,
-      rating: (file.ratingTot + 5) / (file.ratingNum + 1)
+      rating: (file.ratingTot + 5) / (file.ratingNum + 1),
     };
     modifyContext(media, file, newData);
   };
 
-  const getComments = id => {
+  const getComments = (id) => {
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
-    const fetchComments = async id => {
+    const fetchComments = async (id) => {
       try {
-        const usr = await AsyncStorage.getItem("user");
+        const usr = await AsyncStorage.getItem('user');
         const userParsed = await JSON.parse(usr);
-        const token = await AsyncStorage.getItem("userToken");
-        const comments = await fetchAPI("GET", "comments/file", id);
-        const rating = await fetchAPI("GET", "ratings/file", id);
+        const token = await AsyncStorage.getItem('userToken');
+        const comments = await fetchAPI('GET', 'comments/file', id);
+        const rating = await fetchAPI('GET', 'ratings/file', id);
         await Promise.all(
-          comments.map(async i => {
-            const user = await fetchAPI("GET", "users", i.user_id, token);
-            i.username = user.username;
-          })
+            comments.map(async (i) => {
+              const user = await fetchAPI('GET', 'users', i.user_id, token);
+              i.username = user.username;
+            }),
         );
 
         for (const x in rating) {
@@ -111,7 +112,7 @@ const Single = props => {
         setComments(comments);
         setCommentsLoading(false);
       } catch (e) {
-        console.log("comments loading error ", e);
+        console.log('comments loading error ', e);
       }
     };
     useEffect(() => {
@@ -125,7 +126,7 @@ const Single = props => {
     setC(comments);
   }, [commentsLoading]);
 
-  const commentList = c.map(comment => {
+  const commentList = c.map((comment) => {
     return (
       <ListItem key={comment.comment_id}>
         <H3>{comment.username}</H3>
@@ -136,64 +137,64 @@ const Single = props => {
 
   const postComment = async () => {
     try {
-      const usr = await AsyncStorage.getItem("user");
+      const usr = await AsyncStorage.getItem('user');
       const userParsed = await JSON.parse(usr);
-      const token = await AsyncStorage.getItem("userToken");
-      const result = await fetchAPI("POST", "comments", undefined, token, {
+      const token = await AsyncStorage.getItem('userToken');
+      const result = await fetchAPI('POST', 'comments', undefined, token, {
         file_id: file.file_id,
-        comment: inputs.comment
+        comment: inputs.comment,
       });
-      console.log("posting comment response", await result);
-      setC(c => [
+      console.log('posting comment response', await result);
+      setC((c) => [
         ...c,
         {
           comment: inputs.comment,
           comment_id: result.comment_id,
-          username: userParsed.username
-        }
+          username: userParsed.username,
+        },
       ]);
     } catch (e) {
-      console.log("posting comment error", e);
+      console.log('posting comment error', e);
     }
   };
 
-  const postRating = async rating => {
+  const postRating = async (rating) => {
     try {
-      const token = await AsyncStorage.getItem("userToken");
+      const token = await AsyncStorage.getItem('userToken');
       if (comments.myRating !== undefined) {
         try {
-          await fetchAPI("DELETE", "ratings/file", file.file_id, token);
+          await fetchAPI('DELETE', 'ratings/file', file.file_id, token);
         } catch (e) {
-          console.log("error deleting user rating", e);
+          console.log('error deleting user rating', e);
         }
       }
       const data = {
         file_id: file.file_id,
-        rating: rating
+        rating: rating,
       };
       const response = await fetchAPI(
-        "POST",
-        "ratings",
-        undefined,
-        token,
-        data
+          'POST',
+          'ratings',
+          undefined,
+          token,
+          data,
       );
       const newRating = {
         ratingTot: file.rating + rating,
         ratingNum: file.ratingNum + 1,
-        rating: (file.ratingTot + rating) / (file.ratingNum + 1)
+        rating: (file.ratingTot + rating) / (file.ratingNum + 1),
       };
       modifyContext(media, setMedia, file, newRating);
-      console.log("rating response", response);
+      console.log('rating response', response);
     } catch (e) {
-      console.log("posting rating error", e);
+      console.log('posting rating error', e);
     }
   };
 
   const getUser = async () => {
     try {
-      const token = await AsyncStorage.getItem("userToken");
-      const user = await fetchAPI("GET", "users", file.user_id, token);
+      const token = await AsyncStorage.getItem('userToken');
+      const user = await fetchAPI('GET', 'users', file.user_id, token);
       setUser(user);
     } catch (e) {
       console.log(e);
@@ -209,13 +210,13 @@ const Single = props => {
     if (liked) {
       setLiked(false);
       const newData = {
-        favCount: file.favCount - 1
+        favCount: file.favCount - 1,
       };
       await modifyContext(media, setMedia, file, newData);
     } else {
       setLiked(true);
       const newData = {
-        favCount: file.favCount + 1
+        favCount: file.favCount + 1,
       };
       await modifyContext(media, setMedia, file, newData);
     }
@@ -241,42 +242,42 @@ const Single = props => {
     }
   }
   return (
-    <Container>
+    <Container style={listStyles.baseList}>
       {!loading ? (
         <Content>
           <StarRating
             disabled={false}
             maxStars={5}
             rating={star}
-            selectedStar={rating => {
+            selectedStar={(rating) => {
               setStar(rating);
               postRating(rating);
             }}
           />
           <Card>
             <CardItem>
-              {file.media_type === "image" && (
+              {file.media_type === 'image' && (
                 <AsyncImage
                   style={{
-                    width: "100%",
-                    height: deviceHeight / 2
+                    width: '100%',
+                    height: deviceHeight / 2,
                   }}
                   spinnerColor="#777"
-                  source={{ uri: mediaURL + file.filename }}
+                  source={{uri: mediaURL + file.filename}}
                 />
               )}
-              {file.media_type === "video" && (
+              {file.media_type === 'video' && (
                 <Video
-                  source={{ uri: mediaURL + file.filename }}
+                  source={{uri: mediaURL + file.filename}}
                   rate={1.0}
                   volume={1.0}
                   isMuted={false}
                   resizeMode="cover"
                   shouldPlay
                   isLooping
-                  style={{ width: "100%", height: deviceHeight / 2 }}
-                  onError={e => {
-                    console.log("video error", e);
+                  style={{width: '100%', height: deviceHeight / 2}}
+                  onError={(e) => {
+                    console.log('video error', e);
                   }}
                 />
               )}
@@ -294,13 +295,13 @@ const Single = props => {
                         latitude: exif.GPSLatitude,
                         longitude: exif.GPSLongitude,
                         latitudeDelta: 1,
-                        longitudeDelta: 1
+                        longitudeDelta: 1,
                       }}
                     >
                       <MapView.Marker
                         coordinate={{
                           latitude: exif.GPSLatitude,
-                          longitude: exif.GPSLongitude
+                          longitude: exif.GPSLongitude,
                         }}
                         title={`${exif.GPSAltitude} meters above the sea level`}
                       />
@@ -317,10 +318,10 @@ const Single = props => {
                 }}
               >
                 {!liked && (
-                  <Icon name="heart" style={{ color: "#3F51B5" }} />
+                  <Icon name="heart" style={{color: '#3F51B5'}} />
                 )}
-                {liked  && (
-                  <Icon name="heart" style={{ color: "red" }} />
+                {liked && (
+                  <Icon name="heart" style={{color: 'red'}} />
                 )}
               </Button>
             </CardItem>
@@ -335,7 +336,7 @@ const Single = props => {
                   warning
                   rounded
                   onPress={async () => {
-                    handleCommentChange("");
+                    handleCommentChange('');
                     await postComment();
                   }}
                 >
@@ -354,9 +355,9 @@ const Single = props => {
                   onPress={() => {
                     deletePost(file.file_id);
                     setMedia([
-                      ...media.filter(i => i.file_id !== file.file_id)
+                      ...media.filter((i) => i.file_id !== file.file_id),
                     ]);
-                    props.navigation.navigate("Home");
+                    props.navigation.navigate('Home');
                   }}
                 >
                   <Text>DELETE</Text>
@@ -365,7 +366,7 @@ const Single = props => {
                   warning
                   onPress={async () => {
                     setLoading(true);
-                    props.navigation.replace("Update", file);
+                    props.navigation.replace('Update', file);
                   }}
                 >
                   <Text>UPDATE</Text>
@@ -382,13 +383,13 @@ const Single = props => {
 };
 const styles = StyleSheet.create({
   map: {
-    height: Dimensions.get("window").height * 0.5,
-    width: Dimensions.get("window").width * 0.75
-  }
+    height: Dimensions.get('window').height * 0.5,
+    width: Dimensions.get('window').width * 0.75,
+  },
 });
 Single.propTypes = {
   navigation: PropTypes.object,
-  file: PropTypes.object
+  file: PropTypes.object,
 };
 
 export default Single;
