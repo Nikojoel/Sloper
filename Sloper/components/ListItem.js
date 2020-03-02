@@ -10,6 +10,8 @@ import {
   H3,
   Label,
   Icon,
+  Card,
+  CardItem,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import nearbyCities from 'nearby-big-cities';
@@ -40,32 +42,43 @@ const ListItem = (props) => {
 
   return (
     <BaseListItem>
-      <Body>
+      <Card>
         <TouchableOpacity onPress={() => {
           props.navigation.push('Single', {file: props.singleMedia, user: props.user});
         }
         }>
-          <Body>
+          <CardItem style={listStyles.cardStyle}>
             <AsyncImage style={listStyles.asyncImage}
                         source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
             />
-          </Body>
+          </CardItem>
         </TouchableOpacity>
-        {city &&
-        <Text>Taken near {city}</Text>
-
-        }
-        <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
-        <Text numberOfLines={1}>{description}</Text>
-        <Icon name="heart"/>
-        <Text>{props.singleMedia.favCount}</Text>
-        <Icon name="star"/>
-        {isNaN(props.singleMedia.rating) ? (
-          <Text>0</Text>
-        ) : (
-          <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
-        )}
-      </Body>
+        <Body>
+          <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
+          <Text numberOfLines={1}>{description}</Text>
+        </Body>
+        <CardItem>
+          <Left>
+            <Icon name="heart"/>
+            <Text>{props.singleMedia.favCount}</Text>
+          </Left>
+          <Body>
+            <CardItem>
+              <Icon name="star"/>
+              {isNaN(props.singleMedia.rating) ? (
+                <Text>0</Text>
+              ) : (
+                <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
+              )}
+            </CardItem>
+          </Body>
+          <Right>
+            {city &&
+            <Icon name="locate"><Text>{city}</Text></Icon>
+            }
+          </Right>
+        </CardItem>
+      </Card>
     </BaseListItem>
   );
 };

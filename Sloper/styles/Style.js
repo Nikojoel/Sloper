@@ -66,6 +66,10 @@ const listStyles = StyleSheet.create({
     width: windowWidth * 0.9,
     height: windowHeight * 0.4,
   },
+  cardStyle: {
+    width: windowWidth * 0.9,
+    flex: 1,
+  },
 });
 
 export {loginStyles, formStyles, listStyles};
