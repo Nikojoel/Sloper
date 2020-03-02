@@ -68,6 +68,7 @@ const listStyles = StyleSheet.create({
   },
   cardStyle: {
     width: windowWidth * 0.9,
+    height: windowHeight * 0.4,
     flex: 1,
   },
 });
