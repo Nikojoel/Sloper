@@ -73,6 +73,7 @@ const listStyles = StyleSheet.create({
   },
   baseList: {
     borderColor: 'transparent',
+    backgroundColor: 'grey',
   },
 });
 
