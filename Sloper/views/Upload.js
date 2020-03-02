@@ -1,4 +1,4 @@
-import React, {useState, } from 'react';
+import React, {useState,} from 'react';
 import {
   Text,
   Button,
@@ -7,12 +7,14 @@ import {
   Item,
   Container,
   Spinner,
-  Badge, } from "native-base";
-import {Image, Dimensions, StyleSheet, } from 'react-native';
+  Badge,
+} from "native-base";
+import {Image, Dimensions, StyleSheet,} from 'react-native';
 import PropTypes from 'prop-types';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
 import * as ImagePicker from "expo-image-picker";
+import {uploadConstraints} from '../constraints/Constraints';
 
 const Upload = (props) => {
   const {
@@ -24,7 +26,7 @@ const Upload = (props) => {
     validateInput,
     handleUpload,
     resetText,
-  } = useUploadForm();
+  } = useUploadForm(uploadConstraints);
 
   const [image, setImage] = useState(null);
   const [exif, setExif] = useState(null);
@@ -86,13 +88,15 @@ const Upload = (props) => {
           </Button>
           <Form>
             <Button primary onPress={async () => {
+              const regValid = validateInput("title", inputs.title);
               if (!image) {
                 setErrors((errors) =>
                   ({
                     ...errors,
-                    fetch: "Choose an image before uploading"
+                    fetch: "Choose an image before uploading",
                   }));
-              } else {
+              }
+              if (!regValid && image) {
                 setLoading(true);
                 setErrors((errors) =>
                   ({
@@ -124,9 +128,9 @@ const Upload = (props) => {
         </Form>
       ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
       {errors.fetch &&
-          <Body>
-            <Badge><Text>{errors.fetch}</Text></Badge>
-          </Body>
+      <Body>
+        <Badge><Text>{errors.fetch}</Text></Badge>
+      </Body>
       }
     </Container>
   );

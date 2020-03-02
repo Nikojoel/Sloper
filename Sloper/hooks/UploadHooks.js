@@ -1,9 +1,8 @@
 import { useState, } from "react";
 import validate from "validate.js";
 import { uploadImage } from "./APIHooks";
-import {uploadConstraints} from '../constraints/Constraints';
 
-const useUploadForm = () => {
+const useUploadForm = (constraints = {}) => {
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -57,7 +56,7 @@ const useUploadForm = () => {
   };
 
   const validateInput = (attr, value) => {
-    const validated = validate({[attr]: value}, uploadConstraints);
+    const validated = validate({[attr]: value}, constraints);
     let valResult = undefined;
     if (validated) {
       valResult = validated[attr][0];
@@ -68,6 +67,7 @@ const useUploadForm = () => {
         [attr]: valResult,
         fetch: undefined
       }));
+    return validated;
   };
 
   return {
@@ -75,10 +75,10 @@ const useUploadForm = () => {
     handleTextChange,
     validateInput,
     handleUpload,
+    resetText,
     inputs,
     errors,
     setErrors,
-    resetText,
   };
 };
 
