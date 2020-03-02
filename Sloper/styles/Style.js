@@ -71,6 +71,9 @@ const listStyles = StyleSheet.create({
     height: windowHeight * 0.4,
     flex: 1,
   },
+  baseList: {
+    borderColor: 'transparent',
+  },
 });
 
 export {loginStyles, formStyles, listStyles};

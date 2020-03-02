@@ -41,7 +41,7 @@ const ListItem = (props) => {
   }, []);
 
   return (
-    <BaseListItem>
+    <BaseListItem style={listStyles.baseList}>
       <Card>
         <TouchableOpacity onPress={() => {
           props.navigation.push('Single', {file: props.singleMedia, user: props.user});
