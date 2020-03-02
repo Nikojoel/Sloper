@@ -77,5 +77,24 @@ const listStyles = StyleSheet.create({
   },
 });
 
-export {loginStyles, formStyles, listStyles};
+const singleStyles = StyleSheet.create({
+  title: {
+    fontSize: 40,
+    marginTop: 10,
+  },
+  description: {
+    fontSize: 18,
+  },
+  heart: {
+    color: '#3F51B5',
+    width: 30,
+  },
+  heartLiked: {
+    color: 'red',
+    width: 30,
+  },
+});
+
+
+export {loginStyles, formStyles, listStyles, singleStyles};
 

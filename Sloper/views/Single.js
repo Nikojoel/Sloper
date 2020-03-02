@@ -16,14 +16,17 @@ import {
   Form,
   Input,
   Label,
+  Right,
 } from 'native-base';
 import {
   fetchAPI,
 
   deletePost,
 } from '../hooks/APIHooks';
-import {postFavourite,
-  checkFavourite} from '../hooks/FavouriteHooks';
+import {
+  postFavourite,
+  checkFavourite
+} from '../hooks/FavouriteHooks';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -40,7 +43,7 @@ import StarRating from 'react-native-star-rating';
 import {MediaContext} from '../contexts/MediaContext';
 import {UserContext} from '../contexts/UserContext';
 import {modifyContext} from '../hooks/ContextHooks';
-import {listStyles} from '../styles/Style';
+import {singleStyles} from '../styles/Style';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -96,10 +99,10 @@ const Single = (props) => {
         const comments = await fetchAPI('GET', 'comments/file', id);
         const rating = await fetchAPI('GET', 'ratings/file', id);
         await Promise.all(
-            comments.map(async (i) => {
-              const user = await fetchAPI('GET', 'users', i.user_id, token);
-              i.username = user.username;
-            }),
+          comments.map(async (i) => {
+            const user = await fetchAPI('GET', 'users', i.user_id, token);
+            i.username = user.username;
+          }),
         );
 
         for (const x in rating) {
@@ -173,11 +176,11 @@ const Single = (props) => {
         rating: rating,
       };
       const response = await fetchAPI(
-          'POST',
-          'ratings',
-          undefined,
-          token,
-          data,
+        'POST',
+        'ratings',
+        undefined,
+        token,
+        data,
       );
       const newRating = {
         ratingTot: file.rating + rating,
@@ -245,86 +248,120 @@ const Single = (props) => {
     <Container>
       {!loading ? (
         <Content>
-          <StarRating
-            disabled={false}
-            maxStars={5}
-            rating={star}
-            selectedStar={(rating) => {
-              setStar(rating);
-              postRating(rating);
-            }}
-          />
           <Card>
+            <Body>
+              <Text style={singleStyles.title}>{file.title}</Text>
+            </Body>
             <CardItem>
-              {file.media_type === 'image' && (
-                <AsyncImage
-                  style={{
-                    width: '100%',
-                    height: deviceHeight / 2,
+              <Body>
+                {file.media_type === 'image' && (
+                  <AsyncImage
+                    style={{
+                      width: '100%',
+                      height: deviceHeight / 2,
+                      flex: 1,
+                      marginTop: -30,
+                    }}
+                    spinnerColor="#777"
+                    source={{uri: mediaURL + file.filename}}
+                  />
+                )}
+                {file.media_type === 'video' && (
+                  <Video
+                    source={{uri: mediaURL + file.filename}}
+                    rate={1.0}
+                    volume={1.0}
+                    isMuted={false}
+                    resizeMode="cover"
+                    shouldPlay
+                    isLooping
+                    style={{width: '100%', height: deviceHeight / 2, flex: 1,}}
+                    onError={(e) => {
+                      console.log('video error', e);
+                    }}
+                  />
+                )}
+              </Body>
+            </CardItem>
+            <CardItem style={{marginTop: -60}}>
+              <Left>
+                <Body>
+                  <CardItem>
+                    <Icon name="heart"/>
+                    <Text>{file.favCount}</Text>
+                  </CardItem>
+                </Body>
+              </Left>
+              <Right>
+                <Body>
+                  <CardItem>
+                    <Icon name="star"/>
+                    {isNaN(file.rating) ? (
+                      <Text>0</Text>
+                    ) : (
+                      <Text>{file.rating.toFixed(1)}/5</Text>
+                    )}
+                  </CardItem>
+                </Body>
+              </Right>
+              <Right>
+                <Button
+                  transparent
+                  onPress={() => {
+                    putLike();
                   }}
-                  spinnerColor="#777"
-                  source={{uri: mediaURL + file.filename}}
-                />
-              )}
-              {file.media_type === 'video' && (
-                <Video
-                  source={{uri: mediaURL + file.filename}}
-                  rate={1.0}
-                  volume={1.0}
-                  isMuted={false}
-                  resizeMode="cover"
-                  shouldPlay
-                  isLooping
-                  style={{width: '100%', height: deviceHeight / 2}}
-                  onError={(e) => {
-                    console.log('video error', e);
-                  }}
-                />
-              )}
+                >
+                  {!liked && (
+                    <Icon name="heart" style={singleStyles.heart}/>
+                  )}
+                  {liked && (
+                    <Icon name="heart" style={singleStyles.heartLiked}/>
+                  )}
+                </Button>
+              </Right>
+            </CardItem>
+            <CardItem>
+            <Left>
+              <Text style={singleStyles.description}>{description}</Text>
+            </Left>
             </CardItem>
             <CardItem>
               <Left>
                 <Body>
-                  <H3>{file.title}</H3>
-                  <Text>{description}</Text>
                   <Text>By {user.username}</Text>
-                  {avail ? (
-                    <MapView
-                      style={styles.map}
-                      region={{
-                        latitude: exif.GPSLatitude,
-                        longitude: exif.GPSLongitude,
-                        latitudeDelta: 1,
-                        longitudeDelta: 1,
-                      }}
-                    >
-                      <MapView.Marker
-                        coordinate={{
-                          latitude: exif.GPSLatitude,
-                          longitude: exif.GPSLongitude,
-                        }}
-                        title={`${exif.GPSAltitude} meters above the sea level`}
-                      />
-                    </MapView>
-                  ) : (
-                    <Text>No GPS data available</Text>
-                  )}
                 </Body>
               </Left>
-              <Button
-                transparent
-                onPress={() => {
-                  putLike();
+            </CardItem>
+            {avail ? (
+              <MapView
+                style={styles.map}
+                region={{
+                  latitude: exif.GPSLatitude,
+                  longitude: exif.GPSLongitude,
+                  latitudeDelta: 1,
+                  longitudeDelta: 1,
                 }}
               >
-                {!liked && (
-                  <Icon name="heart" style={{color: '#3F51B5'}} />
-                )}
-                {liked && (
-                  <Icon name="heart" style={{color: 'red'}} />
-                )}
-              </Button>
-            </CardItem>
+                <MapView.Marker
+                  coordinate={{
+                    latitude: exif.GPSLatitude,
+                    longitude: exif.GPSLongitude,
+                  }}
+                  title={`${exif.GPSAltitude} meters above the sea level`}
+                />
+              </MapView>
+            ) : (
+              <Text>No GPS data available</Text>
+            )}
+            <StarRating
+              disabled={false}
+              maxStars={5}
+              rating={star}
+              selectedStar={(rating) => {
+                setStar(rating);
+                postRating(rating);
+              }}
+            />
             <Form>
               <Item>
                 <Input
@@ -376,7 +413,7 @@ const Single = (props) => {
           </Card>
         </Content>
       ) : (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0000ff"/>
       )}
     </Container>
   );
