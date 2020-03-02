@@ -131,9 +131,11 @@ const Single = (props) => {
 
   const commentList = c.map((comment) => {
     return (
-      <ListItem key={comment.comment_id}>
+      <ListItem style={singleStyles.comments} key={comment.comment_id}>
+        <Left>
         <H3>{comment.username}</H3>
         <Text>{comment.comment}</Text>
+        </Left>
       </ListItem>
     );
   });
@@ -366,6 +368,14 @@ const Single = (props) => {
                 <Text>No GPS data available</Text>
               )}
             </CardItem>
+            <Item>
+              <Body>
+                <Text style={singleStyles.commentTitle}>Comments</Text>
+              </Body>
+            </Item>
+            <Item>
+              <List>{commentList}</List>
+            </Item>
             <Form>
               <Item>
                 <Input
@@ -385,24 +395,22 @@ const Single = (props) => {
                 </Button>
               </Item>
             </Form>
-            <Item>
-              <H3>Comments</H3>
-              <List>{commentList}</List>
-            </Item>
             {user.user_id === file.user_id && (
               <CardItem>
-                <Button
-                  danger
-                  onPress={() => {
-                    deletePost(file.file_id);
-                    setMedia([
-                      ...media.filter((i) => i.file_id !== file.file_id),
-                    ]);
-                    props.navigation.navigate('Home');
-                  }}
-                >
-                  <Text>DELETE</Text>
-                </Button>
+                <Body>
+                  <Button
+                    danger
+                    onPress={() => {
+                      deletePost(file.file_id);
+                      setMedia([
+                        ...media.filter((i) => i.file_id !== file.file_id),
+                      ]);
+                      props.navigation.navigate('Home');
+                    }}
+                  >
+                    <Text>DELETE</Text>
+                  </Button>
+                </Body>
                 <Button
                   warning
                   onPress={async () => {

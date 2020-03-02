@@ -93,6 +93,14 @@ const singleStyles = StyleSheet.create({
     color: 'red',
     width: 30,
   },
+  commentTitle: {
+    fontSize: 25,
+    textDecorationLine: 'underline',
+  },
+  comments: {
+    width: windowWidth * 0.7,
+    borderColor: 'transparent',
+  },
 });
 
 
