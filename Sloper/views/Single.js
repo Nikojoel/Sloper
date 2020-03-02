@@ -38,6 +38,7 @@ import useCommentForm from "../hooks/CommentHooks";
 import StarRating from "react-native-star-rating";
 import { MediaContext } from "../contexts/MediaContext";
 import { UserContext } from "../contexts/UserContext";
+import { modifyContext} from '../hooks/ContextHooks';
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -52,7 +53,7 @@ const Single = props => {
   const { inputs, handleCommentChange } = useCommentForm();
   const [star, setStar] = useState(0);
 
-  const modifyContext = async (context, file, data) => {
+  /*const modifyContext = async (context,setContext, file, data) => {
     const modifyData = file => ({
       ...file,
       ...data
@@ -62,8 +63,8 @@ const Single = props => {
         return new Date(b.time_added) - new Date(a.time_added);
       }
     );
-    setMedia(newData);
-  };
+    setContext(newData);
+  };*/
 
   /*useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", reloadData);
@@ -181,7 +182,7 @@ const Single = props => {
         ratingNum: file.ratingNum + 1,
         rating: (file.ratingTot + rating) / (file.ratingNum + 1)
       };
-      modifyContext(media, file, newRating);
+      modifyContext(media, setMedia, file, newRating);
       console.log("rating response", response);
     } catch (e) {
       console.log("posting rating error", e);
@@ -209,13 +210,13 @@ const Single = props => {
       const newData = {
         favCount: file.favCount - 1
       };
-      await modifyContext(media, file, newData);
+      await modifyContext(media, setMedia, file, newData);
     } else {
       setLiked(true);
       const newData = {
         favCount: file.favCount + 1
       };
-      await modifyContext(media, file, newData);
+      await modifyContext(media, setMedia, file, newData);
     }
     await postFavourite(file.file_id);
   };
