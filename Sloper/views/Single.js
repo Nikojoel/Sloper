@@ -242,7 +242,7 @@ const Single = (props) => {
     }
   }
   return (
-    <Container style={listStyles.baseList}>
+    <Container>
       {!loading ? (
         <Content>
           <StarRating
