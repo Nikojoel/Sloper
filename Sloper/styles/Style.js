@@ -101,6 +101,9 @@ const singleStyles = StyleSheet.create({
     width: windowWidth * 0.7,
     borderColor: 'transparent',
   },
+  border: {
+    borderColor: 'transparent',
+  },
 });
 
 
