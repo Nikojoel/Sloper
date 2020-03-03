@@ -51,42 +51,19 @@ const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const Single = (props) => {
   const [media, setMedia] = useContext(MediaContext);
+  const [{user,token}, setUser] = useContext(UserContext);
   const [liked, setLiked] = useState();
   const {navigation} = props;
   const file = navigation.state.params.file;
-  const [user, setUser] = useState({});
+  const [owner, setOwner] = useState({});
   const {inputs, handleCommentChange} = useCommentForm();
   const [star, setStar] = useState(0);
-
-  /* const modifyContext = async (context,setContext, file, data) => {
-    const modifyData = file => ({
-      ...file,
-      ...data
-    });
-    const newData = [...context.filter(i => i !== file), modifyData(file)].sort(
-      (a, b) => {
-        return new Date(b.time_added) - new Date(a.time_added);
-      }
-    );
-    setContext(newData);
-  };*/
-
-  /* useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", reloadData);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", reloadData);
-    };
-  });*/
-
 
   const getComments = (id) => {
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
     const fetchComments = async (id) => {
       try {
-        const usr = await AsyncStorage.getItem('user');
-        const userParsed = await JSON.parse(usr);
-        const token = await AsyncStorage.getItem('userToken');
         const comments = await fetchAPI('GET', 'comments/file', id);
         const rating = await fetchAPI('GET', 'ratings/file', id);
         await Promise.all(
@@ -96,7 +73,7 @@ const Single = (props) => {
             }),
         );
         for (const x in rating) {
-          if (rating[x].user_id === userParsed.user.user_id) {
+          if (rating[x].user_id === user.user_id) {
             comments.myRating = rating[x].rating;
             console.log('my rating', comments.myRating);
             break;
@@ -134,9 +111,6 @@ const Single = (props) => {
 
   const postComment = async () => {
     try {
-      const usr = await AsyncStorage.getItem('user');
-      const userParsed = await JSON.parse(usr);
-      const token = await AsyncStorage.getItem('userToken');
       const result = await fetchAPI('POST', 'comments', undefined, token, {
         file_id: file.file_id,
         comment: inputs.comment,
@@ -147,7 +121,7 @@ const Single = (props) => {
         {
           comment: inputs.comment,
           comment_id: result.comment_id,
-          username: userParsed.username,
+          username: user.username,
         },
       ]);
     } catch (e) {
@@ -157,7 +131,6 @@ const Single = (props) => {
 
   const postRating = async (rating) => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
       if (comments.myRating !== undefined) {
         try {
           await fetchAPI('DELETE', 'ratings/file', file.file_id, token);
@@ -190,9 +163,8 @@ const Single = (props) => {
 
   const getUser = async () => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
       const user = await fetchAPI('GET', 'users', file.user_id, token);
-      setUser(user);
+      setOwner(user);
     } catch (e) {
       console.log(e);
     }
@@ -323,7 +295,7 @@ const Single = (props) => {
             <CardItem>
               <Left>
                 <Body>
-                  <Text>By {user.username}</Text>
+                  <Text>By {owner.username}</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -391,7 +363,7 @@ const Single = (props) => {
                 </Button>
               </Item>
             </Form>
-            {user.user_id === file.user_id && (
+            {owner.user_id === file.user_id && (
               <CardItem>
                 <Body>
                   <Button
