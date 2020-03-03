@@ -40,6 +40,7 @@ const ListItem = (props) => {
     setCity(temp);
   }, []);
 
+
   return (
     <BaseListItem style={listStyles.baseList}>
       <Card>
