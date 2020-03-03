@@ -49,9 +49,7 @@ const ListItem = (props) => {
         }
         }>
           <CardItem style={listStyles.cardStyle}>
-            <AsyncImage style={listStyles.asyncImage}
-              source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
-            />
+            <Thumbnail square large source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}/>
           </CardItem>
         </TouchableOpacity>
         <Body>
