@@ -25,7 +25,7 @@ import {
 } from '../hooks/APIHooks';
 import {
   postFavourite,
-  checkFavourite
+  checkFavourite,
 } from '../hooks/FavouriteHooks';
 import {
   ActivityIndicator,
@@ -90,10 +90,10 @@ const Single = (props) => {
         const comments = await fetchAPI('GET', 'comments/file', id);
         const rating = await fetchAPI('GET', 'ratings/file', id);
         await Promise.all(
-          comments.map(async (i) => {
-            const user = await fetchAPI('GET', 'users', i.user_id, token);
-            i.username = user.username;
-          }),
+            comments.map(async (i) => {
+              const user = await fetchAPI('GET', 'users', i.user_id, token);
+              i.username = user.username;
+            }),
         );
         for (const x in rating) {
           if (rating[x].user_id === userParsed.user.user_id) {
@@ -125,8 +125,8 @@ const Single = (props) => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Left>
-        <H3>{comment.username}</H3>
-        <Text>{comment.comment}</Text>
+          <H3>{comment.username}: </H3>
+          <Text>{comment.comment}</Text>
         </Left>
       </ListItem>
     );
@@ -170,11 +170,11 @@ const Single = (props) => {
         rating: rating,
       };
       const response = await fetchAPI(
-        'POST',
-        'ratings',
-        undefined,
-        token,
-        data,
+          'POST',
+          'ratings',
+          undefined,
+          token,
+          data,
       );
       const newRating = {
         ratingTot: file.rating + rating,
@@ -270,7 +270,7 @@ const Single = (props) => {
                     resizeMode="cover"
                     shouldPlay
                     isLooping
-                    style={{width: '100%', height: deviceHeight / 2, flex: 1,}}
+                    style={{width: '100%', height: deviceHeight / 2, flex: 1}}
                     onError={(e) => {
                       console.log('video error', e);
                     }}
@@ -361,12 +361,15 @@ const Single = (props) => {
                 <Text>No GPS data available</Text>
               )}
             </CardItem>
-            <Item>
+            <Item style={singleStyles.border}>
               <Body>
-                <Text style={singleStyles.commentTitle}>Comments</Text>
+                <CardItem>
+                  <Text style={singleStyles.commentTitle}>Comments </Text>
+                  <Icon name='chatbubbles'/>
+                </CardItem>
               </Body>
             </Item>
-            <Item>
+            <Item style={singleStyles.border}>
               <List>{commentList}</List>
             </Item>
             <Form>
@@ -384,7 +387,7 @@ const Single = (props) => {
                     await postComment();
                   }}
                 >
-                  <Text>Comment</Text>
+                  <Icon name='pizza'/>
                 </Button>
               </Item>
             </Form>
@@ -401,7 +404,7 @@ const Single = (props) => {
                       props.navigation.navigate('Home');
                     }}
                   >
-                    <Text>DELETE</Text>
+                    <Icon name='ios-trash'/>
                   </Button>
                 </Body>
                 <Button
@@ -411,7 +414,7 @@ const Single = (props) => {
                     props.navigation.replace('Update', file);
                   }}
                 >
-                  <Text>UPDATE</Text>
+                  <Icon name='ios-cog'/>
                 </Button>
               </CardItem>
             )}
