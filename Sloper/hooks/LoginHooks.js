@@ -6,8 +6,8 @@ import { fetchAPI } from './APIHooks';
 const useSignUpForm = (constraints = {}) => {
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
-  const handleUsernameChange = (text) => {
 
+  const handleUsernameChange = (text) => {
     setInputs((inputs) =>
       ({
         ...inputs,

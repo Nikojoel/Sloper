@@ -102,6 +102,7 @@ const Single = (props) => {
             break;
           }
         }
+        console.log(comments.myRating);
         setStar(comments.myRating);
         setComments(comments);
         setCommentsLoading(false);
@@ -237,6 +238,7 @@ const Single = (props) => {
       }, []);
     }
   }
+
   return (
     <Container>
       {!loading ? (

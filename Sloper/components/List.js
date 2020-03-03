@@ -8,14 +8,12 @@ import {getAllMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
 import useSearchForm from "../hooks/SearchHooks";
 
-
 const List = (props) => {
   const [media, setMedia] = useContext(MediaContext);
   const [searchResult, setSearchResult] = useState();
   const [data, loading] = getAllMedia();
   useEffect(() => {
     setMedia(data);
-
   }, [loading]);
 
   const {
@@ -24,30 +22,24 @@ const List = (props) => {
   } = useSearchForm();
 
   const handleSearch = async (text) => {
-    const result = [...media.filter(i => i.title.match(new RegExp(text, 'i')))]
+    const result = [...media.filter(i => i.title.match(new RegExp(text, 'i')))];
     setSearchResult(result)
-  }
+  };
 
   const dataPicker = () => {
-    if (searchResult) return searchResult
+    if (searchResult) return searchResult;
     return media
-  }
+  };
 
   return (
     <Container style={listStyles.baseList}>
       <SearchBar
           placeholder="Search for posts"
-          onChangeText={(t) => {handleSearchChange(t)
+          onChangeText={(t) => {handleSearchChange(t);
           handleSearch(t);
           }}
           value={inputs.search}
         />
-        <Button onPress={async () => {
-          // Hardcoded button to try out filtering
-          // TODO: Search for posts using title as a parameter
-         // handleSearch(inputs.search);
-        }}><Text>Search</Text>
-      </Button>
       {!loading ? (
         <BaseList
           dataArray={dataPicker()}

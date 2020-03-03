@@ -60,9 +60,6 @@ const StackNavigator = createStackNavigator(
   {
     Home: {
       screen: TabNavigator,
-      navigationOptions: {
-        headerMode: 'none', // this will hide the header
-      },
     },
     Single: {
       screen: Single,
@@ -77,12 +74,8 @@ const StackNavigator = createStackNavigator(
       screen: Update,
     },
     UpdateUser: {
-      screen: UpdateUser
+      screen: UpdateUser,
     },
-    Profile: {
-      screen: Profile
-    }
-
   },
 );
 

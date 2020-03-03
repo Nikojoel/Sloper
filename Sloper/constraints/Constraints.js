@@ -1,19 +1,13 @@
 const loginConstraints = {
   username: {
-    presence: {
-      message: 'cannot be blank.',
-    },
     length: {
       minimum: 3,
-      message: 'must be at least 3 characters',
+      message: 'must be atleast 3 characters',
     },
   },
   email: {
-    presence: {
-      message: 'cannot be blank.',
-    },
     email: {
-      message: 'not valid.',
+      message: 'is not valid.',
     },
   },
   fullname: {
@@ -22,33 +16,13 @@ const loginConstraints = {
   password: {
     length: {
       minimum: 5,
-      message: 'must be at least 5 characters',
+      message: 'must be atleast 5 characters',
     },
   },
   confirmPassword: {
-    presence: 'cannot be blank.',
     equality: {
       attribute: 'password',
-    },
-  },
-};
-
-const updateConstraints = {
-  username: {
-    presence: {
-      message: 'cannot be blank.',
-    },
-    length: {
-      minimum: 4,
-      message: 'must be at least 3 characters',
-    },
-  },
-  email: {
-    presence: {
-      message: 'cannot be blank.',
-    },
-    email: {
-      message: 'not valid.',
+      message: 'not matching'
     },
   },
 };
@@ -64,6 +38,5 @@ const uploadConstraints = {
 
 export {
   loginConstraints,
-  updateConstraints,
   uploadConstraints,
 };

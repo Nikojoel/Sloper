@@ -17,6 +17,7 @@ const Update = (props) => {
   } = useUploadForm(uploadConstraints);
 
   const [image, setImage] = useState(null);
+
   useEffect(() => {
     setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
   }, []);
@@ -27,7 +28,7 @@ const Update = (props) => {
         <Item style={{borderColor: "transparent"}}>
           <FormTextInput
             value={inputs.title}
-            placeholder='New title'
+            placeholder={props.navigation.state.params.title}
             onChangeText={handleTitleChange}
             onEndEditing={() => validateInput("title", inputs.title)}
             error={errors.title}
