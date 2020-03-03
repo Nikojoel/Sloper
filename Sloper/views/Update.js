@@ -1,5 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {Text, Button, Form, Body, Item, Container,} from "native-base";
+import {
+  Text,
+  Button,
+  Form,
+  Body,
+  Item,
+  Container,
+  Card,
+  CardItem,
+  Icon,
+} from "native-base";
 import {Image, Dimensions, StyleSheet,} from 'react-native';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
@@ -16,58 +26,71 @@ const Update = (props) => {
     validateInput,
   } = useUploadForm(uploadConstraints);
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(undefined);
 
   useEffect(() => {
     setImage("http://media.mw.metropolia.fi/wbma/uploads/" + props.navigation.state.params.filename);
   }, []);
 
+  const updateMedia = async () => {
+    const regValid = validateInput("title", inputs.title);
+    if (!regValid) {
+      await updatePost(props.navigation.state.params, {
+        title: inputs.title,
+        description: inputs.postText,
+      });
+      props.navigation.dispatch(
+        StackActions.reset({
+          index: 0,
+          key: null,
+          actions: [NavigationActions.navigate({routeName: "Home"})]
+        })
+      );
+    }
+  };
+
   return (
     <Container>
       <Form>
-        <Item style={{borderColor: "transparent"}}>
-          <FormTextInput
-            value={inputs.title}
-            placeholder={props.navigation.state.params.title}
-            onChangeText={handleTitleChange}
-            onEndEditing={() => validateInput("title", inputs.title)}
-            error={errors.title}
-          />
-        </Item>
-        <Item style={{borderColor: "transparent"}}>
-          <FormTextInput
-            value={inputs.postText}
-            placeholder='New text'
-            onChangeText={handleTextChange}
-          />
-        </Item>
-        <Form>
-          <Button warning onPress={async () => {
-            const regValid = validateInput("title", inputs.title);
-            if (!regValid) {
-              await updatePost(props.navigation.state.params, {
-                title: inputs.title,
-                description: inputs.postText,
-              });
-              props.navigation.dispatch(
-                StackActions.reset({
-                  index: 0,
-                  key: null,
-                  actions: [NavigationActions.navigate({routeName: "Home"})]
-                })
-              );
-            }
-          }}>
+        <Card>
+          <CardItem bordered>
+            <Item style={{borderColor: "transparent"}}>
+              <FormTextInput
+                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                value={inputs.title}
+                placeholder='New title'
+                onChangeText={handleTitleChange}
+                onEndEditing={() => {
+                  validateInput("title", inputs.title);
+                }}
+                error={errors.title}
+              />
+            </Item>
+          </CardItem>
+          <CardItem bordered>
+            <Item style={{borderColor: "transparent"}}>
+              <FormTextInput
+                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                value={inputs.postText}
+                placeholder='New description'
+                onChangeText={handleTextChange}
+              />
+            </Item>
+          </CardItem>
+          <CardItem bordered>
             <Body>
-              <Text style={{color: "white"}}>Update</Text>
+              <Button full warning rounded iconLeft onPress={updateMedia}>
+                <Icon name={"ios-cloud-upload"}/>
+                <Text>Update</Text>
+              </Button>
             </Body>
-          </Button>
-        </Form>
-        <Item>
-          <Body>
-            <Image source={{uri: image}} style={styles.image}/>
-          </Body>
-        </Item>
+          </CardItem>
+          <CardItem bordered style={{marginLeft: 10}}>
+            <Body>
+              <Image source={{uri: image}} style={{width: styles.image.width, height: styles.image.height}}/>
+            </Body>
+          </CardItem>
+        </Card>
       </Form>
     </Container>
   );
