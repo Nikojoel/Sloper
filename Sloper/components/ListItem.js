@@ -49,7 +49,9 @@ const ListItem = (props) => {
         }
         }>
           <CardItem style={listStyles.cardStyle}>
-            <Thumbnail square large source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}/>
+            <Thumbnail square style={{width: 160, height: 160,}}
+             source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
+            />
           </CardItem>
         </TouchableOpacity>
         <Body>
