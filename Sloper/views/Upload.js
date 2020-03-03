@@ -11,7 +11,6 @@ import {
   Left,
   Card,
   CardItem,
-  Right,
   Icon,
 } from "native-base";
 import {Image, Dimensions, StyleSheet,} from 'react-native';
@@ -81,8 +80,9 @@ const Upload = (props) => {
   };
 
   return (
-    <Container style={{marginLeft: -10}}>
+    <Container>
       {!loading ? (
+        <Body>
         <Form>
           <Card>
             <CardItem bordered>
@@ -111,15 +111,11 @@ const Upload = (props) => {
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Image source={{uri: image}} style={{width: 250, height: 250}}/>
-              </Left>
-              <Right>
-                <Body style={{marginLeft: 50, marginTop: 30}}>
-                  <Button primary rounded iconLeft onPress={pickImage} style={{marginBottom: 20}}>
+                  <Button primary rounded iconLeft onPress={pickImage}>
                     <Icon name={"ios-image"}/>
                     <Text>Select</Text>
                   </Button>
-                  <Button warning rounded iconLeft onPress={uploadImage} style={{marginBottom: 20}}>
+                  <Button warning rounded iconLeft onPress={uploadImage}>
                     <Icon name={"ios-cloud-upload"}/>
                     <Text>Upload</Text>
                   </Button>
@@ -129,17 +125,24 @@ const Upload = (props) => {
                     <Text>Delete</Text>
                   </Button>
                   }
-                </Body>
-              </Right>
+              </Left>
             </CardItem>
+            {errors.fetch &&
+            <Body>
+              <Badge><Text>{errors.fetch}</Text></Badge>
+            </Body>
+            }
+            {image &&
+            <CardItem bordered style={{marginLeft: 10}}>
+              <Body>
+                  <Image source={{uri: image}} style={{width: styles.image.width, height: styles.image.height}}/>
+              </Body>
+            </CardItem>
+            }
           </Card>
         </Form>
+        </Body>
       ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
-      {errors.fetch &&
-      <Body>
-        <Badge><Text>{errors.fetch}</Text></Badge>
-      </Body>
-      }
     </Container>
   );
 };
