@@ -57,7 +57,7 @@ const Profile = (props) => {
               <Button primary rounded iconLeft style={{marginRight: 10}} onPress={() => {
                 props.navigation.navigate('MyFiles')
               }}>
-                <Icon name='ios-people'/>
+                <Icon name='ios-list'/>
                 <Text>My posts</Text>
               </Button>
               <Button warning rounded iconLeft onPress={() => props.navigation.navigate('UpdateUser')}>
@@ -65,7 +65,7 @@ const Profile = (props) => {
                 <Text>Edit</Text>
               </Button>
               <Button danger rounded iconLeft style={{marginLeft: 10}} onPress={signOutAsync}>
-                <Icon name='ios-trash'/>
+                <Icon name='ios-exit'/>
                 <Text>Logout</Text>
               </Button>
             </CardItem>
