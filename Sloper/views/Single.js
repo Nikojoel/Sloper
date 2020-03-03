@@ -353,7 +353,7 @@ const Single = (props) => {
                         latitude: exif.GPSLatitude,
                         longitude: exif.GPSLongitude,
                       }}
-                      title={`${exif.GPSAltitude} meters above the sea level`}
+                      title={`${exif.GPSAltitude.toFixed(1)} meters above the sea level`}
                     />
                   </MapView>
                 </Body>

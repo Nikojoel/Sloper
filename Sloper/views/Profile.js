@@ -8,8 +8,6 @@ import {
   Body,
   Button,
   Icon,
-  Left,
-  Right,
 } from 'native-base';
 import {AsyncStorage} from 'react-native';
 import PropTypes from 'prop-types';
@@ -31,9 +29,9 @@ const Profile = (props) => {
     <Container>
       <Content>
         <Card>
-          <CardItem header bordered>
-            <Icon name='person'/>
-            <Text>Username: {user.username}</Text>
+          <CardItem bordered>
+            <Icon name='ios-contact' style={{fontSize: 30}}/>
+            <Text style={{fontSize: 16}}>Username: {user.username}</Text>
           </CardItem>
           <CardItem>
             <Body>
@@ -47,38 +45,31 @@ const Profile = (props) => {
               />
             </Body>
           </CardItem>
-          <CardItem>
+          <CardItem bordered>
+            <Icon name='ios-document' style={{fontSize: 30}}/>
             <Body>
-              <Text>Fullname: {user.full_name}</Text>
-              <Text numberOfLines={1}>email: {user.email}</Text>
+              <Text style={{fontSize: 16}}>Full Name: {user.full_name}</Text>
+              <Text style={{fontSize: 16}}>Email: {user.email}</Text>
             </Body>
-            <Right>
-              <Button primary rounded onPress={() => props.navigation.navigate('UpdateUser')}>
-                <Icon name='settings'/>
+          </CardItem>
+          <Body>
+            <CardItem footer bordered>
+              <Button primary rounded iconLeft style={{marginRight: 10}} onPress={() => {
+                props.navigation.navigate('MyFiles')
+              }}>
+                <Icon name='ios-people'/>
+                <Text>My posts</Text>
+              </Button>
+              <Button warning rounded iconLeft onPress={() => props.navigation.navigate('UpdateUser')}>
+                <Icon name='ios-cog'/>
                 <Text>Edit</Text>
               </Button>
-            </Right>
-          </CardItem>
-          <CardItem footer bordered>
-            <Body>
-            <Left>
-            <Button primary rounded onPress={() => {
-              props.navigation.navigate('MyFiles')
-            }}>
-              <Icon name='bookmarks'/>
-              <Text>My posts</Text>
-            </Button>
-            </Left>
-            </Body>
-            <Body>
-              <Right>
-            <Button danger rounded onPress={signOutAsync}>
-              <Icon name='trash'/>
-              <Text>Logout</Text>
-            </Button>
-              </Right>
-            </Body>
-          </CardItem>
+              <Button danger rounded iconLeft style={{marginLeft: 10}} onPress={signOutAsync}>
+                <Icon name='ios-trash'/>
+                <Text>Logout</Text>
+              </Button>
+            </CardItem>
+          </Body>
         </Card>
       </Content>
     </Container>
