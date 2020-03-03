@@ -8,13 +8,11 @@ import {
   Container,
   Spinner,
   Badge,
-  H3,
   Left,
   Card,
   CardItem,
   Right,
   Icon,
-  Thumbnail,
 } from "native-base";
 import {Image, Dimensions, StyleSheet,} from 'react-native';
 import PropTypes from 'prop-types';
