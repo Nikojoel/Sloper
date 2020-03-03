@@ -62,18 +62,22 @@ const formStyles = StyleSheet.create({
 });
 
 const listStyles = StyleSheet.create({
-  asyncImage: {
-    width: windowWidth * 0.9,
-    height: windowHeight * 0.4,
+  thumbNail: {
+    width: 160,
+    height: 160,
   },
   cardStyle: {
-    width: windowWidth * 0.9,
-    height: windowHeight * 0.4,
-    flex: 1,
+    width: windowWidth * 0.5,
+    height: windowHeight * 0.2,
   },
   baseList: {
     borderColor: 'transparent',
     backgroundColor: 'aliceblue',
+  },
+  card: {
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.3,
+    marginTop: -12,
   },
 });
 

@@ -43,27 +43,28 @@ const ListItem = (props) => {
 
   return (
     <BaseListItem style={listStyles.baseList}>
-      <Card>
-        <TouchableOpacity onPress={() => {
-          props.navigation.push('Single', {file: props.singleMedia, user: props.user});
-        }
-        }>
-          <CardItem style={listStyles.cardStyle}>
-            <Thumbnail square style={{width: 160, height: 160,}}
-             source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
-            />
-          </CardItem>
-        </TouchableOpacity>
+      <Card style={listStyles.card}>
         <Body>
-          <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
-          <Text numberOfLines={1}>{description}</Text>
+          <CardItem>
+            <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
+          </CardItem>
         </Body>
         <CardItem>
-          <Left>
-            <Icon name="heart"/>
-            <Text>{props.singleMedia.favCount}</Text>
-          </Left>
+          <TouchableOpacity onPress={() => {
+            props.navigation.push('Single', {file: props.singleMedia, user: props.user});
+          }
+          }>
+            <CardItem>
+              <Thumbnail square style={listStyles.thumbNail}
+                         source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
+              />
+            </CardItem>
+          </TouchableOpacity>
           <Body>
+            <CardItem>
+              <Icon name="heart"/>
+              <Text>{props.singleMedia.favCount}</Text>
+            </CardItem>
             <CardItem>
               <Icon name="star"/>
               {isNaN(props.singleMedia.rating) ? (
@@ -72,13 +73,13 @@ const ListItem = (props) => {
                 <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
               )}
             </CardItem>
+            <CardItem>
+              {city &&
+              <Icon name="locate"/>
+              }
+              <Text>{city}</Text>
+            </CardItem>
           </Body>
-          <Left>
-            {city &&
-            <Icon name="locate"/>
-            }
-            <Text>{city}</Text>
-          </Left>
         </CardItem>
       </Card>
     </BaseListItem>
