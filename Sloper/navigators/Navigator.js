@@ -60,6 +60,10 @@ const StackNavigator = createStackNavigator(
   {
     Home: {
       screen: TabNavigator,
+      navigationOptions: {
+        headerShown: false,
+      }
+
     },
     Single: {
       screen: Single,

@@ -13,12 +13,13 @@ import {
   CardItem,
   Icon,
 } from "native-base";
-import {Image, Dimensions, StyleSheet,} from 'react-native';
+import {Image, Dimensions, StyleSheet, BackHandler,} from 'react-native';
 import PropTypes from 'prop-types';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
 import * as ImagePicker from "expo-image-picker";
 import {uploadConstraints} from '../constraints/Constraints';
+import BackHeader from '../components/BackHeader';
 
 const Upload = (props) => {
   const {
@@ -81,6 +82,7 @@ const Upload = (props) => {
 
   return (
     <Container>
+      <BackHeader title="Profile" navigation={props.navigation}/>
       {!loading ? (
         <Body>
         <Form>

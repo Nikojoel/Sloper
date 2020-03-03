@@ -9,17 +9,17 @@ import {
   Button,
   Icon,
 } from 'native-base';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, BackHandler} from 'react-native';
 import PropTypes from 'prop-types';
 import AsyncImage from '../components/AsyncImage';
 import {Dimensions} from 'react-native';
 import {UserContext} from '../contexts/UserContext';
+import BackHeader from '../components/BackHeader';
 
 const deviceHeight = Dimensions.get('window').height;
 
 const Profile = (props) => {
   const [{user}, setUser] = useContext(UserContext);
-
   const signOutAsync = async () => {
     await AsyncStorage.clear();
     props.navigation.navigate('Auth');
@@ -27,6 +27,7 @@ const Profile = (props) => {
 
   return (
     <Container>
+      <BackHeader title="Profile" navigation={props.navigation}/>
       <Content>
         <Card>
           <CardItem bordered>
