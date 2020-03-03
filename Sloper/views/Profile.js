@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   Container,
   Content,
@@ -8,12 +8,14 @@ import {
   Body,
   Button,
   Icon,
+  Left,
+  Right,
 } from 'native-base';
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import PropTypes from 'prop-types';
 import AsyncImage from '../components/AsyncImage';
-import { Dimensions } from 'react-native';
-import { UserContext} from '../contexts/UserContext';
+import {Dimensions} from 'react-native';
+import {UserContext} from '../contexts/UserContext';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -25,7 +27,7 @@ const Profile = (props) => {
     props.navigation.navigate('Auth');
   };
 
-   return (
+  return (
     <Container>
       <Content>
         <Card>
@@ -50,18 +52,32 @@ const Profile = (props) => {
               <Text>Fullname: {user.full_name}</Text>
               <Text numberOfLines={1}>email: {user.email}</Text>
             </Body>
-          </CardItem>
-          <CardItem footer bordered>
-              <Button primary rounded onPress={() => {
-                props.navigation.navigate('MyFiles')}}>
-                <Text>My posts</Text>
-              </Button>
-              <Button danger rounded onPress={signOutAsync}>
-                <Text>Logout</Text>
-              </Button>
+            <Right>
               <Button primary rounded onPress={() => props.navigation.navigate('UpdateUser')}>
+                <Icon name='settings'/>
                 <Text>Edit</Text>
               </Button>
+            </Right>
+          </CardItem>
+          <CardItem footer bordered>
+            <Body>
+            <Left>
+            <Button primary rounded onPress={() => {
+              props.navigation.navigate('MyFiles')
+            }}>
+              <Icon name='bookmarks'/>
+              <Text>My posts</Text>
+            </Button>
+            </Left>
+            </Body>
+            <Body>
+              <Right>
+            <Button danger rounded onPress={signOutAsync}>
+              <Icon name='trash'/>
+              <Text>Logout</Text>
+            </Button>
+              </Right>
+            </Body>
           </CardItem>
         </Card>
       </Content>
