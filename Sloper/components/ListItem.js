@@ -50,7 +50,7 @@ const ListItem = (props) => {
         }>
           <CardItem style={listStyles.cardStyle}>
             <AsyncImage style={listStyles.asyncImage}
-                        source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
+              source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
             />
           </CardItem>
         </TouchableOpacity>
@@ -77,7 +77,7 @@ const ListItem = (props) => {
             {city &&
             <Icon name="locate"/>
             }
-              <Text>{city}</Text>
+            <Text>{city}</Text>
           </Left>
         </CardItem>
       </Card>

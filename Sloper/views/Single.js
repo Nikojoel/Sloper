@@ -125,7 +125,7 @@ const Single = (props) => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Left>
-          <H3>{comment.username}: </H3>
+          <Text style={singleStyles.username}>{comment.username}: </Text>
           <Text>{comment.comment}</Text>
         </Left>
       </ListItem>
@@ -387,7 +387,7 @@ const Single = (props) => {
                     await postComment();
                   }}
                 >
-                  <Icon name='pizza'/>
+                  <Icon name='md-send'/>
                 </Button>
               </Item>
             </Form>

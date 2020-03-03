@@ -104,6 +104,10 @@ const singleStyles = StyleSheet.create({
   border: {
     borderColor: 'transparent',
   },
+  username: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });
 
 
