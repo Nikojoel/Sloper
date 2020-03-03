@@ -78,15 +78,6 @@ const Single = (props) => {
     };
   });*/
 
-  const reloadData = () => {
-    const newData = {
-      favCount: file.favCount + 1,
-      ratingTot: file.rating + 5,
-      ratingNum: file.ratingNum + 1,
-      rating: (file.ratingTot + 5) / (file.ratingNum + 1),
-    };
-    modifyContext(media, file, newData);
-  };
 
   const getComments = (id) => {
     const [comments, setComments] = useState([]);
@@ -104,10 +95,10 @@ const Single = (props) => {
             i.username = user.username;
           }),
         );
-
         for (const x in rating) {
-          if (rating[x].user_id === userParsed.user_id) {
+          if (rating[x].user_id === userParsed.user.user_id) {
             comments.myRating = rating[x].rating;
+            console.log('my rating', comments.myRating);
             break;
           }
         }
