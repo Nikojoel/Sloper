@@ -120,8 +120,9 @@ const getAllUserMedia = () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
       const json = await fetchAPI("GET", "media/user", undefined, token);
+      const removedDpofile = [...json.filter(i => i.title !== "undefined")];
       const result = await Promise.all(
-        json.map(async item => {
+        removedDpofile.map(async item => {
           return await fetchAPI("GET", "media", item.file_id);
         })
       );

@@ -70,6 +70,7 @@ const Login = (props) => {
           'tags',
           'sloper_avatar_' + user.user.user_id,
         );
+        console.log(avatarPic);
         let avPic = '';
         if (avatarPic.length === 0 || avatarPic === placeHolder) {
           // if avatar is not set or
