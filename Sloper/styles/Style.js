@@ -99,19 +99,21 @@ const listStyles = StyleSheet.create({
     }),
   },
   heartColor: {
-    color: 'red',
+    color: 'black',
   },
   starColor: {
-    color: '#ffe100',
+    color: 'black',
   },
   locationColor: {
-    color: '#3f51b5',
+    color: 'black',
   },
   listTitle: {
     zIndex: 1,
+    marginLeft: -15,
     maxWidth: windowWidth * 0.6,
-    color: 'white',
-    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    color: 'black',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    top: -15,
   },
 });
 
@@ -125,11 +127,11 @@ const singleStyles = StyleSheet.create({
   },
   heart: {
     color: '#3F51B5',
-    width: 30,
+    fontSize: 30,
   },
   heartLiked: {
     color: 'red',
-    width: 30,
+    fontSize: 30,
   },
   commentTitle: {
     fontSize: 25,
