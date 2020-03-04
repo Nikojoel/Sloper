@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
-  View,
   AsyncStorage,
   Image,
-  TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Slider,
 } from "react-native";
+
 import {
   Form,
   Container,
@@ -33,11 +33,18 @@ import {fetchAPI, uploadImage} from '../hooks/APIHooks'
 import {loginConstraints} from '../constraints/Constraints'
 import { UserContext } from '../contexts/UserContext';
 
-
 const UpdateUser = ({navigation}) => {
-
+  const skillLevel = [
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+    "Expert",
+  ];
   const [{user, token}, setUser] = useContext(UserContext);
   const { handleUpload } = useUploadForm();
+  const [skillState, setSkill] = useState(skillLevel[user.skill]);
+  const [skillNumber, setSkillNumber] = useState({});
+
   const {
     handleUsernameChange,
     handlePasswordChange,
@@ -107,6 +114,11 @@ const UpdateUser = ({navigation}) => {
       if (avatarPic !== undefined) {
         await handleUpload(avatarPic, undefined, 'sloper_avatar_' + user.user_id)
       }
+      const formData = new FormData();
+      formData.append("file", {uri: "https://placekitten.com/1024/1024", name: "skillLevelTemplate.jpg", type: "image/jpeg"});
+      formData.append("description", skillNumber);
+      await uploadImage(formData, 'sloper_skill_' + user.user_id);
+      console.log(formData);
       await fetchAPI('PUT','users',undefined , token, update);
       await AsyncStorage.clear();
       navigation.navigate('AuthLoading');
@@ -134,7 +146,7 @@ const UpdateUser = ({navigation}) => {
           onChangeText={handleUsernameChange}
           onEndEditing={() => {
             checkAvail(inputs.username);
-            validateField(validationProperties.username)
+            validateField(validationProperties.username);
           }}
           error={errors.username}
         />
@@ -183,6 +195,27 @@ const UpdateUser = ({navigation}) => {
           error={errors.confirmPassword}
         />
         </Item>
+        </CardItem>
+        <Body>
+          <Label>{skillState}</Label>
+        </Body>
+        <CardItem>
+          <Slider
+            style={{width: 300, height: 40}}
+            value={user.skill}
+            minimumValue={0}
+            maximumValue={3}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#000000"
+            onSlidingComplete={(value) => {
+              setSkill(skillLevel[Math.ceil(value)]);
+              setSkillNumber(Math.ceil(value));
+            }}
+          />
+        </CardItem>
+        <CardItem bordered>
+          <Item style={{borderColor: "transparent"}}>
+          </Item>
         </CardItem>
         <CardItem bordered>
           <Left>

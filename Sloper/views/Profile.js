@@ -18,13 +18,20 @@ import BackHeader from '../components/BackHeader';
 
 const deviceHeight = Dimensions.get('window').height;
 
+const skillLevel = [
+  "Beginner",
+  "Intermediate",
+  "Advanced",
+  "Expert",
+];
+
 const Profile = (props) => {
   const [{user}, setUser] = useContext(UserContext);
   const signOutAsync = async () => {
     await AsyncStorage.clear();
     props.navigation.navigate('Auth');
   };
-
+  console.log(user);
   return (
     <Container>
       <BackHeader title="Profile" navigation={props.navigation}/>
@@ -51,6 +58,7 @@ const Profile = (props) => {
             <Body>
               <Text style={{fontSize: 16}}>Full Name: {user.full_name}</Text>
               <Text style={{fontSize: 16}}>Email: {user.email}</Text>
+              <Text style={{fontSize: 16}}>Skill Level: {skillLevel[user.skill]}</Text>
             </Body>
           </CardItem>
           <Body>
