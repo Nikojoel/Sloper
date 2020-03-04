@@ -83,7 +83,7 @@ const Login = (props) => {
         console.log('setting profile picture error ', e);
       }
       try {
-        const result = fetchAPI('GET', 'tags', 'sloper_skil_'+ user.user.user_id)
+        const result = await fetchAPI('GET', 'tags', 'sloper_skil_'+ user.user.user_id)
         let skill = "";
         if (result.length === 0) {
           skill = 1
