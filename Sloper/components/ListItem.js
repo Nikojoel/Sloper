@@ -45,28 +45,26 @@ const ListItem = (props) => {
     <BaseListItem style={listStyles.baseList}>
       <Card style={listStyles.card}>
         <Body>
-          <CardItem>
-            <H3 numberOfLines={1}>{props.singleMedia.title}</H3>
-          </CardItem>
+            <H3 style={listStyles.listTitle} numberOfLines={1}>{props.singleMedia.title}</H3>
         </Body>
         <CardItem>
           <TouchableOpacity onPress={() => {
             props.navigation.push('Single', {file: props.singleMedia, user: props.user});
           }
           }>
-            <CardItem>
+
               <Thumbnail square style={listStyles.thumbNail}
                          source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
               />
-            </CardItem>
+
           </TouchableOpacity>
           <Body>
             <CardItem>
-              <Icon name="heart"/>
+              <Icon style={listStyles.heartColor} name="heart"/>
               <Text>{props.singleMedia.favCount}</Text>
             </CardItem>
             <CardItem>
-              <Icon name="star"/>
+              <Icon style={listStyles.starColor} name="star"/>
               {isNaN(props.singleMedia.rating) ? (
                 <Text>0</Text>
               ) : (
@@ -75,7 +73,7 @@ const ListItem = (props) => {
             </CardItem>
             <CardItem>
               {city &&
-              <Icon name="locate"/>
+              <Icon style={listStyles.locationColor} name="locate"/>
               }
               <Text>{city}</Text>
             </CardItem>
