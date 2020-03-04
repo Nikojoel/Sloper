@@ -12,6 +12,7 @@ import {
   Icon,
   Card,
   CardItem,
+  View,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import nearbyCities from 'nearby-big-cities';
@@ -29,7 +30,7 @@ const ListItem = (props) => {
 
   let temp = '';
   if (exif === undefined || exif.GPSLatitude === undefined || exif.GPSLatitude === null) {
-    temp = undefined;
+    temp = 'Unknown';
   } else {
     const query = {latitude: exif.GPSLatitude, longitude: exif.GPSLongitude};
     const cities = nearbyCities(query);
@@ -45,22 +46,19 @@ const ListItem = (props) => {
     <BaseListItem style={listStyles.baseList}>
       <Card style={listStyles.card}>
         <CardItem>
-          <Body>
-            <H3 style={listStyles.listTitle} numberOfLines={1}>{props.singleMedia.title}</H3>
-          </Body>
-        </CardItem>
-        <CardItem>
           <TouchableOpacity onPress={() => {
             props.navigation.push('Single', {file: props.singleMedia, user: props.user});
           }
           }>
+            <H3 style={listStyles.listTitle} numberOfLines={1}>{props.singleMedia.title}</H3>
 
             <Thumbnail square style={listStyles.thumbNail}
-                       source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
+                       source={{uri: mediaURL + props.singleMedia.thumbnails.w640}}
             />
 
           </TouchableOpacity>
-          <Body>
+          <Body style={{marginTop: -10}}>
+
             <CardItem>
               <Icon style={listStyles.heartColor} name="heart"/>
               <Text>{props.singleMedia.favCount}</Text>

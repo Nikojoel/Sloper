@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet, Platform} from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -63,34 +63,56 @@ const formStyles = StyleSheet.create({
 
 const listStyles = StyleSheet.create({
   thumbNail: {
-    width: 160,
-    height: 160,
-  },
-  cardStyle: {
-    width: windowWidth * 0.5,
-    height: windowHeight * 0.2,
+    ...Platform.select({
+      ios: {
+        width: windowWidth * 0.6,
+        height: windowHeight * 0.18,
+        marginLeft: -15,
+        marginTop: -37,
+      },
+      android: {
+        width: windowWidth * 0.6,
+        height: windowHeight * 0.3,
+        marginLeft: -15,
+        marginTop: -10,
+      },
+    }),
   },
   baseList: {
     borderColor: 'transparent',
     backgroundColor: 'aliceblue',
+    marginLeft: 0,
   },
   card: {
-    width: windowWidth * 0.9,
-    height: windowHeight * 0.27,
+    ...Platform.select({
+      ios: {
+        width: windowWidth,
+        height: windowHeight * 0.16,
+        marginTop: -5,
+        marginBottom: 0,
+      },
+      android: {
+        width: windowWidth,
+        height: windowHeight * 0.28,
+        marginTop: -5,
+      },
+    }),
   },
   heartColor: {
     color: 'red',
-    marginLeft: 30,
   },
   starColor: {
     color: '#ffe100',
-    marginLeft: 30,
   },
   locationColor: {
     color: '#3f51b5',
-    marginLeft: 30,
   },
-  listTitle: {},
+  listTitle: {
+    zIndex: 1,
+    maxWidth: windowWidth * 0.6,
+    color: 'white',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+  },
 });
 
 const singleStyles = StyleSheet.create({
