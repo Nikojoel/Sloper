@@ -31,7 +31,7 @@ const Profile = (props) => {
       <Content>
         <Card>
           <CardItem bordered>
-            <Icon name='ios-contact' style={{fontSize: 30}}/>
+            <Icon name='ios-person' style={{fontSize: 30,}}/>
             <Text style={{fontSize: 16}}>Username: {user.username}</Text>
           </CardItem>
           <CardItem>

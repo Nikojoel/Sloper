@@ -82,7 +82,7 @@ const Upload = (props) => {
 
   return (
     <Container>
-      <BackHeader title="Profile" navigation={props.navigation}/>
+      <BackHeader title="Upload" navigation={props.navigation}/>
       {!loading ? (
         <Body>
         <Form>

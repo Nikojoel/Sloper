@@ -11,7 +11,7 @@ const loginConstraints = {
     },
   },
   fullname: {
-    presence: 'cannot be blank.',
+    presence: 'cannot be blank',
   },
   password: {
     length: {
