@@ -72,9 +72,9 @@ const listStyles = StyleSheet.create({
       },
       android: {
         width: windowWidth * 0.6,
-        height: windowHeight * 0.3,
+        height: windowHeight * 0.2,
         marginLeft: -15,
-        marginTop: -10,
+        marginTop: -40,
       },
     }),
   },
@@ -89,11 +89,10 @@ const listStyles = StyleSheet.create({
         width: windowWidth,
         height: windowHeight * 0.16,
         marginTop: -5,
-        marginBottom: 0,
       },
       android: {
         width: windowWidth,
-        height: windowHeight * 0.28,
+        height: windowHeight * 0.19,
         marginTop: -5,
       },
     }),
@@ -108,12 +107,24 @@ const listStyles = StyleSheet.create({
     color: 'black',
   },
   listTitle: {
-    zIndex: 1,
-    marginLeft: -15,
-    maxWidth: windowWidth * 0.6,
-    color: 'black',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    top: -15,
+    ...Platform.select({
+      ios: {
+        zIndex: 1,
+        marginLeft: -15,
+        maxWidth: windowWidth * 0.6,
+        color: 'black',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        top: -15,
+      },
+      android: {
+        zIndex: 1,
+        marginLeft: -15,
+        maxWidth: windowWidth * 0.6,
+        color: 'black',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        top: -18,
+      },
+    }),
   },
 });
 
