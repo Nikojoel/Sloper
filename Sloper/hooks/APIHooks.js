@@ -137,7 +137,6 @@ const getAllUserMedia = () => {
       result.favourites = favFiles;
       setData(result);
       setLoading(false);
-      console.log(data);
     } catch (e) {
       console.log("getAllUserMedia error", e.message);
     }
