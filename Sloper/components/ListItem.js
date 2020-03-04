@@ -44,18 +44,20 @@ const ListItem = (props) => {
   return (
     <BaseListItem style={listStyles.baseList}>
       <Card style={listStyles.card}>
-        <Body>
+        <CardItem>
+          <Body>
             <H3 style={listStyles.listTitle} numberOfLines={1}>{props.singleMedia.title}</H3>
-        </Body>
+          </Body>
+        </CardItem>
         <CardItem>
           <TouchableOpacity onPress={() => {
             props.navigation.push('Single', {file: props.singleMedia, user: props.user});
           }
           }>
 
-              <Thumbnail square style={listStyles.thumbNail}
-                         source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
-              />
+            <Thumbnail square style={listStyles.thumbNail}
+                       source={{uri: mediaURL + props.singleMedia.thumbnails.w160}}
+            />
 
           </TouchableOpacity>
           <Body>

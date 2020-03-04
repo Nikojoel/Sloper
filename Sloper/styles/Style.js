@@ -76,21 +76,21 @@ const listStyles = StyleSheet.create({
   },
   card: {
     width: windowWidth * 0.9,
-    height: windowHeight * 0.3,
-    marginTop: -12,
+    height: windowHeight * 0.27,
   },
   heartColor: {
     color: 'red',
+    marginLeft: 30,
   },
   starColor: {
     color: '#ffe100',
+    marginLeft: 30,
   },
   locationColor: {
     color: '#3f51b5',
+    marginLeft: 30,
   },
-  listTitle: {
-    marginTop: 30,
-  },
+  listTitle: {},
 });
 
 const singleStyles = StyleSheet.create({
