@@ -18,7 +18,12 @@ import {
   Textarea,
   Text,
   H3,
-  Button, Label, Card, CardItem, Body, Header,
+  Button,
+  Label,
+  Card,
+  CardItem,
+  Body,
+  Left,
 } from 'native-base'
 import useUploadForm from '../hooks/UploadHooks'
 import useSignUpForm from '../hooks/LoginHooks'
@@ -120,10 +125,12 @@ const UpdateUser = ({navigation}) => {
     <Container>
     <Content padder>
       <Form>
-        <Item>
-        <Label>Username:</Label>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-person"}/>
         <FormTextInput
           placeholder={user.username}
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           onChangeText={handleUsernameChange}
           onEndEditing={() => {
             checkAvail(inputs.username);
@@ -132,10 +139,13 @@ const UpdateUser = ({navigation}) => {
           error={errors.username}
         />
         </Item>
-        <Item>
-        <Label>Email:</Label>
+        </CardItem>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-mail"}/>
         <FormTextInput
           placeholder={user.email}
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           onChangeText={handleEmailChange}
           onEndEditing={() => {
             validateField(validationProperties.email)
@@ -143,10 +153,13 @@ const UpdateUser = ({navigation}) => {
           error={errors.email}
         />
         </Item>
-        <Item>
-        <Label>Password:</Label>
+        </CardItem>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-lock"}/>
         <FormTextInput
           placeholder='Password'
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           secureTextEntry={true}
           onChangeText={handlePasswordChange}
           onEndEditing={() => {
@@ -155,10 +168,13 @@ const UpdateUser = ({navigation}) => {
           error={errors.password}
         />
         </Item>
-        <Item>
-        <Label>Confirm Password: </Label>
+        </CardItem>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-lock"}/>
         <FormTextInput
           placeholder='Confirm password'
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           secureTextEntry={true}
           onChangeText={handleConfirmPasswordChange}
           onEndEditing={() => {
@@ -167,16 +183,24 @@ const UpdateUser = ({navigation}) => {
           error={errors.confirmPassword}
         />
         </Item>
-        <Item>
-          <Button onPress={pickImage}><Text>select image</Text></Button>
-          {avatarPic && <Image source={{uri: avatarPic}} style={styles.image}></Image>}
-        </Item>
-        <Item>
-          <Button onPress={async () => {
+        </CardItem>
+        <CardItem bordered>
+          <Left>
+          <Button primary rounded iconLeft onPress={pickImage}>
+            <Icon name={"ios-image"}/>
+            <Text>Select</Text>
+          </Button>
+          <Button warning rounded iconLeft onPress={async () => {
             await updateProfileAsync();
-
-          }}><Text>Update profile</Text></Button>
-        </Item>
+          }}>
+            <Icon name={"ios-cloud-upload"}/>
+            <Text>Update</Text>
+          </Button>
+          </Left>
+          {avatarPic &&
+          <Image source={{uri: avatarPic}} style={styles.image}/>
+          }
+        </CardItem>
        </Form>
       {errors.fetch && (
         <Card>
