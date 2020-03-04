@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
-  View,
   AsyncStorage,
   Image,
-  TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Slider,
 } from "react-native";
+
 import {
   Form,
   Container,
@@ -18,7 +18,12 @@ import {
   Textarea,
   Text,
   H3,
-  Button, Label, Card, CardItem, Body, Header,
+  Button,
+  Label,
+  Card,
+  CardItem,
+  Body,
+  Left,
 } from 'native-base'
 import useUploadForm from '../hooks/UploadHooks'
 import useSignUpForm from '../hooks/LoginHooks'
@@ -28,11 +33,18 @@ import {fetchAPI, uploadImage} from '../hooks/APIHooks'
 import {loginConstraints} from '../constraints/Constraints'
 import { UserContext } from '../contexts/UserContext';
 
-
 const UpdateUser = ({navigation}) => {
-
+  const skillLevel = [
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+    "Expert",
+  ];
   const [{user, token}, setUser] = useContext(UserContext);
   const { handleUpload } = useUploadForm();
+  const [skillState, setSkill] = useState(skillLevel[user.skill]);
+  const [skillNumber, setSkillNumber] = useState({});
+
   const {
     handleUsernameChange,
     handlePasswordChange,
@@ -102,6 +114,11 @@ const UpdateUser = ({navigation}) => {
       if (avatarPic !== undefined) {
         await handleUpload(avatarPic, undefined, 'sloper_avatar_' + user.user_id)
       }
+      const formData = new FormData();
+      formData.append("file", {uri: "https://placekitten.com/1024/1024", name: "skillLevelTemplate.jpg", type: "image/jpeg"});
+      formData.append("description", skillNumber);
+      await uploadImage(formData, 'sloper_skill_' + user.user_id);
+      console.log(formData);
       await fetchAPI('PUT','users',undefined , token, update);
       await AsyncStorage.clear();
       navigation.navigate('AuthLoading');
@@ -120,22 +137,27 @@ const UpdateUser = ({navigation}) => {
     <Container>
     <Content padder>
       <Form>
-        <Item>
-        <Label>Username:</Label>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-person"}/>
         <FormTextInput
           placeholder={user.username}
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           onChangeText={handleUsernameChange}
           onEndEditing={() => {
             checkAvail(inputs.username);
-            validateField(validationProperties.username)
+            validateField(validationProperties.username);
           }}
           error={errors.username}
         />
         </Item>
-        <Item>
-        <Label>Email:</Label>
+        </CardItem>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-mail"}/>
         <FormTextInput
           placeholder={user.email}
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           onChangeText={handleEmailChange}
           onEndEditing={() => {
             validateField(validationProperties.email)
@@ -143,10 +165,13 @@ const UpdateUser = ({navigation}) => {
           error={errors.email}
         />
         </Item>
-        <Item>
-        <Label>Password:</Label>
+        </CardItem>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-lock"}/>
         <FormTextInput
           placeholder='Password'
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           secureTextEntry={true}
           onChangeText={handlePasswordChange}
           onEndEditing={() => {
@@ -155,10 +180,13 @@ const UpdateUser = ({navigation}) => {
           error={errors.password}
         />
         </Item>
-        <Item>
-        <Label>Confirm Password: </Label>
+        </CardItem>
+        <CardItem bordered>
+        <Item style={{borderColor: "transparent"}}>
+        <Icon name={"ios-lock"}/>
         <FormTextInput
           placeholder='Confirm password'
+          style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           secureTextEntry={true}
           onChangeText={handleConfirmPasswordChange}
           onEndEditing={() => {
@@ -167,16 +195,45 @@ const UpdateUser = ({navigation}) => {
           error={errors.confirmPassword}
         />
         </Item>
-        <Item>
-          <Button onPress={pickImage}><Text>select image</Text></Button>
-          {avatarPic && <Image source={{uri: avatarPic}} style={styles.image}></Image>}
-        </Item>
-        <Item>
-          <Button onPress={async () => {
+        </CardItem>
+        <Body>
+          <Label>{skillState}</Label>
+        </Body>
+        <CardItem>
+          <Slider
+            style={{width: 300, height: 40}}
+            value={user.skill}
+            minimumValue={0}
+            maximumValue={3}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#000000"
+            onSlidingComplete={(value) => {
+              setSkill(skillLevel[Math.ceil(value)]);
+              setSkillNumber(Math.ceil(value));
+            }}
+          />
+        </CardItem>
+        <CardItem bordered>
+          <Item style={{borderColor: "transparent"}}>
+          </Item>
+        </CardItem>
+        <CardItem bordered>
+          <Left>
+          <Button primary rounded iconLeft onPress={pickImage}>
+            <Icon name={"ios-image"}/>
+            <Text>Select</Text>
+          </Button>
+          <Button warning rounded iconLeft onPress={async () => {
             await updateProfileAsync();
-
-          }}><Text>Update profile</Text></Button>
-        </Item>
+          }}>
+            <Icon name={"ios-cloud-upload"}/>
+            <Text>Update</Text>
+          </Button>
+          </Left>
+          {avatarPic &&
+          <Image source={{uri: avatarPic}} style={styles.image}/>
+          }
+        </CardItem>
        </Form>
       {errors.fetch && (
         <Card>

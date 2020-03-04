@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Input,
-  Content,
   Badge,
   Item,
   Text,
