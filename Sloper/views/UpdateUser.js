@@ -252,7 +252,6 @@ const UpdateUser = ({navigation}) => {
       )}
     </Content>
   </Container>
-
   );
 };
   const styles = StyleSheet.create({
