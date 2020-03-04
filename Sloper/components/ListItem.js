@@ -56,7 +56,7 @@ const ListItem = (props) => {
             />
 
           </TouchableOpacity>
-          <Body style={{marginTop: -10}}>
+          <Body style={listStyles.bodyMargin}>
 
             <CardItem>
               <Icon style={listStyles.heartColor} name="heart"/>

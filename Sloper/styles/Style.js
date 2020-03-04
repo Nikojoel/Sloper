@@ -126,6 +126,9 @@ const listStyles = StyleSheet.create({
       },
     }),
   },
+  bodyMargin: {
+    marginTop: -10,
+  },
 });
 
 const singleStyles = StyleSheet.create({
