@@ -115,7 +115,7 @@ const UpdateUser = ({navigation}) => {
         await handleUpload(avatarPic, undefined, 'sloper_avatar_' + user.user_id)
       }
       const formData = new FormData();
-      formData.append("file", {uri: "https://placekitten.com/1024/1024", name: "skillLevelTemplate.jpg", type: "image/jpeg"});
+      formData.append("file", {uri: "https://placekitten.com/1024/1024", name: "placeholder.jpg", type: "image/jpeg"});
       formData.append("description", skillNumber);
       await uploadImage(formData, 'sloper_skill_' + user.user_id);
       console.log(formData);
@@ -139,7 +139,7 @@ const UpdateUser = ({navigation}) => {
       <Form>
         <CardItem bordered>
         <Item style={{borderColor: "transparent"}}>
-        <Icon name={"ios-person"}/>
+        <Icon name={"ios-person"} style={{fontSize: 30}}/>
         <FormTextInput
           placeholder={user.username}
           style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
@@ -154,7 +154,7 @@ const UpdateUser = ({navigation}) => {
         </CardItem>
         <CardItem bordered>
         <Item style={{borderColor: "transparent"}}>
-        <Icon name={"ios-mail"}/>
+        <Icon name={"ios-mail"} style={{fontSize: 30}}/>
         <FormTextInput
           placeholder={user.email}
           style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
@@ -168,7 +168,7 @@ const UpdateUser = ({navigation}) => {
         </CardItem>
         <CardItem bordered>
         <Item style={{borderColor: "transparent"}}>
-        <Icon name={"ios-lock"}/>
+        <Icon name={"ios-lock"} style={{fontSize: 30}}/>
         <FormTextInput
           placeholder='Password'
           style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
@@ -183,7 +183,7 @@ const UpdateUser = ({navigation}) => {
         </CardItem>
         <CardItem bordered>
         <Item style={{borderColor: "transparent"}}>
-        <Icon name={"ios-lock"}/>
+        <Icon name={"ios-lock"} style={{fontSize: 30}}/>
         <FormTextInput
           placeholder='Confirm password'
           style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
@@ -200,7 +200,7 @@ const UpdateUser = ({navigation}) => {
           <Label>{skillState}</Label>
         </Body>
         <CardItem>
-          <Icon name={"ios-star"}/>
+          <Icon name={"ios-podium"} style={{fontSize: 30}}/>
           <Slider
             style={{width: 300, height: 40}}
             value={parseInt(user.skill)}

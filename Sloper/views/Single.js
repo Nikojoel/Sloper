@@ -312,7 +312,7 @@ const Single = (props) => {
               {avail ? (
                 <Body>
                   <MapView
-                    style={listStyles.asyncImage}
+                    style={{width: 100, height: 100}}
                     region={{
                       latitude: exif.GPSLatitude,
                       longitude: exif.GPSLongitude,
@@ -367,7 +367,7 @@ const Single = (props) => {
               <CardItem>
                 <Body>
                   <Button
-                    danger
+                    danger rounded iconLeft
                     onPress={() => {
                       deletePost(file.file_id);
                       setMedia([
@@ -377,17 +377,21 @@ const Single = (props) => {
                     }}
                   >
                     <Icon name='ios-trash'/>
+                    <Text>Delete</Text>
                   </Button>
                 </Body>
+                <Right>
                 <Button
-                  warning
+                  warning rounded iconLeft
                   onPress={async () => {
                     setLoading(true);
                     props.navigation.replace('Update', file);
                   }}
                 >
                   <Icon name='ios-cog'/>
+                  <Text>Edit</Text>
                 </Button>
+                </Right>
               </CardItem>
             )}
           </Card>
