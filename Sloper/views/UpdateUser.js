@@ -132,7 +132,7 @@ const UpdateUser = ({navigation}) => {
         }));
     }
   };
-
+  console.log(user);
   return (
     <Container>
     <Content padder>
@@ -200,16 +200,22 @@ const UpdateUser = ({navigation}) => {
           <Label>{skillState}</Label>
         </Body>
         <CardItem>
+          <Icon name={"ios-star"}/>
           <Slider
             style={{width: 300, height: 40}}
-            value={user.skill}
+            value={parseInt(user.skill)}
             minimumValue={0}
             maximumValue={3}
-            minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#000000"
+            minimumTrackTintColor="red"
+            maximumTrackTintColor="blue"
             onSlidingComplete={(value) => {
-              setSkill(skillLevel[Math.ceil(value)]);
-              setSkillNumber(Math.ceil(value));
+              if (value % 1 < 0.5) {
+                setSkill(skillLevel[Math.floor(value)]);
+                setSkillNumber(Math.floor(value));
+              } else {
+                setSkill(skillLevel[Math.ceil(value)]);
+                setSkillNumber(Math.ceil(value));
+              }
             }}
           />
         </CardItem>
