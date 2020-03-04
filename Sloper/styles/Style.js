@@ -132,6 +132,18 @@ const listStyles = StyleSheet.create({
 });
 
 const singleStyles = StyleSheet.create({
+  map: {
+    width: '100%',
+    height: windowHeight * 0.4,
+    flex: 1,
+    marginTop: 0,
+  },
+  asyncImage: {
+    width: '100%',
+    height: windowHeight * 0.5,
+    flex: 1,
+    marginTop: -30,
+  },
   title: {
     fontSize: 40,
     marginTop: 10,

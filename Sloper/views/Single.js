@@ -223,12 +223,7 @@ const Single = (props) => {
               <Body>
                 {file.media_type === 'image' && (
                   <AsyncImage
-                    style={{
-                      width: '100%',
-                      height: deviceHeight / 2,
-                      flex: 1,
-                      marginTop: -30,
-                    }}
+                    style={singleStyles.asyncImage}
                     spinnerColor="#777"
                     source={{uri: mediaURL + file.filename}}
                   />
@@ -312,7 +307,7 @@ const Single = (props) => {
               {avail ? (
                 <Body>
                   <MapView
-                    style={{width: 100, height: 100}}
+                    style={singleStyles.map}
                     region={{
                       latitude: exif.GPSLatitude,
                       longitude: exif.GPSLongitude,
