@@ -79,6 +79,18 @@ const listStyles = StyleSheet.create({
     height: windowHeight * 0.3,
     marginTop: -12,
   },
+  heartColor: {
+    color: 'red',
+  },
+  starColor: {
+    color: '#ffe100',
+  },
+  locationColor: {
+    color: '#3f51b5',
+  },
+  listTitle: {
+    marginTop: 30,
+  },
 });
 
 const singleStyles = StyleSheet.create({
