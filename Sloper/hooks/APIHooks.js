@@ -118,9 +118,11 @@ const getAllUserMedia = () => {
   const [loading, setLoading] = useState(true);
   const fetchMedia = async () => {
     try {
+
       const token = await AsyncStorage.getItem("userToken");
       const json = await fetchAPI("GET", "media/user", undefined, token);
-      const removedDpofile = [...json.filter(i => i.title !== "undefined")];
+      const removedD = [...json.filter(i => i.title !== "undefined")];
+      const removedDpofile = [...removedD.filter(i => i.title !== "")];
       const result = await Promise.all(
         removedDpofile.map(async item => {
           return await fetchAPI("GET", "media", item.file_id);
@@ -135,6 +137,7 @@ const getAllUserMedia = () => {
       result.favourites = favFiles;
       setData(result);
       setLoading(false);
+      console.log(data);
     } catch (e) {
       console.log("getAllUserMedia error", e.message);
     }

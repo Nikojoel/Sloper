@@ -84,7 +84,7 @@ const Login = (props) => {
       }
       try {
         const result = await fetchAPI('GET', 'tags', 'sloper_skill_'+ user.user.user_id);
-        console.log(result);
+        console.log('skill',await result);
         let skill = "";
         if (result.length === 0) {
           skill = 0
