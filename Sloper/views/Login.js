@@ -80,8 +80,21 @@ const Login = (props) => {
         }
         user.user.avatar = avPic;
       } catch (e) {
-        console.log('setting profile picture error');
+        console.log('setting profile picture error ', e);
       }
+      try {
+        const result = fetchAPI('GET', 'tags', 'sloper_skil_'+ user.user.user_id)
+        let skill = "";
+        if (result.length === 0) {
+          skill = 1
+        } else {
+          skill = result[result.length -1].description
+        }
+        user.user.skill = skill;
+      } catch (e) {
+        console.log('setting skilllevel error ', e)
+      }
+
       await AsyncStorage.setItem('user', JSON.stringify(user));
       await setUser(user);
 
