@@ -17,6 +17,7 @@ import {
   Input,
   Label,
   Right,
+  H4,
 } from 'native-base';
 import {
   fetchAPI,
@@ -50,6 +51,7 @@ const deviceHeight = Dimensions.get('window').height;
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const Single = (props) => {
+  const level = ['looser', 'sucker', 'ok', 'master']
   const [media, setMedia] = useContext(MediaContext);
   const [{user,token}, setUser] = useContext(UserContext);
   const [liked, setLiked] = useState();
@@ -164,6 +166,14 @@ const Single = (props) => {
   const getUser = async () => {
     try {
       const user = await fetchAPI('GET', 'users', file.user_id, token);
+      const result = await fetchAPI('GET', 'tags', 'sloper_skill_'+ user.user_id);
+
+      if (result.length < 1) {
+        user.skill = 0
+      } else {
+        user.skill = result[result.length -1].description
+      }
+      console.log(user);
       setOwner(user);
     } catch (e) {
       console.log(e);
@@ -290,7 +300,7 @@ const Single = (props) => {
             <CardItem>
               <Left>
                 <Body>
-                  <Text>By {owner.username}</Text>
+                  <Text>By {owner.username} Skill: {level[owner.skill]}</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -358,7 +368,7 @@ const Single = (props) => {
                 </Button>
               </Item>
             </Form>
-            {owner.user_id === file.user_id && (
+            {user.user_id === file.user_id && (
               <CardItem>
                 <Body>
                   <Button
