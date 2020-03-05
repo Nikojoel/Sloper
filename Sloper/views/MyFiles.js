@@ -18,6 +18,7 @@ import {getAllUserMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
 import {UserContext} from '../contexts/UserContext';
 import {listStyles, myFilesStyles} from '../styles/Style';
+import BackHeader from "../components/BackHeader";
 
 
 const MyFiles = (props) => {
@@ -31,6 +32,7 @@ const MyFiles = (props) => {
 
   return (
     <Container>
+      <BackHeader navigation={props.navigation}/>
       {!loading ? (
         <Container style={listStyles.baseList}>
           <BaseList

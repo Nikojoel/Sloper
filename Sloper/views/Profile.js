@@ -34,7 +34,7 @@ const Profile = (props) => {
   console.log(user);
   return (
     <Container>
-      <BackHeader title="Profile" navigation={props.navigation}/>
+      <BackHeader navigation={props.navigation}/>
       <Content>
         <Card>
           <CardItem bordered>

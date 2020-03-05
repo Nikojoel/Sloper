@@ -46,6 +46,7 @@ import {UserContext} from '../contexts/UserContext';
 import {modifyContext} from '../hooks/ContextHooks';
 import {listStyles, singleStyles} from '../styles/Style';
 import FormTextInput from "../components/FormTextInput";
+import BackHeader from "../components/BackHeader";
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -227,6 +228,7 @@ const Single = (props) => {
 
   return (
     <Container>
+      <BackHeader navigation={props.navigation}/>
       {!loading ? (
         <Content>
           <Card>

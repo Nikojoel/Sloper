@@ -139,10 +139,19 @@ const singleStyles = StyleSheet.create({
     marginTop: 0,
   },
   asyncImage: {
-    width: '100%',
-    height: windowHeight * 0.5,
-    flex: 1,
-    marginTop: -30,
+    ...Platform.select({
+      ios: {
+        width: '100%',
+        height: windowHeight * 0.5,
+        flex: 1,
+        marginTop: -30,
+      },
+      android: {
+        width: '100%',
+        height: windowHeight * 0.5,
+        flex: 1,
+      },
+    }),
   },
   title: {
     fontSize: 40,
@@ -193,11 +202,20 @@ const myFilesStyles = StyleSheet.create({
       ios: {
         backgroundColor: 'white',
       },
-      android: {
-      },
+      android: {},
     }),
   },
 });
 
-export {loginStyles, formStyles, listStyles, singleStyles, myFilesStyles};
+const headerStyles = StyleSheet.create({
+  header: {
+    width: 70,
+    height: 25,
+  },
+  headerArrow: {
+
+  },
+});
+
+export {loginStyles, formStyles, listStyles, singleStyles, myFilesStyles, headerStyles};
 

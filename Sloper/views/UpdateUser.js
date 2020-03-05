@@ -32,6 +32,7 @@ import * as ImagePicker from "expo-image-picker";
 import {fetchAPI, uploadImage} from '../hooks/APIHooks'
 import {loginConstraints} from '../constraints/Constraints'
 import { UserContext } from '../contexts/UserContext';
+import BackHeader from "../components/BackHeader";
 
 const UpdateUser = ({navigation}) => {
   const skillLevel = [
@@ -135,6 +136,7 @@ const UpdateUser = ({navigation}) => {
   console.log(user);
   return (
     <Container>
+      <BackHeader navigation={navigation}/>
     <Content padder>
       <Form>
         <CardItem bordered>
