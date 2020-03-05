@@ -51,9 +51,9 @@ const deviceHeight = Dimensions.get('window').height;
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const Single = (props) => {
-  const level = ['looser', 'sucker', 'ok', 'master']
+  const level = ['looser', 'sucker', 'ok', 'master'];
   const [media, setMedia] = useContext(MediaContext);
-  const [{user,token}, setUser] = useContext(UserContext);
+  const [{user, token}, setUser] = useContext(UserContext);
   const [liked, setLiked] = useState();
   const {navigation} = props;
   const file = navigation.state.params.file;
@@ -69,10 +69,10 @@ const Single = (props) => {
         const comments = await fetchAPI('GET', 'comments/file', id);
         const rating = await fetchAPI('GET', 'ratings/file', id);
         await Promise.all(
-            comments.map(async (i) => {
-              const user = await fetchAPI('GET', 'users', i.user_id, token);
-              i.username = user.username;
-            }),
+          comments.map(async (i) => {
+            const user = await fetchAPI('GET', 'users', i.user_id, token);
+            i.username = user.username;
+          }),
         );
         for (const x in rating) {
           if (rating[x].user_id === user.user_id) {
@@ -145,11 +145,11 @@ const Single = (props) => {
         rating: rating,
       };
       const response = await fetchAPI(
-          'POST',
-          'ratings',
-          undefined,
-          token,
-          data,
+        'POST',
+        'ratings',
+        undefined,
+        token,
+        data,
       );
       const newRating = {
         ratingTot: file.rating + rating,
@@ -166,12 +166,12 @@ const Single = (props) => {
   const getUser = async () => {
     try {
       const user = await fetchAPI('GET', 'users', file.user_id, token);
-      const result = await fetchAPI('GET', 'tags', 'sloper_skill_'+ user.user_id);
+      const result = await fetchAPI('GET', 'tags', 'sloper_skill_' + user.user_id);
 
       if (result.length < 1) {
-        user.skill = 0
+        user.skill = 0;
       } else {
-        user.skill = result[result.length -1].description
+        user.skill = result[result.length - 1].description;
       }
       console.log(user);
       setOwner(user);
@@ -255,7 +255,7 @@ const Single = (props) => {
                 )}
               </Body>
             </CardItem>
-            <CardItem style={{marginTop: -60}}>
+            <CardItem bordered style={{marginTop: -60}}>
               <Left>
                 <Body>
                   <CardItem>
@@ -292,27 +292,41 @@ const Single = (props) => {
                 </Button>
               </Right>
             </CardItem>
-            <CardItem>
+            <CardItem bordered>
               <Left>
+                <Icon name='ios-reorder'/>
                 <Text style={singleStyles.description}>{description}</Text>
               </Left>
             </CardItem>
-            <CardItem>
+            <Body>
+            <CardItem bordered>
               <Left>
-                <Body>
-                  <Text>By {owner.username} Skill: {level[owner.skill]}</Text>
-                </Body>
+                  <Icon name='ios-person'/>
+                  <Text>{owner.username}</Text>
               </Left>
             </CardItem>
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              rating={star}
-              selectedStar={(rating) => {
-                setStar(rating);
-                postRating(rating);
-              }}
-            />
+              <CardItem bordered>
+                <Left>
+                  <Icon name='ios-podium'/>
+                  <Text>{level[owner.skill]}</Text>
+                </Left>
+              </CardItem>
+            </Body>
+            <Body>
+              <Text style={{marginTop: 10}}>Rate this post</Text>
+              <CardItem bordered>
+                <StarRating
+                  fullStarColor={'gold'}
+                  disabled={false}
+                  maxStars={5}
+                  rating={star}
+                  selectedStar={(rating) => {
+                    setStar(rating);
+                    postRating(rating);
+                  }}
+                />
+              </CardItem>
+            </Body>
             <CardItem>
               {avail ? (
                 <Body>
@@ -338,7 +352,7 @@ const Single = (props) => {
                 <Text>No GPS data available</Text>
               )}
             </CardItem>
-            <Item style={singleStyles.border}>
+            <Item>
               <Body>
                 <CardItem>
                   <Text style={singleStyles.commentTitle}>Comments </Text>
@@ -346,7 +360,7 @@ const Single = (props) => {
                 </CardItem>
               </Body>
             </Item>
-            <Item style={singleStyles.border}>
+            <Item>
               <List>{commentList}</List>
             </Item>
             <Form>
@@ -386,16 +400,16 @@ const Single = (props) => {
                   </Button>
                 </Body>
                 <Right>
-                <Button
-                  warning rounded iconLeft
-                  onPress={async () => {
-                    setLoading(true);
-                    props.navigation.replace('Update', file);
-                  }}
-                >
-                  <Icon name='ios-cog'/>
-                  <Text>Edit</Text>
-                </Button>
+                  <Button
+                    warning rounded iconLeft
+                    onPress={async () => {
+                      setLoading(true);
+                      props.navigation.replace('Update', file);
+                    }}
+                  >
+                    <Icon name='ios-cog'/>
+                    <Text>Edit</Text>
+                  </Button>
                 </Right>
               </CardItem>
             )}

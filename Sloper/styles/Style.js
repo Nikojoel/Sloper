@@ -154,10 +154,12 @@ const singleStyles = StyleSheet.create({
   heart: {
     color: '#3F51B5',
     fontSize: 30,
+    marginRight: 20,
   },
   heartLiked: {
     color: 'red',
     fontSize: 30,
+    marginRight: 20,
   },
   commentTitle: {
     fontSize: 25,
