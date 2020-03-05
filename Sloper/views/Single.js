@@ -45,6 +45,7 @@ import {MediaContext} from '../contexts/MediaContext';
 import {UserContext} from '../contexts/UserContext';
 import {modifyContext} from '../hooks/ContextHooks';
 import {listStyles, singleStyles} from '../styles/Style';
+import FormTextInput from "../components/FormTextInput";
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -104,6 +105,7 @@ const Single = (props) => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Left>
+          <Icon name='chatbubbles'/>
           <Text style={singleStyles.username}>{comment.username}: </Text>
           <Text>{comment.comment}</Text>
         </Left>
@@ -294,7 +296,7 @@ const Single = (props) => {
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Icon name='ios-reorder'/>
+                <Icon name='paper'/>
                 <Text style={singleStyles.description}>{description}</Text>
               </Left>
             </CardItem>
@@ -356,7 +358,6 @@ const Single = (props) => {
               <Body>
                 <CardItem>
                   <Text style={singleStyles.commentTitle}>Comments </Text>
-                  <Icon name='chatbubbles'/>
                 </CardItem>
               </Body>
             </Item>
@@ -364,14 +365,15 @@ const Single = (props) => {
               <List>{commentList}</List>
             </Item>
             <Form>
-              <Item>
+              <Item style={singleStyles.commentForm}>
                 <Input
+                  style={singleStyles.commentInput}
                   placeholder="Write a comment"
                   onChangeText={handleCommentChange}
                   value={inputs.comment}
                 />
                 <Button
-                  warning
+                  primary
                   rounded
                   onPress={async () => {
                     handleCommentChange('');

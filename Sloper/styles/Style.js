@@ -162,8 +162,7 @@ const singleStyles = StyleSheet.create({
     marginRight: 20,
   },
   commentTitle: {
-    fontSize: 25,
-    textDecorationLine: 'underline',
+    fontSize: 20,
   },
   comments: {
     width: windowWidth * 0.7,
@@ -175,6 +174,16 @@ const singleStyles = StyleSheet.create({
   username: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  commentForm: {
+    borderColor: 'transparent',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  commentInput: {
+    borderRadius: 25,
+    borderStyle: 'solid',
+    borderWidth: 1,
   },
 });
 
