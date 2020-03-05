@@ -39,7 +39,6 @@ const Upload = (props) => {
   const [image, setImage] = useState(null);
   const [exif, setExif] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [city, setCity] = useState(undefined);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -80,17 +79,16 @@ const Upload = (props) => {
           fetch: undefined,
         }));
 
+      let city = undefined;
       try {
         const result = await fetch(geoApi + exif.GPSLatitude + "+" + exif.GPSLongitude + "&key=" + apiKey);
         const response = await result.json();
         const components = response.results[0].components;
 
         if (components.town !== undefined || null) {
-          setCity(components.town);
+          city = components.town;
         } else if (components.city !== undefined || null) {
-          setCity(components.city);
-        } else {
-          setCity(undefined);
+          city = components.city;
         }
       } catch (e) {
         console.log("geo api error", e);
@@ -99,9 +97,10 @@ const Upload = (props) => {
       const resultData = {
         GPSLatitude: exif.GPSLatitude,
         GPSLongitude: exif.GPSLongitude,
+        GPSAltitude: exif.GPSAltitude,
         location: city,
       };
-      await handleUpload(image, resultData, 'sloperTEST2');
+      await handleUpload(image, resultData, 'sloperTESTV2');
       props.navigation.replace("Home");
     }
   };

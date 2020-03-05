@@ -23,24 +23,16 @@ import {listStyles} from '../styles/Style';
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const ListItem = (props) => {
-  const [city, setCity] = useState(undefined);
   const allData = JSON.parse(props.singleMedia.description);
   const description = allData.description;
   const exif = allData.exif;
 
-  let temp = '';
-  if (exif === undefined || exif.GPSLatitude === undefined || exif.GPSLatitude === null) {
-    temp = 'Unknown';
+  let city = '';
+  if (exif.location === undefined ) {
+    city = 'Unknown';
   } else {
-    const query = {latitude: exif.GPSLatitude, longitude: exif.GPSLongitude};
-    const cities = nearbyCities(query);
-    temp = cities[0].name;
+    city = exif.location;
   }
-
-  useEffect(() => {
-    setCity(temp);
-    console.log("exif: ", exif, "postTitle: ", props.singleMedia.title);
-  }, []);
 
   return (
     <BaseListItem style={listStyles.baseList}>
