@@ -14,7 +14,7 @@ const BackHeader = ({navigation, title}) => {
         </Button>
       </Left>
       <Body>
-        <Title>{title}</Title>
+        <Image source={require('../public/media/sloper.png')}></Image>
       </Body>
       <Right>
         <Button transparent onPress={()=> {navigation.navigate('Profile')}}>
