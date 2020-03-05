@@ -57,25 +57,29 @@ const ListItem = (props) => {
 
           </TouchableOpacity>
           <Body style={listStyles.bodyMargin}>
-
-            <CardItem>
-              <Icon style={listStyles.heartColor} name="heart"/>
-              <Text>{props.singleMedia.favCount}</Text>
-            </CardItem>
-            <CardItem>
-              <Icon style={listStyles.starColor} name="star"/>
-              {isNaN(props.singleMedia.rating) ? (
-                <Text>0</Text>
-              ) : (
-                <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
-              )}
-            </CardItem>
-            <CardItem>
-              {city &&
-              <Icon style={listStyles.locationColor} name="locate"/>
-              }
-              <Text>{city}</Text>
-            </CardItem>
+            <TouchableOpacity onPress={() => {
+              props.navigation.push('Single', {file: props.singleMedia, user: props.user});
+            }
+            }>
+              <CardItem>
+                <Icon style={listStyles.heartColor} name="heart"/>
+                <Text>{props.singleMedia.favCount}</Text>
+              </CardItem>
+              <CardItem>
+                <Icon style={listStyles.starColor} name="star"/>
+                {isNaN(props.singleMedia.rating) ? (
+                  <Text>0</Text>
+                ) : (
+                  <Text>{props.singleMedia.rating.toFixed(1)}/5</Text>
+                )}
+              </CardItem>
+              <CardItem>
+                {city &&
+                <Icon style={listStyles.locationColor} name="locate"/>
+                }
+                <Text>{city}</Text>
+              </CardItem>
+            </TouchableOpacity>
           </Body>
         </CardItem>
       </Card>
