@@ -61,6 +61,7 @@ const Single = (props) => {
   const [owner, setOwner] = useState({});
   const {inputs, handleCommentChange} = useCommentForm();
   const [star, setStar] = useState(0);
+  const [loadingSingle, setLoadingSingle] = useState(true);
 
   const getComments = (id) => {
     const [comments, setComments] = useState([]);
@@ -86,6 +87,7 @@ const Single = (props) => {
         setStar(comments.myRating);
         setComments(comments);
         setCommentsLoading(false);
+        setLoading(false);
       } catch (e) {
         console.log('comments loading error ', e);
       }
@@ -209,7 +211,7 @@ const Single = (props) => {
     checkLicked();
   }, []);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [avail, setAvail] = useState(false);
   const allData = JSON.parse(file.description);
   const exif = allData.exif;
