@@ -189,7 +189,13 @@ const singleStyles = StyleSheet.create({
 
 const myFilesStyles = StyleSheet.create({
   tabFooter: {
-    backgroundColor: 'white',
+    ...Platform.select({
+      ios: {
+        backgroundColor: 'white',
+      },
+      android: {
+      },
+    }),
   },
 });
 
