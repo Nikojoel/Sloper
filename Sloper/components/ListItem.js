@@ -39,6 +39,7 @@ const ListItem = (props) => {
 
   useEffect(() => {
     setCity(temp);
+    console.log("exif: ", exif, "postTitle: ", props.singleMedia.title);
   }, []);
 
   return (

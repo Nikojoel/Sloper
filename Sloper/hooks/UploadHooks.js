@@ -46,12 +46,10 @@ const useUploadForm = (constraints = {}) => {
         description: inputs.postText,
         exif: exifData,
       };
-      console.log("filename", filename);
-      console.log("file", file);
-      console.log("type", type);
       formData.append("file", {uri: file, name: filename, type});
       formData.append("title", inputs.title);
       formData.append("description", JSON.stringify(descriptionData));
+      console.log(formData);
       await uploadImage(formData, tag);
     } catch (e) {
       console.log("upload error", e);

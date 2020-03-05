@@ -77,7 +77,7 @@ const getAllMedia = () => {
   const [loading, setLoading] = useState(true);
   const fetchMedia = async () => {
     try {
-      const json = await fetchAPI("GET", "tags/sloperTEST");
+      const json = await fetchAPI("GET", "tags/sloperTEST2");
       const result = await Promise.all(
         json
           .reverse()
