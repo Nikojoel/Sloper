@@ -17,7 +17,7 @@ import ListItem from '../components/ListItem';
 import {getAllUserMedia} from '../hooks/APIHooks';
 import PropTypes from 'prop-types';
 import {UserContext} from '../contexts/UserContext';
-import {listStyles} from '../styles/Style';
+import {listStyles, myFilesStyles} from '../styles/Style';
 
 
 const MyFiles = (props) => {
@@ -52,13 +52,13 @@ const MyFiles = (props) => {
               }
             }}>
               <Tab heading={
-                <TabHeading style={{backgroundColor: 'red'}}>
+                <TabHeading style={myFilesStyles.tabFooter}>
                   <Icon name="person"/>
                   <Text>My Files</Text>
                 </TabHeading>}>
               </Tab>
               <Tab heading={
-                <TabHeading style={{backgroundColor: 'red'}}>
+                <TabHeading style={myFilesStyles.tabFooter}>
                   <Icon name="heart"/>
                   <Text>My Favourites</Text>
                 </TabHeading>}>

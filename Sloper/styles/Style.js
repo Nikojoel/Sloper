@@ -187,6 +187,11 @@ const singleStyles = StyleSheet.create({
   },
 });
 
+const myFilesStyles = StyleSheet.create({
+  tabFooter: {
+    backgroundColor: 'white',
+  },
+});
 
-export {loginStyles, formStyles, listStyles, singleStyles};
+export {loginStyles, formStyles, listStyles, singleStyles, myFilesStyles};
 
