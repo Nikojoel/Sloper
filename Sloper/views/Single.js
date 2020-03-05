@@ -330,7 +330,7 @@ const Single = (props) => {
               </CardItem>
             </Body>
             <CardItem>
-              {avail ? (
+              {avail &&
                 <Body>
                   <MapView
                     style={singleStyles.map}
@@ -350,9 +350,7 @@ const Single = (props) => {
                     />
                   </MapView>
                 </Body>
-              ) : (
-                <Text>No GPS data available</Text>
-              )}
+              }
             </CardItem>
             <Item>
               <Body>
