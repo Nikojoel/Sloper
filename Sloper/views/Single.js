@@ -18,6 +18,7 @@ import {
   Label,
   Right,
   H4,
+  Spinner,
 } from 'native-base';
 import {
   fetchAPI,
@@ -44,7 +45,7 @@ import StarRating from 'react-native-star-rating';
 import {MediaContext} from '../contexts/MediaContext';
 import {UserContext} from '../contexts/UserContext';
 import {modifyContext} from '../hooks/ContextHooks';
-import {listStyles, singleStyles} from '../styles/Style';
+import {listStyles, loadingStyles, singleStyles} from '../styles/Style';
 import FormTextInput from "../components/FormTextInput";
 import BackHeader from "../components/BackHeader";
 
@@ -420,7 +421,7 @@ const Single = (props) => {
           </Card>
         </Content>
       ) : (
-        <ActivityIndicator size="large" color="#0000ff"/>
+        <Spinner style={loadingStyles.activityIndicator} size="large" color="blue"/>
       )}
     </Container>
   );

@@ -11,11 +11,11 @@ const BackHeader = ({navigation, title}) => {
     <Header style={{backgroundColor: 'white'}}>
       <Left>
         <Button transparent onPress={()=>{navigation.goBack()} }>
-          <Icon name="arrow-back" />
+          <Icon style={headerStyles.headerArrow} name="arrow-back" />
         </Button>
       </Left>
       <Body>
-        <Image style={headerStyles.header} source={require('../public/media/sloper.png')}></Image>
+        <Image style={headerStyles.headerLogo} source={require('../public/media/sloper.png')}></Image>
       </Body>
       <Right>
         <Button transparent onPress={()=> {navigation.navigate('Profile')}}>

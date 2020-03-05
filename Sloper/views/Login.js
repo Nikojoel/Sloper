@@ -12,14 +12,14 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {AsyncStorage, Dimensions, StyleSheet} from 'react-native';
+import {AsyncStorage, Dimensions, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {fetchAPI} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHooks';
 import {Video} from 'expo-av';
 import {loginConstraints} from '../constraints/Constraints';
-import {formStyles, loginStyles} from '../styles/Style';
+import {formStyles, headerStyles, loginStyles} from '../styles/Style';
 import {UserContext} from '../contexts/UserContext';
 
 
@@ -137,6 +137,7 @@ const Login = (props) => {
 
   return (
     <Container>
+      <Image style={headerStyles.loginLogo} source={require('../public/media/sloper.png')}/>
       <Video
         source={require('../public/media/loginVideo.mp4')}
         style={loginStyles.backgroundVideo}

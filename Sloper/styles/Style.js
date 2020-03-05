@@ -1,4 +1,5 @@
-import {Dimensions, StyleSheet, Platform} from 'react-native';
+import {Dimensions, StyleSheet, Platform, ActivityIndicator} from 'react-native';
+import React from "react";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -15,7 +16,14 @@ const loginStyles = StyleSheet.create({
     right: 0,
   },
   content: {
-    top: '20%',
+    ...Platform.select({
+      ios: {
+        top: '20%',
+      },
+      android: {
+        top: '10%',
+      },
+    }),
   },
   title: {
     color: 'grey',
@@ -129,6 +137,12 @@ const listStyles = StyleSheet.create({
   bodyMargin: {
     marginTop: -10,
   },
+  headerBar: {
+    backgroundColor: 'white',
+  },
+  headerInput: {
+    backgroundColor: 'rgba(52, 52, 52, 0.3)',
+  },
 });
 
 const singleStyles = StyleSheet.create({
@@ -208,14 +222,41 @@ const myFilesStyles = StyleSheet.create({
 });
 
 const headerStyles = StyleSheet.create({
-  header: {
-    width: 70,
-    height: 25,
+  headerLogo: {
+    ...Platform.select({
+      ios: {
+        width: 70,
+        height: 25,
+        marginLeft: 10,
+      },
+      android: {
+        width: 70,
+        height: 25,
+        marginLeft: 95,
+      },
+    }),
   },
   headerArrow: {
-
+    ...Platform.select({
+      ios: {},
+      android: {
+        color: 'blue',
+      },
+    }),
+  },
+  loginLogo: {
+    width: 150,
+    height: 50,
+    top: '8%',
+    left: '33%',
   },
 });
 
-export {loginStyles, formStyles, listStyles, singleStyles, myFilesStyles, headerStyles};
+const loadingStyles = StyleSheet.create({
+  activityIndicator: {
+    top: '30%',
+  },
+});
+
+export {loginStyles, formStyles, listStyles, singleStyles, myFilesStyles, headerStyles, loadingStyles};
 

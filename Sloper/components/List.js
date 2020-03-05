@@ -45,8 +45,8 @@ const List = props => {
 
   return (
     <Container style={listStyles.baseList}>
-      <Header searchBar rounded>
-        <Item>
+      <Header style={listStyles.headerBar} searchBar rounded>
+        <Item style={listStyles.headerInput}>
           <Icon name="ios-search" />
           <Input placeholder="Search"
           onChangeText={t => {
@@ -54,7 +54,6 @@ const List = props => {
             handleSearch(t);
           }}
           value={inputs.search} />
-          <Icon name="ios-people" />
         </Item>
      </Header>
       {!loading ? (
