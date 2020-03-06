@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   Container,
   Body,
@@ -12,7 +12,7 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {AsyncStorage, Dimensions, Image, StyleSheet} from 'react-native';
+import {AsyncStorage,Keyboard, Dimensions, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {fetchAPI} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
@@ -135,6 +135,27 @@ const Login = (props) => {
     }
   };
 
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+ useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true); // or some other action
+     }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // or some other action
+      }
+    );
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <Container>
       <Image style={headerStyles.loginLogo} source={require('../public/media/sloper.png')}/>
@@ -154,12 +175,14 @@ const Login = (props) => {
       <Content style={loginStyles.content}>
         {toggleForm && (
           <Form>
+            {!isKeyboardVisible && (
             <Body>
               <Text style={loginStyles.title}>
                 The night is dark and full of terror, be a sloper and make no
                 error
               </Text>
             </Body>
+            )}
             <Body>
               <Item style={loginStyles.form}>
                 <FormTextInput
