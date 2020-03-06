@@ -54,7 +54,7 @@ const deviceHeight = Dimensions.get('window').height;
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const Single = (props) => {
-  const level = ['looser', 'sucker', 'ok', 'master'];
+  const level = ["Beginner", "Intermediate", "Advanced", "Expert",];
   const [media, setMedia] = useContext(MediaContext);
   const [{user, token}, setUser] = useContext(UserContext);
   const [liked, setLiked] = useState();
@@ -219,8 +219,12 @@ const Single = (props) => {
   const exif = allData.exif;
   const description = allData.description;
 
+  let altitude = "No altitude data";
   if (exif !== undefined) {
     if (exif.GPSLongitude !== undefined && exif.GPSLatitude !== undefined) {
+      if (exif.GPSAltitude !== 0) {
+        altitude = `${exif.GPSAltitude.toFixed(1)} meters above the sea level`
+      }
       useEffect(() => {
         setAvail(true);
       }, []);
@@ -351,7 +355,7 @@ const Single = (props) => {
                         latitude: exif.GPSLatitude,
                         longitude: exif.GPSLongitude,
                       }}
-                      title={`${exif.GPSAltitude.toFixed(1)} meters above the sea level`}
+                      title={altitude}
                     />
                   </MapView>
                 </Body>
