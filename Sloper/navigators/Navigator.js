@@ -13,6 +13,7 @@ import MyFiles from '../views/MyFiles';
 import {Icon} from 'native-base';
 import Update from '../views/Update';
 import UpdateUser from '../views/UpdateUser';
+import ShowProfile from '../views/ShowProfile';
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -82,6 +83,12 @@ const StackNavigator = createStackNavigator(
         headerShown: false,
       },
     },
+    ShowProfile: {
+      screen: ShowProfile,
+      navigationOptions: {
+        headerShown: false,
+      },
+    }
   },
 );
 

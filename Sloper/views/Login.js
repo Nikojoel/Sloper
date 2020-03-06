@@ -80,6 +80,8 @@ const Login = props => {
           console.log("error creating tag for new user", e);
         }
       }
+
+      // check if the user is valid sloper user.
       try {
         const validationTag = await fetchAPI(
           "GET",
@@ -104,7 +106,6 @@ const Login = props => {
           AsyncStorage.clear();
           return;
         }
-
       } catch (e) {
         console.log("fake sloper tag error", e);
       }
@@ -259,7 +260,7 @@ const Login = props => {
               <Button
                 style={loginStyles.signInOrRegister}
                 rounded
-                onPress={()=> signInAsync(false)}
+                onPress={() => signInAsync(false)}
               >
                 <Text>Sign in</Text>
               </Button>
