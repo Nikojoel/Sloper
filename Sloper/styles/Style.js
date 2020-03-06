@@ -249,6 +249,7 @@ const headerStyles = StyleSheet.create({
     height: 50,
     top: '8%',
     left: '33%',
+    zIndex: 1,
   },
 });
 
