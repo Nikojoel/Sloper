@@ -197,7 +197,7 @@ const singleStyles = StyleSheet.create({
     fontSize: 20,
   },
   comments: {
-    width: windowWidth * 0.7,
+    width: windowWidth * 0.65,
     borderColor: 'transparent',
   },
   border: {
@@ -216,6 +216,10 @@ const singleStyles = StyleSheet.create({
     borderRadius: 25,
     borderStyle: 'solid',
     borderWidth: 1,
+  },
+  bubbleIcon: {
+    fontSize: 25,
+    marginRight: 5,
   },
 });
 

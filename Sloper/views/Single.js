@@ -103,11 +103,9 @@ const Single = props => {
   const commentList = c.map(comment => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
-        <Left>
-          <Icon name="chatbubbles" />
+          <Icon style={singleStyles.bubbleIcon} name="chatbubbles"/>
           <Text style={singleStyles.username}>{comment.username}: </Text>
           <Text>{comment.comment}</Text>
-        </Left>
       </ListItem>
     );
   });
