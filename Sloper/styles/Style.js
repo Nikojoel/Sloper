@@ -197,7 +197,7 @@ const singleStyles = StyleSheet.create({
     fontSize: 20,
   },
   comments: {
-    width: windowWidth * 0.65,
+    width: windowWidth * 0.9,
     borderColor: 'transparent',
   },
   border: {
