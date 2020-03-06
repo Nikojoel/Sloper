@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import validate from 'validate.js';
 import { fetchAPI } from './APIHooks';
-
+import { UserContext } from '../contexts/UserContext';
 
 const useSignUpForm = (constraints = {}) => {
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
+  const [{user, token}, setUser] = useContext(UserContext);
 
   const handleUsernameChange = (text) => {
     setInputs((inputs) =>

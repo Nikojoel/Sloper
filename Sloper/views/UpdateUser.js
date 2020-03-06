@@ -92,11 +92,7 @@ const UpdateUser = ({navigation}) => {
   };
 
   const updateProfileAsync = async () => {
-    console.log('inputs:', inputs);
     const regValid = validateOnSend(validationProperties);
-    console.log('reg field errors', errors);
-
-    console.log(regValid);
 
     if (!regValid) {
       console.log('not valid');
@@ -147,7 +143,9 @@ const UpdateUser = ({navigation}) => {
           style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
           onChangeText={handleUsernameChange}
           onEndEditing={() => {
-            checkAvail(inputs.username);
+            if (user.username !== inputs.username) {
+              checkAvail(inputs.username);
+            }
             validateField(validationProperties.username);
           }}
           error={errors.username}
