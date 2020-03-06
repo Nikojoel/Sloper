@@ -24,14 +24,13 @@ const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const ListItem = (props) => {
   const allData = JSON.parse(props.singleMedia.description);
-  const description = allData.description;
   const exif = allData.exif;
 
-  let city = '';
-  if (exif.location === undefined ) {
-    city = 'Unknown';
-  } else {
-    city = exif.location;
+  let city = 'Unknown';
+  if (exif !== undefined) {
+    if (exif.location !== undefined) {
+      city = exif.location;
+    }
   }
 
   return (

@@ -94,12 +94,15 @@ const Upload = (props) => {
         console.log("geo api error", e);
         setExif(undefined);
       }
-      const resultData = {
-        GPSLatitude: exif.GPSLatitude,
-        GPSLongitude: exif.GPSLongitude,
-        GPSAltitude: exif.GPSAltitude,
-        location: city,
-      };
+      let resultData = undefined;
+      if (exif !== undefined) {
+        resultData = {
+          GPSLatitude: exif.GPSLatitude,
+          GPSLongitude: exif.GPSLongitude,
+          GPSAltitude: exif.GPSAltitude,
+          location: city,
+        };
+      }
       await handleUpload(image, resultData, 'sloperTESTV2');
       props.navigation.replace("Home");
     }
@@ -110,34 +113,34 @@ const Upload = (props) => {
       <BackHeader title="Upload" navigation={props.navigation}/>
       {!loading ? (
         <Body>
-        <Form>
-          <Card>
-            <CardItem bordered>
-              <Item style={{borderColor: "transparent"}}>
-                <FormTextInput
-                  style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
-                  value={inputs.title}
-                  placeholder='Title'
-                  onChangeText={handleTitleChange}
-                  onEndEditing={() => {
-                    validateInput("title", inputs.title);
-                  }}
-                  error={errors.title}
-                />
-              </Item>
-            </CardItem>
-            <CardItem bordered>
-              <Item style={{borderColor: "transparent"}}>
-                <FormTextInput
-                  style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
-                  value={inputs.postText}
-                  placeholder='Description'
-                  onChangeText={handleTextChange}
-                />
-              </Item>
-            </CardItem>
-            <CardItem bordered>
-              <Left>
+          <Form>
+            <Card>
+              <CardItem bordered>
+                <Item style={{borderColor: "transparent"}}>
+                  <FormTextInput
+                    style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                    value={inputs.title}
+                    placeholder='Title'
+                    onChangeText={handleTitleChange}
+                    onEndEditing={() => {
+                      validateInput("title", inputs.title);
+                    }}
+                    error={errors.title}
+                  />
+                </Item>
+              </CardItem>
+              <CardItem bordered>
+                <Item style={{borderColor: "transparent"}}>
+                  <FormTextInput
+                    style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                    value={inputs.postText}
+                    placeholder='Description'
+                    onChangeText={handleTextChange}
+                  />
+                </Item>
+              </CardItem>
+              <CardItem bordered>
+                <Left>
                   <Button primary rounded iconLeft onPress={pickImage}>
                     <Icon name={"ios-image"}/>
                     <Text>Select</Text>
@@ -152,22 +155,22 @@ const Upload = (props) => {
                     <Text>Delete</Text>
                   </Button>
                   }
-              </Left>
-            </CardItem>
-            {errors.fetch &&
-            <Body>
-              <Badge><Text>{errors.fetch}</Text></Badge>
-            </Body>
-            }
-            {image &&
-            <CardItem bordered style={{marginLeft: 10}}>
+                </Left>
+              </CardItem>
+              {errors.fetch &&
               <Body>
-                  <Image source={{uri: image}} style={{width: styles.image.width, height: styles.image.height}}/>
+                <Badge><Text>{errors.fetch}</Text></Badge>
               </Body>
-            </CardItem>
-            }
-          </Card>
-        </Form>
+              }
+              {image &&
+              <CardItem bordered style={{marginLeft: 10}}>
+                <Body>
+                  <Image source={{uri: image}} style={{width: styles.image.width, height: styles.image.height}}/>
+                </Body>
+              </CardItem>
+              }
+            </Card>
+          </Form>
         </Body>
       ) : (<Spinner size="large" color="#0000ff" style={{top: "40%"}}/>)}
     </Container>
