@@ -12,7 +12,7 @@ import {
   Card,
   CardItem,
 } from 'native-base';
-import {AsyncStorage,Keyboard, Dimensions, Image, StyleSheet} from 'react-native';
+import {AsyncStorage, Keyboard, Dimensions, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {fetchAPI} from '../hooks/APIHooks';
 import FormTextInput from '../components/FormTextInput';
@@ -83,8 +83,8 @@ const Login = (props) => {
         console.log('setting profile picture error ', e);
       }
       try {
-        const result = await fetchAPI('GET', 'tags', 'sloper_skill_'+ user.user.user_id);
-        console.log('skill',await result);
+        const result = await fetchAPI('GET', 'tags', 'sloper_skill_' + user.user.user_id);
+        console.log('skill', await result);
         let skill = "";
         if (result.length === 0) {
           skill = 0
@@ -137,12 +137,12 @@ const Login = (props) => {
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
- useEffect(() => {
+  useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
         setKeyboardVisible(true); // or some other action
-     }
+      }
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
@@ -176,12 +176,12 @@ const Login = (props) => {
         {toggleForm && (
           <Form>
             {!isKeyboardVisible && (
-            <Body>
-              <Text style={loginStyles.title}>
-                The night is dark and full of terror, be a sloper and make no
-                error
-              </Text>
-            </Body>
+              <Body>
+                <Text style={loginStyles.title}>
+                  The night is dark and full of terror, be a sloper and make no
+                  error
+                </Text>
+              </Body>
             )}
             <Body>
               <Item style={loginStyles.form}>
@@ -227,7 +227,9 @@ const Login = (props) => {
         {!toggleForm && (
           <Form>
             <Body>
-              <Text style={loginStyles.title}>Become a sloper</Text>
+              {!isKeyboardVisible && (
+                <Text style={loginStyles.title}>Become a sloper</Text>
+              )}
               <Item style={loginStyles.form}>
                 <FormTextInput
                   style={formStyles.border}
