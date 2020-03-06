@@ -104,8 +104,10 @@ const Single = props => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Body>
-          <Icon style={singleStyles.bubbleIcon} name="chatbubbles"/>
+          <Item style={{borderColor: 'transparent'}}>
+          <Icon name='chatbubbles'/>
           <Text style={singleStyles.username}>{comment.username}: </Text>
+          </Item>
           <Text>{comment.comment}</Text>
         </Body>
       </ListItem>
