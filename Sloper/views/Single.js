@@ -308,16 +308,18 @@ const Single = props => {
             </CardItem>
 
             <CardItem bordered>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("ShowProfile", owner.user_id)
-                }
-              >
                 <Left>
                   <Icon name="ios-person" />
                   <Text>{owner.username}</Text>
                 </Left>
-              </TouchableOpacity>
+                <Right>
+                  <Button primary rounded iconLeft onPress={() => {
+                    navigation.navigate("ShowProfile", owner.user_id)
+                  }}>
+                    <Icon name={"ios-eye"}/>
+                    <Text>View profile</Text>
+                  </Button>
+                </Right>
             </CardItem>
             <CardItem bordered>
               <Left>
@@ -386,8 +388,10 @@ const Single = props => {
                   primary
                   rounded
                   onPress={async () => {
-                    handleCommentChange("");
-                    await postComment();
+                    if (inputs.comment !== "") {
+                      handleCommentChange("");
+                      await postComment();
+                    }
                   }}
                 >
                   <Icon name="md-send" />
