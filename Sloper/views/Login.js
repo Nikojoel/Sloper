@@ -13,6 +13,7 @@ import {
   CardItem,
   Badge,
   Icon,
+  Left,
 } from "native-base";
 import {
   AsyncStorage,
@@ -207,12 +208,26 @@ const Login = props => {
     };
   }, []);
 
+  const showAlert = () => {
+    Alert.alert(
+      'Sloper',
+      'Sloper is the place to share your pictures from different downhillskiing locations. Creators: Niko Holopainen, Enar Mariinsky and Jalmari Espo',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+    );
+  };
+
   return (
     <Container>
       <Image
         style={headerStyles.loginLogo}
         source={require("../public/media/sloper.png")}
       />
+      <Button rounded onPress={showAlert} style={loginStyles.alertButton}>
+        <Icon style={loginStyles.alert} name='md-help'/>
+      </Button>
       <Video
         source={require("../public/media/loginVideo.mp4")}
         style={loginStyles.backgroundVideo}

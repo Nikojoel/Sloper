@@ -51,6 +51,15 @@ const loginStyles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
     marginTop: 15,
   },
+  alert: {
+      fontSize: 30,
+  },
+  alertButton: {
+    zIndex: 1,
+    backgroundColor: 'rgba(52, 52, 52, 0.5)',
+    width: 50,
+    marginLeft: 10,
+  },
 });
 
 const formStyles = StyleSheet.create({
