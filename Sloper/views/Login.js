@@ -211,7 +211,7 @@ const Login = props => {
   const showAlert = () => {
     Alert.alert(
       'Sloper',
-      'Sloper is the place to share your pictures from different downhillskiing locations. Creators: Niko Holopainen, Enar Mariinsky and Jalmari Espo',
+      'Sloper is the place to share your pictures and videos from different downhill skiing locations. Creators: Niko Holopainen, Enar Mariinsky and Jalmari Espo',
       [
         {text: 'OK', onPress: () => console.log('OK Pressed')},
       ],
