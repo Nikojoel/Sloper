@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {
   Container,
   Body,
@@ -10,7 +10,9 @@ import {
   Item,
   H2,
   Card,
-  CardItem
+  CardItem,
+  Badge,
+  Icon,
 } from "native-base";
 import {
   AsyncStorage,
@@ -21,13 +23,13 @@ import {
   Alert
 } from "react-native";
 import PropTypes from "prop-types";
-import { fetchAPI } from "../hooks/APIHooks";
+import {fetchAPI} from "../hooks/APIHooks";
 import FormTextInput from "../components/FormTextInput";
 import useSignUpForm from "../hooks/LoginHooks";
-import { Video } from "expo-av";
-import { loginConstraints } from "../constraints/Constraints";
-import { formStyles, headerStyles, loginStyles } from "../styles/Style";
-import { UserContext } from "../contexts/UserContext";
+import {Video} from "expo-av";
+import {loginConstraints} from "../constraints/Constraints";
+import {formStyles, headerStyles, loginStyles} from "../styles/Style";
+import {UserContext} from "../contexts/UserContext";
 
 const Login = props => {
   const [user, setUser] = useContext(UserContext);
@@ -47,10 +49,10 @@ const Login = props => {
   } = useSignUpForm(loginConstraints);
 
   const validationProperties = {
-    username: { username: inputs.username },
-    email: { email: inputs.email },
-    full_name: { full_name: inputs.full_name },
-    password: { password: inputs.password },
+    username: {username: inputs.username},
+    email: {email: inputs.email},
+    full_name: {full_name: inputs.full_name},
+    password: {password: inputs.password},
     confirmPassword: {
       password: inputs.password,
       confirmPassword: inputs.confirmPassword
@@ -101,7 +103,7 @@ const Login = props => {
                 }
               }
             ],
-            { cancelable: false }
+            {cancelable: false}
           );
           AsyncStorage.clear();
           return;
@@ -153,7 +155,7 @@ const Login = props => {
       console.log("signInAsync error: " + e.message);
       setErrors(errors => ({
         ...errors,
-        fetch: e.message
+        fetch: "Incorrect username or password"
       }));
     }
   };
@@ -179,7 +181,7 @@ const Login = props => {
       console.log("registerAsync error: ", e.message);
       setErrors(errors => ({
         ...errors,
-        fetch: e.message
+        fetch: "Something went wrong. Try again"
       }));
     }
   };
@@ -372,13 +374,11 @@ const Login = props => {
           </Form>
         )}
         {errors.fetch && (
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>{errors.fetch}</Text>
-              </Body>
-            </CardItem>
-          </Card>
+          <Body>
+            <Badge>
+              <Text>{errors.fetch}</Text>
+            </Badge>
+          </Body>
         )}
       </Content>
     </Container>

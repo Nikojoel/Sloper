@@ -1,12 +1,10 @@
-import {useContext, useState} from 'react';
+import {useState} from 'react';
 import validate from 'validate.js';
-import { fetchAPI } from './APIHooks';
-import { UserContext } from '../contexts/UserContext';
+import {fetchAPI} from './APIHooks';
 
 const useSignUpForm = (constraints = {}) => {
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
-  const [{user, token}, setUser] = useContext(UserContext);
 
   const handleUsernameChange = (text) => {
     setInputs((inputs) =>
@@ -14,7 +12,7 @@ const useSignUpForm = (constraints = {}) => {
         ...inputs,
         username: text,
       }));
-      console.log(inputs.username);
+    console.log(inputs.username);
   };
 
   const handlePasswordChange = (text) => {
@@ -66,7 +64,7 @@ const useSignUpForm = (constraints = {}) => {
   const checkAvail = async () => {
     const text = inputs.username;
     try {
-      const result = await fetchAPI('GET','users/username', text);
+      const result = await fetchAPI('GET', 'users/username', text);
       if (!result.available) {
         setErrors((errors) =>
           ({
@@ -85,11 +83,9 @@ const useSignUpForm = (constraints = {}) => {
 
   const validateOnSend = (fields) => {
     checkAvail();
-
     for (const [key, value] of Object.entries(fields)) {
       validateField(value);
     }
-
     return !(errors.username !== undefined ||
       errors.email !== undefined ||
       errors.full_name !== undefined ||
