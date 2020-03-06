@@ -213,7 +213,7 @@ const Login = props => {
       'Sloper',
       'Sloper is the place to share your pictures and videos from different downhill skiing locations. Creators: Niko Holopainen, Enar Mariinsky and Jalmari Espo',
       [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        {text: 'Start sloping!', onPress: () => console.log('OK Pressed')},
       ],
       {cancelable: false},
     );
