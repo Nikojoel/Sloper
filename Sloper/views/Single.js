@@ -6,7 +6,6 @@ import {
   CardItem,
   Left,
   Body,
-  H3,
   Icon,
   Text,
   Button,
@@ -15,23 +14,14 @@ import {
   Item,
   Form,
   Input,
-  Label,
   Right,
-  H4,
-  Spinner,
-  View
+  Spinner
 } from "native-base";
 import { fetchAPI, deletePost } from "../hooks/APIHooks";
 import { postFavourite, checkFavourite } from "../hooks/FavouriteHooks";
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  ListView,
-  BackHandler
-} from "react-native";
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
 import { Video } from "expo-av";
 import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
@@ -39,27 +29,31 @@ import StarRating from "react-native-star-rating";
 import { MediaContext } from "../contexts/MediaContext";
 import { UserContext } from "../contexts/UserContext";
 import { modifyContext } from "../hooks/ContextHooks";
-import { listStyles, loadingStyles, singleStyles } from "../styles/Style";
-import FormTextInput from "../components/FormTextInput";
+import { loadingStyles, singleStyles } from "../styles/Style";
 import BackHeader from "../components/BackHeader";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const deviceHeight = Dimensions.get("window").height;
 
 const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
 
 const Single = props => {
-  const level = ["Beginner", "Intermediate", "Advanced", "Expert"];
-  const [media, setMedia] = useContext(MediaContext);
-  const [{ user, token }, setUser] = useContext(UserContext);
-  const [liked, setLiked] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  const [owner, setOwner] = useState({});
+  const allData = JSON.parse(file.description);
+  const exif = allData.exif;
+  const description = allData.description;
+  const [media, setMedia] = useContext(MediaContext);
+  const [{ user, token }, setUser] = useContext(UserContext);
   const { inputs, handleCommentChange } = useCommentForm();
+  const [owner, setOwner] = useState({});
+  const [liked, setLiked] = useState();
+  const [loadedComments, setLoadedComments] = useState([]);
   const [star, setStar] = useState(0);
-  const [loadingSingle, setLoadingSingle] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [avail, setAvail] = useState(false);
+  const level = ["Beginner", "Intermediate", "Advanced", "Expert"];
 
+  // fetch all comments and rating for a single post
   const getComments = id => {
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
@@ -95,18 +89,18 @@ const Single = props => {
     return [comments, commentsLoading];
   };
   const [comments, commentsLoading] = getComments(file.file_id);
-  const [c, setC] = useState([]);
   useEffect(() => {
-    setC(comments);
+    setLoadedComments(comments);
   }, [commentsLoading]);
 
-  const commentList = c.map(comment => {
+  // Create a list from loaded commetns
+  const commentList = loadedComments.map(comment => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Body>
-          <Item style={{borderColor: 'transparent'}}>
-          <Icon name='chatbubbles'/>
-          <Text style={singleStyles.username}>{comment.username}: </Text>
+          <Item style={{ borderColor: "transparent" }}>
+            <Icon name="chatbubbles" />
+            <Text style={singleStyles.username}>{comment.username}: </Text>
           </Item>
           <Text>{comment.comment}</Text>
         </Body>
@@ -114,6 +108,7 @@ const Single = props => {
     );
   });
 
+  // post a new comment and update a local state
   const postComment = async () => {
     try {
       const result = await fetchAPI("POST", "comments", undefined, token, {
@@ -121,7 +116,7 @@ const Single = props => {
         comment: inputs.comment
       });
       console.log("posting comment response", await result);
-      setC(c => [
+      setLoadedComments(c => [
         ...c,
         {
           comment: inputs.comment,
@@ -134,6 +129,7 @@ const Single = props => {
     }
   };
 
+  // Rate the post by star and update the main list context
   const postRating = async rating => {
     try {
       if (comments.myRating !== undefined) {
@@ -166,7 +162,8 @@ const Single = props => {
     }
   };
 
-  const getUser = async () => {
+  // Get owner of this post
+  const getOwner = async () => {
     try {
       const user = await fetchAPI("GET", "users", file.user_id, token);
       const result = await fetchAPI(
@@ -180,18 +177,19 @@ const Single = props => {
       } else {
         user.skill = result[result.length - 1].description;
       }
-      console.log(user);
       setOwner(user);
     } catch (e) {
       console.log(e);
     }
   };
 
+  // checks if the current user has likes this post
   const checkLicked = async () => {
     const status = await checkFavourite(file.file_id);
     setLiked(status);
   };
 
+  // sets the like for this post with current user and update main list context
   const putLike = async () => {
     if (liked) {
       setLiked(false);
@@ -210,16 +208,11 @@ const Single = props => {
   };
 
   useEffect(() => {
-    getUser();
+    getOwner();
     checkLicked();
   }, []);
 
-  const [loading, setLoading] = useState(true);
-  const [avail, setAvail] = useState(false);
-  const allData = JSON.parse(file.description);
-  const exif = allData.exif;
-  const description = allData.description;
-
+  // gets the altitude data from exif if exist
   let altitude = "No altitude data";
   if (exif !== undefined) {
     if (exif.GPSLongitude !== undefined && exif.GPSLatitude !== undefined) {
@@ -310,18 +303,23 @@ const Single = props => {
             </CardItem>
 
             <CardItem bordered>
-                <Left>
-                  <Icon name="ios-person" />
-                  <Text>{owner.username}</Text>
-                </Left>
-                <Right>
-                  <Button primary rounded iconLeft onPress={() => {
-                    navigation.navigate("ShowProfile", owner.user_id)
-                  }}>
-                    <Icon name={"ios-eye"}/>
-                    <Text>View profile</Text>
-                  </Button>
-                </Right>
+              <Left>
+                <Icon name="ios-person" />
+                <Text>{owner.username}</Text>
+              </Left>
+              <Right>
+                <Button
+                  primary
+                  rounded
+                  iconLeft
+                  onPress={() => {
+                    navigation.navigate("ShowProfile", owner.user_id);
+                  }}
+                >
+                  <Icon name={"ios-eye"} />
+                  <Text>View profile</Text>
+                </Button>
+              </Right>
             </CardItem>
             <CardItem bordered>
               <Left>
