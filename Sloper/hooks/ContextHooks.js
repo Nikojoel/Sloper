@@ -1,5 +1,6 @@
 
-
+// takes in a context, context entry wanted to modify, data for the entry to modify and sets the context with
+// updated data in a timestamp order
  const modifyContext = async (context, setContext, file, data) => {
   const modifyData = file => ({
     ...file,
