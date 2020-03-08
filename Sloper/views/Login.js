@@ -1,36 +1,24 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Container,
   Body,
-  Title,
   Content,
   Form,
   Button,
   Text,
   Item,
-  H2,
-  Card,
-  CardItem,
   Badge,
-  Icon,
-  Left,
+  Icon
 } from "native-base";
-import {
-  AsyncStorage,
-  Keyboard,
-  Dimensions,
-  Image,
-  StyleSheet,
-  Alert
-} from "react-native";
+import { AsyncStorage, Keyboard, Image, Alert } from "react-native";
 import PropTypes from "prop-types";
-import {fetchAPI} from "../hooks/APIHooks";
+import { fetchAPI } from "../hooks/APIHooks";
 import FormTextInput from "../components/FormTextInput";
 import useSignUpForm from "../hooks/LoginHooks";
-import {Video} from "expo-av";
-import {loginConstraints} from "../constraints/Constraints";
-import {formStyles, headerStyles, loginStyles} from "../styles/Style";
-import {UserContext} from "../contexts/UserContext";
+import { Video } from "expo-av";
+import { loginConstraints } from "../constraints/Constraints";
+import { formStyles, headerStyles, loginStyles } from "../styles/Style";
+import { UserContext } from "../contexts/UserContext";
 
 const Login = props => {
   const [user, setUser] = useContext(UserContext);
@@ -50,16 +38,25 @@ const Login = props => {
   } = useSignUpForm(loginConstraints);
 
   const validationProperties = {
-    username: {username: inputs.username},
-    email: {email: inputs.email},
-    full_name: {full_name: inputs.full_name},
-    password: {password: inputs.password},
+    username: { username: inputs.username },
+    email: { email: inputs.email },
+    full_name: { full_name: inputs.full_name },
+    password: { password: inputs.password },
     confirmPassword: {
       password: inputs.password,
       confirmPassword: inputs.confirmPassword
     }
   };
 
+  /*
+      User sign is:
+    - checks if the user is signing in for the first time. If the is tag is created wich confirms him as a
+      valid sloper user.
+    - If he is trying to log in with account from different app using same backend he will be redirected to register.
+    - Gets users avatar picture. If no custom sets it to placeholder.
+    - Gets users skill level if no custom sets it as beginner.
+    - Stores all data into usercontext and asyncstorage upon succesfull login.
+  */
   const signInAsync = async firstTime => {
     try {
       const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
@@ -104,7 +101,7 @@ const Login = props => {
                 }
               }
             ],
-            {cancelable: false}
+            { cancelable: false }
           );
           AsyncStorage.clear();
           return;
@@ -161,6 +158,7 @@ const Login = props => {
     }
   };
 
+  // Registration of new user. Upon succesfull login it logs in automaticly
   const registerAsync = async () => {
     const regValid = validateOnSend(validationProperties);
     console.log("reg field errors", errors);
@@ -187,8 +185,8 @@ const Login = props => {
     }
   };
 
+  // keyboard event listener to moove input fields upon user interaction with them.
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -208,14 +206,13 @@ const Login = props => {
     };
   }, []);
 
+  // App info alert
   const showAlert = () => {
     Alert.alert(
-      'Sloper',
-      'Sloper is the place to share your pictures and videos from different downhill skiing locations. Creators: Niko Holopainen, Enar Mariinsky and Jalmari Espo',
-      [
-        {text: 'Start sloping!', onPress: () => console.log('OK Pressed')},
-      ],
-      {cancelable: false},
+      "Sloper",
+      "Sloper is the place to share your pictures and videos from different downhill skiing locations. Creators: Niko Holopainen, Enar Mariinsky and Jalmari Espo",
+      [{ text: "Start sloping!", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
     );
   };
 
@@ -226,7 +223,7 @@ const Login = props => {
         source={require("../public/media/sloper.png")}
       />
       <Button rounded onPress={showAlert} style={loginStyles.alertButton}>
-        <Icon style={loginStyles.alert} name='md-help'/>
+        <Icon style={loginStyles.alert} name="md-help" />
       </Button>
       <Video
         source={require("../public/media/loginVideo.mp4")}
