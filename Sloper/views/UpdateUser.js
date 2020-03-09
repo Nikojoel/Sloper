@@ -44,7 +44,7 @@ const UpdateUser = ({navigation}) => {
   const [{user, token}, setUser] = useContext(UserContext);
   const { handleUpload } = useUploadForm();
   const [skillState, setSkill] = useState(skillLevel[user.skill]);
-  const [skillNumber, setSkillNumber] = useState({});
+  const [skillNumber, setSkillNumber] = useState(user.skill);
 
   const {
     handleUsernameChange,
