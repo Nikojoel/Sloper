@@ -49,12 +49,6 @@ The intent of this project is to create a React-Native media sharing application
     - tabs
 </details>
 
-
-#### Android
-Run with emulator or download the [Expo client](https://expo.io/tools) from Google Play Store.
-#### iOS
-Download [Expo client](https://expo.io/tools) from the App Store and scan the QR code from your terminal.
-
 #### To use the reverse geocoding [API](https://opencagedata.com/api)
 1. Sign up and generate an unique API key (requires a valid email address).
    - 2500 request/day with a free account.
@@ -66,6 +60,11 @@ Download [Expo client](https://expo.io/tools) from the App Store and scan the QR
 ```JavaScript
 export const apiKey = "YOUR_API_KEY_HERE";
 ```
+
+#### Android
+Run with emulator or download the [Expo client](https://expo.io/tools) from Google Play Store.
+#### iOS
+Download [Expo client](https://expo.io/tools) from the App Store and scan the QR code from your terminal.
 
 ### Routes
   - GET /media/all
