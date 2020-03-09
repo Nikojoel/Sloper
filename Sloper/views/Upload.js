@@ -13,7 +13,7 @@ import {
   CardItem,
   Icon,
 } from "native-base";
-import {Image, Dimensions, StyleSheet, BackHandler,} from 'react-native';
+import {Image, Dimensions, StyleSheet,} from 'react-native';
 import PropTypes from 'prop-types';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";
@@ -25,6 +25,8 @@ import {apiKey} from "../API";
 const geoApi = "https://api.opencagedata.com/geocode/v1/json?q=";
 
 const Upload = (props) => {
+
+  // FormTextInput handlers
   const {
     inputs,
     errors,
@@ -36,10 +38,12 @@ const Upload = (props) => {
     resetText,
   } = useUploadForm(uploadConstraints);
 
+  // Hooks
   const [image, setImage] = useState(null);
   const [exif, setExif] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Select image from image library
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -48,20 +52,22 @@ const Upload = (props) => {
       quality: 1,
       exif: true,
     });
+
+    // useState setters if an image was chosen
     if (!result.cancelled) {
       setImage(result.uri);
       setExif(result.exif);
-      console.log(image);
-      console.log(exif);
     }
   };
 
+  // Clears inputs and image
   const clearForms = () => {
     setImage(null);
     resetText("title", "");
     resetText("postText", "");
   };
 
+  // Upload image and data
   const uploadImage = async () => {
     const regValid = validateInput("title", inputs.title);
     if (!image) {
@@ -80,10 +86,12 @@ const Upload = (props) => {
         }));
 
       let city = undefined;
+      // Try to reverse the geolocation with coordinates from exif data
       try {
+        // API call to reverse geocode the coordinates
         const result = await fetch(geoApi + exif.GPSLatitude + "+" + exif.GPSLongitude + "&key=" + apiKey);
         const response = await result.json();
-        const components = response.results[0].components;
+        const components = response.results[0].components; // Results in city name or undefined
 
         if (components.town !== undefined || null) {
           city = components.town;
@@ -94,6 +102,7 @@ const Upload = (props) => {
         console.log("geo api error", e);
         setExif(undefined);
       }
+      // Set coordinates or undefined if not present
       let resultData = undefined;
       if (exif !== undefined) {
         resultData = {
@@ -103,11 +112,13 @@ const Upload = (props) => {
           location: city,
         };
       }
+      // Send post picture to be set to correct file format
       await handleUpload(image, resultData, 'sloperTESTV2');
-      props.navigation.replace("Home");
+      props.navigation.replace("Home"); // Navigate to home
     }
   };
 
+  // Upload view components
   return (
     <Container>
       <BackHeader title="Upload" navigation={props.navigation}/>
@@ -187,6 +198,7 @@ const styles = StyleSheet.create({
 Upload.propTypes = {
   navigation: PropTypes.object,
 };
+
 export default Upload;
 
 /* END OF FILE */

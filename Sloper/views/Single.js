@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   Container,
   Content,
@@ -17,19 +17,19 @@ import {
   Right,
   Spinner
 } from "native-base";
-import { fetchAPI, deletePost } from "../hooks/APIHooks";
-import { postFavourite, checkFavourite } from "../hooks/FavouriteHooks";
+import {fetchAPI, deletePost} from "../hooks/APIHooks";
+import {postFavourite, checkFavourite} from "../hooks/FavouriteHooks";
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
-import { Dimensions } from "react-native";
-import { Video } from "expo-av";
+import {Dimensions} from "react-native";
+import {Video} from "expo-av";
 import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
 import StarRating from "react-native-star-rating";
-import { MediaContext } from "../contexts/MediaContext";
-import { UserContext } from "../contexts/UserContext";
-import { modifyContext } from "../hooks/ContextHooks";
-import { loadingStyles, singleStyles } from "../styles/Style";
+import {MediaContext} from "../contexts/MediaContext";
+import {UserContext} from "../contexts/UserContext";
+import {modifyContext} from "../hooks/ContextHooks";
+import {loadingStyles, singleStyles} from "../styles/Style";
 import BackHeader from "../components/BackHeader";
 
 const deviceHeight = Dimensions.get("window").height;
@@ -37,14 +37,15 @@ const deviceHeight = Dimensions.get("window").height;
 const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
 
 const Single = props => {
-  const { navigation } = props;
+  // Hooks
+  const {navigation} = props;
   const file = navigation.state.params.file;
   const allData = JSON.parse(file.description);
   const exif = allData.exif;
   const description = allData.description;
   const [media, setMedia] = useContext(MediaContext);
-  const [{ user, token }, setUser] = useContext(UserContext);
-  const { inputs, handleCommentChange } = useCommentForm();
+  const [{user, token}, setUser] = useContext(UserContext);
+  const {inputs, handleCommentChange} = useCommentForm();
   const [owner, setOwner] = useState({});
   const [liked, setLiked] = useState();
   const [loadedComments, setLoadedComments] = useState([]);
@@ -53,20 +54,24 @@ const Single = props => {
   const [avail, setAvail] = useState(false);
   const level = ["Beginner", "Intermediate", "Advanced", "Expert"];
 
-  // fetch all comments and rating for a single post
+  // Fetch all comments and rating for a single post
   const getComments = id => {
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true);
     const fetchComments = async id => {
       try {
+        // API call to get comments
         const comments = await fetchAPI("GET", "comments/file", id);
+        // API call to get ratings
         const rating = await fetchAPI("GET", "ratings/file", id);
         await Promise.all(
           comments.map(async i => {
+            // API call to get users
             const user = await fetchAPI("GET", "users", i.user_id, token);
             i.username = user.username;
           })
         );
+        // Iterate over ratings
         for (const x in rating) {
           if (rating[x].user_id === user.user_id) {
             comments.myRating = rating[x].rating;
@@ -74,7 +79,6 @@ const Single = props => {
             break;
           }
         }
-        console.log(comments.myRating);
         setStar(comments.myRating);
         setComments(comments);
         setCommentsLoading(false);
@@ -88,18 +92,19 @@ const Single = props => {
     }, []);
     return [comments, commentsLoading];
   };
+
   const [comments, commentsLoading] = getComments(file.file_id);
   useEffect(() => {
     setLoadedComments(comments);
   }, [commentsLoading]);
 
-  // Create a list from loaded commetns
+  // Create a list from loaded comments
   const commentList = loadedComments.map(comment => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Body>
-          <Item style={{ borderColor: "transparent" }}>
-            <Icon name="chatbubbles" />
+          <Item style={{borderColor: "transparent"}}>
+            <Icon name="chatbubbles"/>
             <Text style={singleStyles.username}>{comment.username}: </Text>
           </Item>
           <Text>{comment.comment}</Text>
@@ -108,14 +113,14 @@ const Single = props => {
     );
   });
 
-  // post a new comment and update a local state
+  // Post a new comment and update a local state
   const postComment = async () => {
     try {
+      // API call to post comment
       const result = await fetchAPI("POST", "comments", undefined, token, {
         file_id: file.file_id,
         comment: inputs.comment
       });
-      console.log("posting comment response", await result);
       setLoadedComments(c => [
         ...c,
         {
@@ -134,6 +139,7 @@ const Single = props => {
     try {
       if (comments.myRating !== undefined) {
         try {
+          // API call to delete rating
           await fetchAPI("DELETE", "ratings/file", file.file_id, token);
         } catch (e) {
           console.log("error deleting user rating", e);
@@ -143,6 +149,7 @@ const Single = props => {
         file_id: file.file_id,
         rating: rating
       };
+      // API call to post rating
       const response = await fetchAPI(
         "POST",
         "ratings",
@@ -155,8 +162,8 @@ const Single = props => {
         ratingNum: file.ratingNum + 1,
         rating: (file.ratingTot + rating) / (file.ratingNum + 1)
       };
+      // Modifies local data to display
       modifyContext(media, setMedia, file, newRating);
-      console.log("rating response", response);
     } catch (e) {
       console.log("posting rating error", e);
     }
@@ -165,13 +172,15 @@ const Single = props => {
   // Get owner of this post
   const getOwner = async () => {
     try {
+      // API call to get user
       const user = await fetchAPI("GET", "users", file.user_id, token);
+      // API call to get user skill level
       const result = await fetchAPI(
         "GET",
         "tags",
         "sloper_skill_" + user.user_id
       );
-
+      // User skill level
       if (result.length < 1) {
         user.skill = 0;
       } else {
@@ -183,18 +192,18 @@ const Single = props => {
     }
   };
 
-  // checks if the current user has likes this post
+  // Checks if the current user has liked this post
   const checkLicked = async () => {
     const status = await checkFavourite(file.file_id);
     setLiked(status);
   };
 
-  // sets the like for this post with current user and update main list context
+  // Sets the like for this post with current user and update main list context
   const putLike = async () => {
     if (liked) {
       setLiked(false);
-      const data = media[media.indexOf(file)]
-      data.favCount --;
+      const data = media[media.indexOf(file)];
+      data.favCount--;
       const newContext = [...media.filter(i => i !== file), data].sort(
         (a, b) => {
           return new Date(b.time_added) - new Date(a.time_added);
@@ -203,8 +212,8 @@ const Single = props => {
       setMedia(newContext);
     } else {
       setLiked(true);
-      const data = media[media.indexOf(file)]
-      data.favCount ++;
+      const data = media[media.indexOf(file)];
+      data.favCount++;
       const newContext = [...media.filter(i => i !== file), data].sort(
         (a, b) => {
           return new Date(b.time_added) - new Date(a.time_added);
@@ -220,7 +229,7 @@ const Single = props => {
     checkLicked();
   }, []);
 
-  // gets the altitude data from exif if exist
+  // Sets the altitude from exif data if it exists
   let altitude = "No altitude data";
   if (exif !== undefined) {
     if (exif.GPSLongitude !== undefined && exif.GPSLatitude !== undefined) {
@@ -233,9 +242,10 @@ const Single = props => {
     }
   }
 
+  // Single view components
   return (
     <Container>
-      <BackHeader navigation={props.navigation} />
+      <BackHeader navigation={props.navigation}/>
       {!loading ? (
         <Content>
           <Card>
@@ -248,19 +258,19 @@ const Single = props => {
                   <AsyncImage
                     style={singleStyles.asyncImage}
                     spinnerColor="#777"
-                    source={{ uri: mediaURL + file.filename }}
+                    source={{uri: mediaURL + file.filename}}
                   />
                 )}
                 {file.media_type === "video" && (
                   <Video
-                    source={{ uri: mediaURL + file.filename }}
+                    source={{uri: mediaURL + file.filename}}
                     rate={1.0}
                     volume={1.0}
                     isMuted={false}
                     resizeMode="cover"
                     shouldPlay
                     isLooping
-                    style={{ width: "100%", height: deviceHeight / 2, flex: 1 }}
+                    style={{width: "100%", height: deviceHeight / 2, flex: 1}}
                     onError={e => {
                       console.log("video error", e);
                     }}
@@ -268,11 +278,11 @@ const Single = props => {
                 )}
               </Body>
             </CardItem>
-            <CardItem bordered style={{ marginTop: -60 }}>
+            <CardItem bordered style={{marginTop: -60}}>
               <Left>
                 <Body>
                   <CardItem>
-                    <Icon name="heart" />
+                    <Icon name="heart"/>
                     <Text>{file.favCount}</Text>
                   </CardItem>
                 </Body>
@@ -280,7 +290,7 @@ const Single = props => {
               <Right>
                 <Body>
                   <CardItem>
-                    <Icon name="star" />
+                    <Icon name="star"/>
                     {isNaN(file.rating) ? (
                       <Text>0</Text>
                     ) : (
@@ -296,23 +306,23 @@ const Single = props => {
                     putLike();
                   }}
                 >
-                  {!liked && <Icon name="heart" style={singleStyles.heart} />}
+                  {!liked && <Icon name="heart" style={singleStyles.heart}/>}
                   {liked && (
-                    <Icon name="heart" style={singleStyles.heartLiked} />
+                    <Icon name="heart" style={singleStyles.heartLiked}/>
                   )}
                 </Button>
               </Right>
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Icon name="paper" />
+                <Icon name="paper"/>
                 <Text style={singleStyles.description}>{description}</Text>
               </Left>
             </CardItem>
 
             <CardItem bordered>
               <Left>
-                <Icon name="ios-person" />
+                <Icon name="ios-person"/>
                 <Text>{owner.username}</Text>
               </Left>
               <Right>
@@ -324,20 +334,20 @@ const Single = props => {
                     navigation.navigate("ShowProfile", owner.user_id);
                   }}
                 >
-                  <Icon name={"ios-eye"} />
+                  <Icon name={"ios-eye"}/>
                   <Text>View profile</Text>
                 </Button>
               </Right>
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Icon name="ios-podium" />
+                <Icon name="ios-podium"/>
                 <Text>{level[owner.skill]}</Text>
               </Left>
             </CardItem>
 
             <Body>
-              <Text style={{ marginTop: 10 }}>Rate this post</Text>
+              <Text style={{marginTop: 10}}>Rate this post</Text>
               <CardItem bordered>
                 <StarRating
                   fullStarColor={"gold"}
@@ -402,7 +412,7 @@ const Single = props => {
                     }
                   }}
                 >
-                  <Icon name="md-send" />
+                  <Icon name="md-send"/>
                 </Button>
               </Item>
             </Form>
@@ -421,7 +431,7 @@ const Single = props => {
                       props.navigation.navigate("Home");
                     }}
                   >
-                    <Icon name="ios-trash" />
+                    <Icon name="ios-trash"/>
                     <Text>Delete</Text>
                   </Button>
                 </Body>
@@ -435,7 +445,7 @@ const Single = props => {
                       props.navigation.replace("Update", file);
                     }}
                   >
-                    <Icon name="ios-cog" />
+                    <Icon name="ios-cog"/>
                     <Text>Edit</Text>
                   </Button>
                 </Right>

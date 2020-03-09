@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {
   Container,
   Content,
@@ -9,7 +9,7 @@ import {
   Button,
   Icon,
 } from 'native-base';
-import {AsyncStorage, BackHandler} from 'react-native';
+import {AsyncStorage} from 'react-native';
 import PropTypes from 'prop-types';
 import AsyncImage from '../components/AsyncImage';
 import {Dimensions} from 'react-native';
@@ -18,6 +18,7 @@ import BackHeader from '../components/BackHeader';
 
 const deviceHeight = Dimensions.get('window').height;
 
+// Skill level array
 const skillLevel = [
   "Beginner",
   "Intermediate",
@@ -27,11 +28,14 @@ const skillLevel = [
 
 const Profile = (props) => {
   const [{user}, setUser] = useContext(UserContext);
+
+  // Removes token from AsyncStorage and logs the user out
   const signOutAsync = async () => {
     await AsyncStorage.clear();
     props.navigation.navigate('Auth');
   };
-  console.log(user);
+
+  // Profile view components
   return (
     <Container>
       <BackHeader navigation={props.navigation}/>

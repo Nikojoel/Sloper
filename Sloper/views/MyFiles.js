@@ -6,9 +6,6 @@ import {
   Text,
   Footer,
   Icon,
-  Button,
-  FooterTab,
-  H3,
   Tab,
   Tabs,
   TabHeading,
@@ -20,16 +17,16 @@ import {UserContext} from '../contexts/UserContext';
 import {listStyles, myFilesStyles} from '../styles/Style';
 import BackHeader from "../components/BackHeader";
 
-
 const MyFiles = (props) => {
+  // Hooks
   const [{user}, setUser] = useContext(UserContext);
   const [media, setMedia] = useState({});
   const [data, loading] = getAllUserMedia();
-
   useEffect(() => {
     setMedia(data);
   }, [loading]);
 
+  // MyFiles view components
   return (
     <Container>
       <BackHeader navigation={props.navigation}/>
@@ -47,6 +44,7 @@ const MyFiles = (props) => {
           <Footer>
             <Footer hasTabs/>
             <Tabs onChangeTab={(from) => {
+              // Choose between my files & my favourites
               if (from.i === 0) {
                 setMedia(data);
               } else if (from.i === 1) {

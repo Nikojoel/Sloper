@@ -19,6 +19,7 @@ import {uploadConstraints} from '../constraints/Constraints';
 import BackHeader from "../components/BackHeader";
 
 const Update = (props) => {
+  // FormTextInput handlers
   const {
     inputs,
     errors,
@@ -27,29 +28,33 @@ const Update = (props) => {
     validateInput,
   } = useUploadForm(uploadConstraints);
 
+  // Hooks
   const [image, setImage] = useState(undefined);
-
   useEffect(() => {
     setImage('http://media.mw.metropolia.fi/wbma/uploads/' + props.navigation.state.params.filename);
   }, []);
 
+  // Updates specific media file with new title and description
   const updateMedia = async () => {
     const regValid = validateInput('title', inputs.title);
     if (!regValid) {
+      // Sends data to be formatted
       await updatePost(props.navigation.state.params, {
         title: inputs.title,
         description: inputs.postText,
       });
+      // Resets the stack from navigator and navigates back to home
       props.navigation.dispatch(
-          StackActions.reset({
-            index: 0,
-            key: null,
-            actions: [NavigationActions.navigate({routeName: 'Home'})],
-          }),
+        StackActions.reset({
+          index: 0,
+          key: null,
+          actions: [NavigationActions.navigate({routeName: 'Home'})],
+        }),
       );
     }
   };
 
+  // Update view components
   return (
     <Container>
       <BackHeader navigation={props.navigation}/>
@@ -106,3 +111,5 @@ const styles = StyleSheet.create({
 });
 
 export default Update;
+
+/* END OF FILE */

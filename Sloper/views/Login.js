@@ -2,25 +2,18 @@ import React, {useState, useContext, useEffect} from "react";
 import {
   Container,
   Body,
-  Title,
   Content,
   Form,
   Button,
   Text,
   Item,
-  H2,
-  Card,
-  CardItem,
   Badge,
-  Icon,
 } from "native-base";
 import {
   AsyncStorage,
   Keyboard,
-  Dimensions,
   Image,
-  StyleSheet,
-  Alert
+  Alert,
 } from "react-native";
 import PropTypes from "prop-types";
 import {fetchAPI} from "../hooks/APIHooks";
@@ -32,8 +25,11 @@ import {formStyles, headerStyles, loginStyles} from "../styles/Style";
 import {UserContext} from "../contexts/UserContext";
 
 const Login = props => {
+  // Hooks
   const [user, setUser] = useContext(UserContext);
   const [toggleForm, setToggleForm] = useState(true);
+
+  // FormTextInput handlers
   const {
     handleUsernameChange,
     handlePasswordChange,
@@ -48,6 +44,7 @@ const Login = props => {
     setErrors
   } = useSignUpForm(loginConstraints);
 
+  // Used to validate user input
   const validationProperties = {
     username: {username: inputs.username},
     email: {email: inputs.email},
@@ -59,6 +56,9 @@ const Login = props => {
     }
   };
 
+  /* Authenticates the user with unique token and checks if the user is
+  trying to log in with a different account that is not registered to Sloper
+   */
   const signInAsync = async firstTime => {
     try {
       const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
@@ -71,9 +71,10 @@ const Login = props => {
         inputs
       );
       await AsyncStorage.setItem("userToken", user.token);
-      // create tag to block user from other apps
+      // Create tag to block user from other apps
       if (firstTime) {
         try {
+          // API call to post validation tag
           await fetchAPI("POST", "tags", undefined, user.token, {
             file_id: 1,
             tag: "sloper_validation_" + user.user.user_id
@@ -83,13 +84,14 @@ const Login = props => {
         }
       }
 
-      // check if the user is valid sloper user.
+      // Check if the user is valid Sloper user.
       try {
+        // API call for validation tag
         const validationTag = await fetchAPI(
           "GET",
           "tags/sloper_validation_" + user.user.user_id
         );
-
+        // If user is not registered to Sloper, display an alert
         if (validationTag === undefined || validationTag.length === 0) {
           Alert.alert(
             "Not a Sloper user",
@@ -112,6 +114,7 @@ const Login = props => {
         console.log("fake sloper tag error", e);
       }
       try {
+        // API call for avatar picture
         const avatarPic = await fetchAPI(
           "GET",
           "tags",
@@ -130,6 +133,7 @@ const Login = props => {
         console.log("setting profile picture error ", e);
       }
       try {
+        // API call to get user skill level
         const result = await fetchAPI(
           "GET",
           "tags",
@@ -146,13 +150,13 @@ const Login = props => {
       } catch (e) {
         console.log("setting skilllevel error ", e);
       }
-
+      // Set user data to AsyncStorage
       await AsyncStorage.setItem("user", JSON.stringify(user));
       await setUser(user);
-
-      props.navigation.navigate("App");
+      props.navigation.navigate("App"); // Navigate to Home view
     } catch (e) {
       console.log("signInAsync error: " + e.message);
+      // Set error badge
       setErrors(errors => ({
         ...errors,
         fetch: "Incorrect username or password"
@@ -160,13 +164,15 @@ const Login = props => {
     }
   };
 
+  // Registers user to Sloper
   const registerAsync = async () => {
+    // Validate user input
     const regValid = validateOnSend(validationProperties);
-    console.log("reg field errors", errors);
     if (!regValid) {
       return;
     }
     try {
+      // API call to register an user
       const user = inputs;
       delete user.confirmPassword;
       const result = await fetchAPI(
@@ -179,6 +185,7 @@ const Login = props => {
       signInAsync(true);
     } catch (e) {
       console.log("registerAsync error: ", e.message);
+      // Set error badge
       setErrors(errors => ({
         ...errors,
         fetch: "Something went wrong. Try again"
@@ -186,8 +193,8 @@ const Login = props => {
     }
   };
 
+  // Pushes content away from the keyboard
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -207,6 +214,7 @@ const Login = props => {
     };
   }, []);
 
+  // Login view components
   return (
     <Container>
       <Image

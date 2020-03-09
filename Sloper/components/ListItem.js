@@ -1,22 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   ListItem as BaseListItem,
-  Left,
   Body,
-  Right,
-  Button,
   Text,
   Thumbnail,
   H3,
-  Label,
   Icon,
   Card,
   CardItem,
-  View,
 } from 'native-base';
 import PropTypes from 'prop-types';
-import nearbyCities from 'nearby-big-cities';
-import AsyncImage from '../components/AsyncImage';
 import {TouchableOpacity} from 'react-native';
 import {listStyles} from '../styles/Style';
 
@@ -25,7 +18,7 @@ const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const ListItem = (props) => {
   const allData = JSON.parse(props.singleMedia.description);
   const exif = allData.exif;
-
+  // Set location
   let city = 'Unknown';
   if (exif !== undefined) {
     if (exif.location !== undefined) {
@@ -33,6 +26,7 @@ const ListItem = (props) => {
     }
   }
 
+  // ListItem view components
   return (
     <BaseListItem style={listStyles.baseList}>
       <Card style={listStyles.card}>
