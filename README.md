@@ -5,10 +5,15 @@ The intent of this project is to create a React-Native media sharing application
 ### Feature specification
 * [Nativebase components](https://docs.nativebase.io/Components.html#Components)
 * [Hooks](https://reactjs.org/docs/hooks-reference.html)
+    * [useState](https://reactjs.org/docs/hooks-state.html)
+    * [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext)
+    * [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect)
 * [Expo](https://expo.io/learn)
 * [ESlint](https://eslint.org/)
 * [Validate.js](http://validatejs.org/)
 * [Reverse geocoding](https://opencagedata.com/)
+* [ES6](http://es6-features.org/#Constants)
+* [REST](https://en.wikipedia.org/wiki/Representational_state_transfer)
 ### Deployment
 1. Clone or download the repository.
 `git clone https://github.com/Nikojoel/Sloper.git`
