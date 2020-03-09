@@ -57,7 +57,7 @@ const loginStyles = StyleSheet.create({
   alertButton: {
     zIndex: 1,
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
-    width: 50,
+    width: 49,
     marginLeft: 10,
   },
 });
