@@ -196,13 +196,17 @@ const Single = props => {
       const newData = {
         favCount: file.favCount - 1
       };
-      await modifyContext(media, setMedia, file, newData);
+      if (!liked) {
+        modifyContext(media, setMedia, file, newData);
+      }
     } else {
       setLiked(true);
       const newData = {
         favCount: file.favCount + 1
       };
-      await modifyContext(media, setMedia, file, newData);
+      if (liked) {
+        modifyContext(media, setMedia, file, newData);
+      }
     }
     await postFavourite(file.file_id, liked);
   };
