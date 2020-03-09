@@ -14,6 +14,7 @@ The intent of this project is to create a React-Native media sharing application
 `git clone https://github.com/Nikojoel/Sloper.git`
 2. Make sure you have [Node.js](https://nodejs.org/en/) installed to install required dependencies.
 3. Run `npm i` to install dependencies.
+4. Run `npm start` from the terminal.
 <details>
   <summary>Check all dependencies</summary>
  
