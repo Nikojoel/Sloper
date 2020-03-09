@@ -193,20 +193,24 @@ const Single = props => {
   const putLike = async () => {
     if (liked) {
       setLiked(false);
-      const newData = {
-        favCount: file.favCount - 1
-      };
-      if (!liked) {
-        modifyContext(media, setMedia, file, newData);
-      }
+      const data = media[media.indexOf(file)]
+      data.favCount --;
+      const newContext = [...media.filter(i => i !== file), data].sort(
+        (a, b) => {
+          return new Date(b.time_added) - new Date(a.time_added);
+        }
+      );
+      setMedia(newContext);
     } else {
       setLiked(true);
-      const newData = {
-        favCount: file.favCount + 1
-      };
-      if (liked) {
-        modifyContext(media, setMedia, file, newData);
-      }
+      const data = media[media.indexOf(file)]
+      data.favCount ++;
+      const newContext = [...media.filter(i => i !== file), data].sort(
+        (a, b) => {
+          return new Date(b.time_added) - new Date(a.time_added);
+        }
+      );
+      setMedia(newContext);
     }
     await postFavourite(file.file_id, liked);
   };
