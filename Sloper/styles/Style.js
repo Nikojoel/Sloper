@@ -52,7 +52,7 @@ const loginStyles = StyleSheet.create({
     marginTop: 15,
   },
   alert: {
-      fontSize: 30,
+    fontSize: 30,
   },
   alertButton: {
     zIndex: 1,
@@ -264,6 +264,11 @@ const headerStyles = StyleSheet.create({
     left: '33%',
     zIndex: 1,
   },
+  headerImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 40
+  },
 });
 
 const loadingStyles = StyleSheet.create({
@@ -272,5 +277,27 @@ const loadingStyles = StyleSheet.create({
   },
 });
 
-export {loginStyles, formStyles, listStyles, singleStyles, myFilesStyles, headerStyles, loadingStyles};
+const aSyncImageStyles = StyleSheet.create({
+  image: {
+    height: '100%',
+    width: '100%',
+  },
+  view: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginLeft: -13,
+  },
+});
+
+export {
+  loginStyles,
+  formStyles,
+  listStyles,
+  singleStyles,
+  myFilesStyles,
+  headerStyles,
+  loadingStyles,
+  aSyncImageStyles,
+};
 

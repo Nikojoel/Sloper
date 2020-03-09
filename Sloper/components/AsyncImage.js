@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Image } from 'react-native';
 import {Spinner} from 'native-base';
 import PropTypes from 'prop-types';
+import {aSyncImageStyles} from "../styles/Style";
 
 const AsyncImage = (props) => {
   const [loaded, setLoaded] = useState(false);
@@ -22,18 +23,10 @@ const AsyncImage = (props) => {
       <Image
         source={source}
         resizeMode={'contain'}
-        style={{
-          height: '100%',
-          width: '100%',
-        }}
+        style={aSyncImageStyles.image}
         onLoad={onLoad}/>
       {!loaded &&
-      <View style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        marginLeft: -13,
-      }}>
+      <View style={aSyncImageStyles.view}>
         <Spinner color={spinnerColor}/>
       </View>
       }

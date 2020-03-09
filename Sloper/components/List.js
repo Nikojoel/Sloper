@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Image} from 'react-native'
 import {
   Container,
@@ -14,10 +14,10 @@ import {
 
 } from "native-base";
 import ListItem from "./ListItem";
-import { MediaContext } from "../contexts/MediaContext";
-import { listStyles } from "../styles/Style";
-import { SearchBar } from "react-native-elements";
-import { getAllMedia } from "../hooks/APIHooks";
+import {MediaContext} from "../contexts/MediaContext";
+import {listStyles} from "../styles/Style";
+import {SearchBar} from "react-native-elements";
+import {getAllMedia} from "../hooks/APIHooks";
 import PropTypes from "prop-types";
 import useSearchForm from "../hooks/SearchHooks";
 import {UserContext} from "../contexts/UserContext";
@@ -31,7 +31,7 @@ const List = props => {
     setMedia(data);
   }, [loading]);
 
-  const { inputs, handleSearchChange } = useSearchForm();
+  const {inputs, handleSearchChange} = useSearchForm();
 
   const handleSearch = async text => {
     const result = [...media.filter(i => i.title.match(new RegExp(text, "i")))];
@@ -47,20 +47,20 @@ const List = props => {
     <Container style={listStyles.baseList}>
       <Header style={listStyles.headerBar} searchBar rounded>
         <Item style={listStyles.headerInput}>
-          <Icon name="ios-search" />
+          <Icon name="ios-search"/>
           <Input placeholder="Search"
-          onChangeText={t => {
-            handleSearchChange(t);
-            handleSearch(t);
-          }}
-          value={inputs.search} />
+                 onChangeText={t => {
+                   handleSearchChange(t);
+                   handleSearch(t);
+                 }}
+                 value={inputs.search}/>
         </Item>
-     </Header>
+      </Header>
       {!loading ? (
         <BaseList
           dataArray={dataPicker()}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <ListItem
               navigation={props.navigation}
               singleMedia={item}
@@ -69,7 +69,7 @@ const List = props => {
           )}
         />
       ) : (
-        <Spinner size="large" color="#0000ff" style={{ top: "40%" }} />
+        <Spinner size="large" color="#0000ff" style={{top: "40%"}}/>
       )}
     </Container>
   );
