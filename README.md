@@ -19,7 +19,7 @@ The intent of this project is to create a React-Native media sharing application
 `git clone https://github.com/Nikojoel/Sloper.git`
 2. Make sure you have [Node.js](https://nodejs.org/en/) installed to install required dependencies.
 3. Run `npm i` to install dependencies.
-4. Run `npm start` from the terminal in `/Sloper/Sloper`
+
 <details>
   <summary>Check all dependencies</summary>
  
@@ -49,6 +49,7 @@ The intent of this project is to create a React-Native media sharing application
     - tabs
 </details>
 
+4. Run `npm start` from the terminal in `/Sloper/Sloper`
 #### To use the reverse geocoding [API](https://opencagedata.com/api)
 1. Sign up and generate an unique API key (requires a valid email address).
    - 2500 request/day with a free account.
