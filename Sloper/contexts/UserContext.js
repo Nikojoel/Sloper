@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 const UserContext = React.createContext();
@@ -17,4 +17,6 @@ UserContext.propTypes = {
   children: PropTypes.node
 };
 
-export { UserContext, UserProvider };
+export {UserContext, UserProvider};
+
+/* END OF FILE */

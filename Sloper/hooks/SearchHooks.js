@@ -1,18 +1,24 @@
-import React, {useState,} from 'react';
+import React, {useState} from 'react';
 
 const useSearchForm = () => {
+  // Hook
   const [inputs, setInputs] = useState({});
+
+  // Set search bar input value
   const handleSearchChange = (text) => {
-     setInputs((inputs) =>
+    setInputs((inputs) =>
       ({
         ...inputs,
         search: text,
       }));
   };
- return {
+
+  return {
     inputs,
     handleSearchChange,
   };
 };
 
 export default useSearchForm;
+
+/* END OF FILE */

@@ -9,8 +9,11 @@ import {
 import PropTypes from 'prop-types';
 import {formStyles} from "../styles/Style";
 
+// Custom input component
 const FormTextInput = (props) => {
   const {error, ...otherProps} = props;
+
+  // FormTextInput view components
   return (
     <Body>
       <Item style={formStyles.form}>
@@ -18,6 +21,7 @@ const FormTextInput = (props) => {
           {...otherProps}
         />
       </Item>
+      {/* Error badge */}
       {error &&
       <Badge><Text>{error}</Text></Badge>
       }

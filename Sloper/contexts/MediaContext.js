@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 const MediaContext = React.createContext([{}, () => {}]);
-
 const mediaArray = [];
 
 const MediaProvider = (props) => {

@@ -1,11 +1,13 @@
-import { useState, } from "react";
+import {useState,} from "react";
 import validate from "validate.js";
-import { uploadImage } from "./APIHooks";
+import {uploadImage} from "./APIHooks";
 
 const useUploadForm = (constraints = {}) => {
+  // Hooks
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
 
+  // Sets title FormTextInput value
   const handleTitleChange = (text) => {
     setInputs((inputs) =>
       ({
@@ -13,6 +15,8 @@ const useUploadForm = (constraints = {}) => {
         title: text,
       }));
   };
+
+  // Sets description text FormTextInput value
   const handleTextChange = (text) => {
     setInputs((inputs) =>
       ({
@@ -20,6 +24,8 @@ const useUploadForm = (constraints = {}) => {
         postText: text,
       }));
   };
+
+  // Clears all FormTextInputs
   const resetText = (attr, text) => {
     setInputs((inputs) =>
       ({
@@ -28,8 +34,10 @@ const useUploadForm = (constraints = {}) => {
       }));
   };
 
-  const handleUpload = async (file, exifData, tag ) => {
+  // Converts uploaded image or video to right format, only necessary because of the BackEnd limitations
+  const handleUpload = async (file, exifData, tag) => {
     try {
+      // Converts .jpg to .jpeg
       const filename = file.split('/').pop();
       const match = /\.(\w+)$/.exec(filename);
       let type = '';
@@ -41,27 +49,30 @@ const useUploadForm = (constraints = {}) => {
           type = match ? `video/${match[1]}` : `video`;
         }
       }
+      // FormData to be sent to the BackEnd
       const formData = new FormData();
       const descriptionData = {
         description: inputs.postText,
         exif: exifData,
       };
+      // Append all data
       formData.append("file", {uri: file, name: filename, type});
       formData.append("title", inputs.title);
       formData.append("description", JSON.stringify(descriptionData));
-      console.log(formData);
       await uploadImage(formData, tag);
     } catch (e) {
       console.log("upload error", e);
     }
   };
 
+  // Validates input values and displays error badges if validation fails
   const validateInput = (attr, value) => {
     const validated = validate({[attr]: value}, constraints);
     let valResult = undefined;
     if (validated) {
       valResult = validated[attr][0];
     }
+    // Error badges
     setErrors((errors) =>
       ({
         ...errors,

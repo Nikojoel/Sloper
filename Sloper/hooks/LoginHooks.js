@@ -3,18 +3,20 @@ import validate from 'validate.js';
 import {fetchAPI} from './APIHooks';
 
 const useSignUpForm = (constraints = {}) => {
+  // Hooks
   const [inputs, setInputs] = useState({});
   const [errors, setErrors] = useState({});
 
+  // Sets username FormTextInput value
   const handleUsernameChange = (text) => {
     setInputs((inputs) =>
       ({
         ...inputs,
         username: text,
       }));
-    console.log(inputs.username);
   };
 
+  // Sets password FormTextInput value
   const handlePasswordChange = (text) => {
     setInputs((inputs) =>
       ({
@@ -23,6 +25,7 @@ const useSignUpForm = (constraints = {}) => {
       }));
   };
 
+  // Sets confirm password FormTextInput value
   const handleConfirmPasswordChange = (text) => {
     setInputs((inputs) =>
       ({
@@ -31,6 +34,7 @@ const useSignUpForm = (constraints = {}) => {
       }));
   };
 
+  // Sets email FormTextInput value
   const handleEmailChange = (text) => {
     setInputs((inputs) =>
       ({
@@ -38,6 +42,8 @@ const useSignUpForm = (constraints = {}) => {
         email: text,
       }));
   };
+
+  // Sets full name FormTextInput value
   const handleFullnameChange = (text) => {
     setInputs((inputs) =>
       ({
@@ -46,13 +52,15 @@ const useSignUpForm = (constraints = {}) => {
       }));
   };
 
+  // Validates input values and displays error badges if validation fails
   const validateField = (attr) => {
-    const attrName = Object.keys(attr).pop(); // get the only or last item from array
+    const attrName = Object.keys(attr).pop(); // Get the only or last item from array
     const valResult = validate(attr, constraints);
     let valid = undefined;
     if (valResult[attrName]) {
-      valid = valResult[attrName][0]; // get just the first message
+      valid = valResult[attrName][0]; // Get just the first message
     }
+    // Error badges
     setErrors((errors) =>
       ({
         ...errors,
@@ -61,10 +69,13 @@ const useSignUpForm = (constraints = {}) => {
       }));
   };
 
+  // Check if username is already in use
   const checkAvail = async () => {
     const text = inputs.username;
     try {
+      // API call to check username availability
       const result = await fetchAPI('GET', 'users/username', text);
+      // Set error badge if username is taken
       if (!result.available) {
         setErrors((errors) =>
           ({
@@ -73,6 +84,7 @@ const useSignUpForm = (constraints = {}) => {
           }));
       }
     } catch (e) {
+      // Error badges for the API call failing
       setErrors((errors) =>
         ({
           ...errors,
@@ -81,11 +93,16 @@ const useSignUpForm = (constraints = {}) => {
     }
   };
 
+  // Validates user input before sending an API call
   const validateOnSend = (fields) => {
+    // Check username
     checkAvail();
+
+    // Iterate over all user input
     for (const [key, value] of Object.entries(fields)) {
       validateField(value);
     }
+    // Return validated inputs
     return !(errors.username !== undefined ||
       errors.email !== undefined ||
       errors.full_name !== undefined ||
@@ -93,6 +110,7 @@ const useSignUpForm = (constraints = {}) => {
       errors.confirmPassword !== undefined);
   };
 
+  // Returns
   return {
     handleUsernameChange,
     handlePasswordChange,

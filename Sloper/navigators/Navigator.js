@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
@@ -15,6 +14,7 @@ import Update from '../views/Update';
 import UpdateUser from '../views/UpdateUser';
 import ShowProfile from '../views/ShowProfile';
 
+// BottomTavNavigator initialization
 const TabNavigator = createBottomTabNavigator(
   {
     Home,
@@ -24,6 +24,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     defaultNavigationOptions: ({navigation}) => ({
       tabBarIcon: () => {
+        // Check route names and place corresponding icon
         const {routeName} = navigation.state;
         let iconName;
         if (routeName === 'Home') {
@@ -33,26 +34,28 @@ const TabNavigator = createBottomTabNavigator(
         } else if (routeName === 'Upload') {
           iconName = 'add';
         }
-        // You can return any component that you like here!
+        // Icons for the bottom navigator
         return <Icon
           name={iconName}
           size={25}
         />;
       },
     }),
+    // Active navigator tint color
     tabBarOptions: {
       activeTintColor: '#000',
     },
   },
 );
 
+// StackNavigator initialization
 const StackNavigator = createStackNavigator(
   // RouteConfigs
   {
     Home: {
       screen: TabNavigator,
       navigationOptions: {
-        headerShown: false,
+        headerShown: false, // Hide the default header
       },
 
     },
@@ -92,6 +95,7 @@ const StackNavigator = createStackNavigator(
   },
 );
 
+// SwitchNavigator initialization
 const Navigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoading,

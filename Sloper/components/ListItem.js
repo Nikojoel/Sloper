@@ -15,6 +15,7 @@ import {listStyles} from '../styles/Style';
 
 const mediaURL = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
+// Custom ListItem component
 const ListItem = (props) => {
   const allData = JSON.parse(props.singleMedia.description);
   const exif = allData.exif;

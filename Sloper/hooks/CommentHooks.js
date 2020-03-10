@@ -1,8 +1,10 @@
-import { useState, } from "react";
+import {useState,} from "react";
 
 const useCommentForm = () => {
+  // Hook
   const [inputs, setInputs] = useState({});
 
+  // Set comment FormTextInput value
   const handleCommentChange = (text) => {
     setInputs((inputs) =>
       ({

@@ -123,8 +123,8 @@ const Login = props => {
         );
 
         let avPic = "";
+        // If avatar pic is not set, set placeholder
         if (avatarPic.length === 0 || avatarPic === placeHolder) {
-          // if avatar is not set or
           avPic = placeHolder;
         } else {
           avPic = mediaURL + avatarPic[avatarPic.length - 1].filename;
@@ -140,7 +140,6 @@ const Login = props => {
           "tags",
           "sloper_skill_" + user.user.user_id
         );
-        console.log("skill", await result);
         let skill = "";
         if (result.length === 0) {
           skill = 0;

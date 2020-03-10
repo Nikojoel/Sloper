@@ -1,12 +1,21 @@
 import React, {useContext} from "react";
 import {Image} from 'react-native';
-import {Header, Left, Button, Body, Right, Icon, Title} from "native-base";
+import {
+  Header,
+  Left,
+  Button,
+  Body,
+  Right,
+  Icon,} from "native-base";
 import {UserContext} from '../contexts/UserContext';
 import {headerStyles} from "../styles/Style";
 
+// Custom header, replaces the standard navigation header
 const BackHeader = ({navigation, title}) => {
+  // Hook
   const [{user}] = useContext(UserContext);
 
+  // Custom header components
   return (
     <Header style={{backgroundColor: 'white'}}>
       <Left>
@@ -17,7 +26,7 @@ const BackHeader = ({navigation, title}) => {
         </Button>
       </Left>
       <Body>
-        <Image style={headerStyles.headerLogo} source={require('../public/media/sloper.png')}></Image>
+        <Image style={headerStyles.headerLogo} source={require('../public/media/sloper.png')}/>
       </Body>
       <Right>
         <Button transparent onPress={() => {
@@ -34,3 +43,5 @@ const BackHeader = ({navigation, title}) => {
 };
 
 export default BackHeader;
+
+/* END OF FILE */
