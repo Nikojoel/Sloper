@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import validate from 'validate.js';
 import {fetchAPI} from './APIHooks';
+import {UserContext} from "../contexts/UserContext";
 
 const useSignUpForm = (constraints = {}) => {
   // Hooks
