@@ -46,10 +46,14 @@ const loginStyles = StyleSheet.create({
   },
   form: {
     borderColor: 'transparent',
+    marginRight: 15,
+    marginLeft: 10,
+
   },
   signInOrRegister: {
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
     marginTop: 15,
+
   },
   alert: {
     fontSize: 30,
@@ -72,6 +76,7 @@ const formStyles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 15,
     marginTop: 5,
+    paddingLeft: 20,
   },
   form: {
     borderColor: 'transparent',
