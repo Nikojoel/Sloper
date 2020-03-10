@@ -49,8 +49,7 @@ The intent of this project is to create a React-Native media sharing application
     - tabs
 </details>
 
-4. Run `npm start` from the terminal in `/Sloper/Sloper`
-#### To use the reverse geocoding [API](https://opencagedata.com/api)
+#### 4. To use the reverse geocoding [API](https://opencagedata.com/api)
 1. Sign up and generate an unique API key (requires a valid email address).
    - 2500 request/day with a free account.
 2. Generate a file called `API.js` in the root directory.
@@ -61,12 +60,39 @@ The intent of this project is to create a React-Native media sharing application
 ```JavaScript
 export const apiKey = "YOUR_API_KEY_HERE";
 ```
+5. Run `npm start` from the terminal in `/Sloper/Sloper`
 
-#### Android
-Run with emulator or download the [Expo client](https://expo.io/tools) from Google Play Store.
-#### iOS
-Download [Expo client](https://expo.io/tools) from the App Store and scan the QR code from your terminal.
+### Run locally
 
+6. Your terminal should now look something like this
+
+```
+ To run the app with live reloading, choose one of:
+  • Sign in as @YOUR_USERNAME in Expo client on Android or iOS. Your projects will automatically appear in the
+>
+  • Scan the QR code above with the Expo app (Android) or the Camera app (iOS).
+  • Press a for Android emulator, or w to run on web.
+  • Press e to send a link to your phone with email.
+
+ Expo  Press ? to show a list of all available commands.
+Logs for your project will appear below. Press Ctrl+C to exit.
+```
+
+7. Pressing `a` in the terminal will open up the project on your connected Android device. Full instructions [here](https://developer.android.com/training/basics/firstapp/running-app)
+```
+Trying to open the project on Android...
+Opening on Android device
+
+ Expo  Press ? to show a list of all available commands.
+Finished building JavaScript bundle in 186ms.
+Running application on Android SDK built for x86.
+```
+
+### Run through LAN or Tunnel
+#### Android and iOS
+1. Download the [Expo client](https://expo.io/tools) from Google Play Store or App Store.
+2. Make sure you are in the same network as your computer for LAN connection or just scan the QR code for Tunnel connection.
+#### If you run into any problems while deploying, check out the full [Expo](https://expo.io/learn) documentation.
 ### Routes
   - GET /media/all
     - All media from all users
@@ -84,8 +110,3 @@ Download [Expo client](https://expo.io/tools) from the App Store and scan the QR
     - Delete favourite
   - PUT /media/id
     - Update media
-  
-
-
-
-
