@@ -113,7 +113,7 @@ const Upload = (props) => {
         };
       }
       // Send post picture to be set to correct file format
-      await handleUpload(image, resultData, 'sloperTESTV2');
+      await handleUpload(image, resultData, 'SloperApp');
       props.navigation.replace("Home"); // Navigate to home
     }
   };

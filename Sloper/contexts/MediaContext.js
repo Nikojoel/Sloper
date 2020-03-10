@@ -22,8 +22,6 @@ MediaProvider.propTypes = {
 export {
   MediaContext,
   MediaProvider,
-
-
 };
 
 /* END OF FILE */
