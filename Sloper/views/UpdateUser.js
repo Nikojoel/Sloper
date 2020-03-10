@@ -29,6 +29,7 @@ import { fetchAPI, uploadImage } from "../hooks/APIHooks";
 import { loginConstraints } from "../constraints/Constraints";
 import { UserContext } from "../contexts/UserContext";
 import BackHeader from "../components/BackHeader";
+import {updateUserStyles} from "../styles/Style";
 
 const UpdateUser = ({ navigation }) => {
   const skillLevel = ["Beginner", "Intermediate", "Advanced", "Expert"];
@@ -138,15 +139,11 @@ const UpdateUser = ({ navigation }) => {
       <Content padder>
         <Form>
           <CardItem bordered>
-            <Item style={{ borderColor: "transparent" }}>
-              <Icon name={"ios-person"} style={{ fontSize: 30 }} />
+            <Item style={updateUserStyles.border}>
+              <Icon name={"ios-person"} style={updateUserStyles.iconSize} />
               <FormTextInput
                 placeholder={user.username}
-                style={{
-                  borderRadius: 25,
-                  borderStyle: "solid",
-                  borderWidth: 1
-                }}
+                style={updateUserStyles.input}
                 onChangeText={handleUsernameChange}
                 onEndEditing={() => {
                   // Check if user is not updating its username
@@ -160,15 +157,11 @@ const UpdateUser = ({ navigation }) => {
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{ borderColor: "transparent" }}>
-              <Icon name={"ios-mail"} style={{ fontSize: 30 }} />
+            <Item style={updateUserStyles.border}>
+              <Icon name={"ios-mail"} style={updateUserStyles.iconSize} />
               <FormTextInput
                 placeholder={user.email}
-                style={{
-                  borderRadius: 25,
-                  borderStyle: "solid",
-                  borderWidth: 1
-                }}
+                style={updateUserStyles.input}
                 onChangeText={handleEmailChange}
                 onEndEditing={() => {
                   validateField(validationProperties.email);
@@ -178,15 +171,11 @@ const UpdateUser = ({ navigation }) => {
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{ borderColor: "transparent" }}>
-              <Icon name={"ios-lock"} style={{ fontSize: 30 }} />
+            <Item style={updateUserStyles.border}>
+              <Icon name={"ios-lock"} style={updateUserStyles.iconSize} />
               <FormTextInput
                 placeholder="Password"
-                style={{
-                  borderRadius: 25,
-                  borderStyle: "solid",
-                  borderWidth: 1
-                }}
+                style={updateUserStyles.input}
                 secureTextEntry={true}
                 onChangeText={handlePasswordChange}
                 onEndEditing={() => {
@@ -197,15 +186,11 @@ const UpdateUser = ({ navigation }) => {
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{ borderColor: "transparent" }}>
-              <Icon name={"ios-lock"} style={{ fontSize: 30 }} />
+            <Item style={updateUserStyles.border}>
+              <Icon name={"ios-lock"} style={updateUserStyles.iconSize} />
               <FormTextInput
                 placeholder="Confirm password"
-                style={{
-                  borderRadius: 25,
-                  borderStyle: "solid",
-                  borderWidth: 1
-                }}
+                style={updateUserStyles.input}
                 secureTextEntry={true}
                 onChangeText={handleConfirmPasswordChange}
                 onEndEditing={() => {
@@ -219,9 +204,9 @@ const UpdateUser = ({ navigation }) => {
             <Label>{skillState}</Label>
           </Body>
           <CardItem>
-            <Icon name={"ios-podium"} style={{ fontSize: 30 }} />
+            <Icon name={"ios-podium"} style={updateUserStyles.iconSize} />
             <Slider
-              style={{ width: 300, height: 40 }}
+              style={updateUserStyles.slider}
               value={parseInt(user.skill)}
               minimumValue={0}
               maximumValue={3}
@@ -239,7 +224,7 @@ const UpdateUser = ({ navigation }) => {
             />
           </CardItem>
           <CardItem bordered>
-            <Item style={{ borderColor: "transparent" }}></Item>
+            <Item style={updateUserStyles.border}></Item>
           </CardItem>
           <CardItem bordered>
             <Left>
@@ -277,7 +262,7 @@ const UpdateUser = ({ navigation }) => {
               </Button>
             </Left>
             {avatarPic && (
-              <Image source={{ uri: avatarPic }} style={styles.image} />
+              <Image source={{ uri: avatarPic }} style={updateUserStyles.image} />
             )}
           </CardItem>
         </Form>
@@ -294,13 +279,6 @@ const UpdateUser = ({ navigation }) => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  image: {
-    width: Dimensions.get("window").width * 0.15,
-    height: Dimensions.get("window").width * 0.15
-  }
-});
 
 export default UpdateUser;
 

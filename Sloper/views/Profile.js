@@ -15,6 +15,7 @@ import AsyncImage from '../components/AsyncImage';
 import {Dimensions} from 'react-native';
 import {UserContext} from '../contexts/UserContext';
 import BackHeader from '../components/BackHeader';
+import {profileStyles} from "../styles/Style";
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -48,26 +49,23 @@ const Profile = (props) => {
           <CardItem>
             <Body>
               <AsyncImage
-                style={{
-                  width: '100%',
-                  height: deviceHeight / 2,
-                }}
+                style={profileStyles.profilePic}
                 spinnerColor='#777'
                 source={{uri: user.avatar}}
               />
             </Body>
           </CardItem>
           <CardItem bordered>
-            <Icon name='ios-document' style={{fontSize: 30}}/>
+            <Icon name='ios-document' style={profileStyles.profileIcon}/>
             <Body>
-              <Text style={{fontSize: 16}}>Full Name: {user.full_name}</Text>
-              <Text style={{fontSize: 16}}>Email: {user.email}</Text>
-              <Text style={{fontSize: 16}}>Skill Level: {skillLevel[user.skill]}</Text>
+              <Text style={profileStyles.info}>Full Name: {user.full_name}</Text>
+              <Text style={profileStyles.info}>Email: {user.email}</Text>
+              <Text style={profileStyles.info}>Skill Level: {skillLevel[user.skill]}</Text>
             </Body>
           </CardItem>
           <Body>
             <CardItem footer bordered>
-              <Button primary rounded iconLeft style={{marginRight: 10}} onPress={() => {
+              <Button primary rounded iconLeft style={profileStyles.myPostsIcon} onPress={() => {
                 props.navigation.navigate('MyFiles')
               }}>
                 <Icon name='ios-list'/>
@@ -77,7 +75,7 @@ const Profile = (props) => {
                 <Icon name='ios-cog'/>
                 <Text>Edit</Text>
               </Button>
-              <Button danger rounded iconLeft style={{marginLeft: 10}} onPress={signOutAsync}>
+              <Button danger rounded iconLeft style={profileStyles.logoutIcon} onPress={signOutAsync}>
                 <Icon name='ios-exit'/>
                 <Text>Logout</Text>
               </Button>

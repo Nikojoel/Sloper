@@ -226,6 +226,12 @@ const singleStyles = StyleSheet.create({
     fontSize: 25,
     marginRight: 5,
   },
+  cardItem: {
+    marginTop: -60,
+  },
+  rateText: {
+    marginTop: 10,
+  },
 });
 
 const myFilesStyles = StyleSheet.create({
@@ -295,6 +301,80 @@ const aSyncImageStyles = StyleSheet.create({
   },
 });
 
+const profileStyles = StyleSheet.create({
+  profilePic: {
+    width: '100%',
+    height: windowHeight * 0.5,
+  },
+  profileIcon: {
+    fontSize: 30,
+  },
+  info: {
+    fontSize: 16,
+  },
+  myPostsIcon: {
+    marginRight: 10,
+  },
+  logoutIcon: {
+    marginLeft: 10,
+  },
+});
+
+const updateStyles = StyleSheet.create({
+  formTextInput: {
+    borderRadius: 25,
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  imageMargin: {
+    marginLeft: 10,
+  },
+  imageSize: {
+    width: windowWidth * 0.85,
+    height: windowHeight * 0.45,
+  },
+});
+
+const updateUserStyles = StyleSheet.create({
+  border: {
+    borderColor: 'transparent',
+  },
+  iconSize: {
+    fontSize: 30,
+  },
+  input: {
+    borderRadius: 25,
+    borderStyle: "solid",
+    borderWidth: 1,
+  },
+  slider: {
+    width: 300,
+    height: 40,
+  },
+  image: {
+    width: windowWidth * 0.2,
+    height: windowHeight * 0.09,
+  },
+});
+
+const uploadStyles = StyleSheet.create({
+  border: {
+    borderColor: 'transparent',
+  },
+  input: {
+    borderRadius: 25,
+    borderStyle: "solid",
+    borderWidth: 1,
+  },
+  imageMargin: {
+    marginLeft: 10,
+  },
+  image: {
+    width: windowWidth * 0.85,
+    height: windowHeight * 0.4,
+  },
+});
+
 export {
   loginStyles,
   formStyles,
@@ -304,5 +384,9 @@ export {
   headerStyles,
   loadingStyles,
   aSyncImageStyles,
+  profileStyles,
+  updateStyles,
+  updateUserStyles,
+  uploadStyles,
 };
 

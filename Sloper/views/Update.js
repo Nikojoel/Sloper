@@ -17,6 +17,7 @@ import {updatePost} from '../hooks/APIHooks';
 import {NavigationActions, StackActions} from 'react-navigation';
 import {uploadConstraints} from '../constraints/Constraints';
 import BackHeader from "../components/BackHeader";
+import {updateStyles} from "../styles/Style";
 
 const Update = (props) => {
   // FormTextInput handlers
@@ -63,7 +64,7 @@ const Update = (props) => {
           <CardItem bordered>
             <Item style={{borderColor: 'transparent'}}>
               <FormTextInput
-                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1}}
+                style={updateStyles.formTextInput}
                 value={inputs.title}
                 placeholder='New title'
                 onChangeText={handleTitleChange}
@@ -77,7 +78,7 @@ const Update = (props) => {
           <CardItem bordered>
             <Item style={{borderColor: 'transparent'}}>
               <FormTextInput
-                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1}}
+                style={updateStyles.formTextInput}
                 value={inputs.postText}
                 placeholder='New description'
                 onChangeText={handleTextChange}
@@ -92,9 +93,9 @@ const Update = (props) => {
               </Button>
             </Body>
           </CardItem>
-          <CardItem bordered style={{marginLeft: 10}}>
+          <CardItem bordered style={updateStyles.imageMargin}>
             <Body>
-              <Image source={{uri: image}} style={{width: styles.image.width, height: styles.image.height}}/>
+              <Image source={{uri: image}} style={updateStyles.imageSize}/>
             </Body>
           </CardItem>
         </Card>
@@ -102,13 +103,6 @@ const Update = (props) => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  image: {
-    width: Dimensions.get('window').width * 0.85,
-    height: Dimensions.get('window').width * 0.85,
-  },
-});
 
 export default Update;
 

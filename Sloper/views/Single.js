@@ -270,7 +270,7 @@ const Single = props => {
                     resizeMode="cover"
                     shouldPlay
                     isLooping
-                    style={{width: "100%", height: deviceHeight / 2, flex: 1}}
+                    style={singleStyles.asyncImage}
                     onError={e => {
                       console.log("video error", e);
                     }}
@@ -278,7 +278,7 @@ const Single = props => {
                 )}
               </Body>
             </CardItem>
-            <CardItem bordered style={{marginTop: -60}}>
+            <CardItem bordered style={singleStyles.cardItem}>
               <Left>
                 <Body>
                   <CardItem>
@@ -347,7 +347,7 @@ const Single = props => {
             </CardItem>
 
             <Body>
-              <Text style={{marginTop: 10}}>Rate this post</Text>
+              <Text style={singleStyles.rateText}>Rate this post</Text>
               <CardItem bordered>
                 <StarRating
                   fullStarColor={"gold"}

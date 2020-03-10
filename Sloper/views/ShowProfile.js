@@ -13,6 +13,7 @@ import {Dimensions} from "react-native";
 import {UserContext} from "../contexts/UserContext";
 import BackHeader from "../components/BackHeader";
 import {fetchAPI} from "../hooks/APIHooks";
+import {profileStyles} from "../styles/Style";
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -64,29 +65,26 @@ const ShowProfile = ({navigation}) => {
         <Content>
           <Card>
             <CardItem bordered>
-              <Icon name="ios-person" style={{fontSize: 30}}/>
-              <Text style={{fontSize: 16}}>Username: {profile.username}</Text>
+              <Icon name="ios-person" style={profileStyles.profileIcon}/>
+              <Text style={profileStyles.info}>Username: {profile.username}</Text>
             </CardItem>
             <CardItem>
               <Body>
                 <AsyncImage
-                  style={{
-                    width: "100%",
-                    height: deviceHeight / 2
-                  }}
+                  style={profileStyles.profilePic}
                   spinnerColor="#777"
                   source={{uri: profile.picture}}
                 />
               </Body>
             </CardItem>
             <CardItem bordered>
-              <Icon name="ios-document" style={{fontSize: 30}}/>
+              <Icon name="ios-document" style={profileStyles.profileIcon}/>
               <Body>
-                <Text style={{fontSize: 16}}>
+                <Text style={profileStyles.info}>
                   Full Name: {profile.full_name}
                 </Text>
-                <Text style={{fontSize: 16}}>Email: {profile.email}</Text>
-                <Text style={{fontSize: 16}}>
+                <Text style={profileStyles.info}>Email: {profile.email}</Text>
+                <Text style={profileStyles.info}>
                   Skill Level: {profile.skill}
                 </Text>
               </Body>

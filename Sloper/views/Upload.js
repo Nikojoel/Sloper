@@ -21,6 +21,7 @@ import * as ImagePicker from "expo-image-picker";
 import {uploadConstraints} from '../constraints/Constraints';
 import BackHeader from '../components/BackHeader';
 import {apiKey} from "../API";
+import {uploadStyles} from "../styles/Style";
 
 const geoApi = "https://api.opencagedata.com/geocode/v1/json?q=";
 
@@ -127,9 +128,9 @@ const Upload = (props) => {
           <Form>
             <Card>
               <CardItem bordered>
-                <Item style={{borderColor: "transparent"}}>
+                <Item style={uploadStyles.border}>
                   <FormTextInput
-                    style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                    style={uploadStyles.input}
                     value={inputs.title}
                     placeholder='Title'
                     onChangeText={handleTitleChange}
@@ -141,9 +142,9 @@ const Upload = (props) => {
                 </Item>
               </CardItem>
               <CardItem bordered>
-                <Item style={{borderColor: "transparent"}}>
+                <Item style={uploadStyles.border}>
                   <FormTextInput
-                    style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                    style={uploadStyles.input}
                     value={inputs.postText}
                     placeholder='Description'
                     onChangeText={handleTextChange}
@@ -174,9 +175,9 @@ const Upload = (props) => {
               </Body>
               }
               {image &&
-              <CardItem bordered style={{marginLeft: 10}}>
+              <CardItem bordered style={uploadStyles.imageMargin}>
                 <Body>
-                  <Image source={{uri: image}} style={{width: styles.image.width, height: styles.image.height}}/>
+                  <Image source={{uri: image}} style={uploadStyles.image}/>
                 </Body>
               </CardItem>
               }
@@ -188,12 +189,6 @@ const Upload = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  image: {
-    width: Dimensions.get("window").width * 0.85,
-    height: Dimensions.get("window").width * 0.85,
-  },
-});
 // proptypes here
 Upload.propTypes = {
   navigation: PropTypes.object,
