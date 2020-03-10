@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import { AsyncStorage } from "react-native";
 
 const apiUrl = "http://media.mw.metropolia.fi/wbma/";
-
+/**
+ * Uneversal function for api requests
+ * @param {http method 'GET', 'POST', 'PUT', 'DELETE' } method
+ * @param {wbma endpoint} endpoint
+ * @param {parameters for query} params
+ * @param {x-access-token} token
+ * @param {data to send} data
+ * @param {appliaction/json by default 'form' for form-data} type
+ */
 const fetchAPI = async (
   method = "GET",
   endpoint = "",
@@ -37,7 +45,10 @@ const fetchAPI = async (
   }
   return json;
 };
-
+/**
+ *
+ * @param {id of the file to delete} id
+ */
 const deletePost = async id => {
   try {
     const token = await AsyncStorage.getItem("userToken");
@@ -46,7 +57,11 @@ const deletePost = async id => {
     console.log(e);
   }
 };
-
+/**
+ * Update a post function
+ * @param {original data} data
+ * @param {data to update} newData
+ */
 const updatePost = async (data, newData) => {
   const descData = await JSON.parse(data.description);
   const description = {
@@ -71,7 +86,9 @@ const updatePost = async (data, newData) => {
     console.log("update file error", e);
   }
 };
-
+/**
+ * gets all media with tag in reverse order.
+ */
 const getAllMedia = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,7 +98,6 @@ const getAllMedia = () => {
       const result = await Promise.all(
         json
           .reverse()
-          .slice(0, 10)
           .map(async item => {
             const file = await fetchAPI("GET", "media", item.file_id);
             const favourites = await fetchAPI(
@@ -113,6 +129,9 @@ const getAllMedia = () => {
   return [data, loading];
 };
 
+/**
+ * get all media for current user
+ */
 const getAllUserMedia = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -147,6 +166,11 @@ const getAllUserMedia = () => {
   return [data, loading];
 };
 
+/**
+ * Upload image to the server
+ * @param {data} data
+ * @param {tag for the image} tag
+ */
 const uploadImage = async (data, tag) => {
   const token = await AsyncStorage.getItem("userToken");
   try {

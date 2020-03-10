@@ -57,8 +57,10 @@ const Login = props => {
     }
   };
 
-  /* Authenticates the user with unique token and checks if the user is
-  trying to log in with a different account that is not registered to Sloper
+  /**
+   * Authenticates the user with unique token and checks if the user is
+    trying to log in with a different account that is not registered to Sloper
+   * @param {boolean if the user loging in for first time} firstTime
    */
   const signInAsync = async firstTime => {
     try {
