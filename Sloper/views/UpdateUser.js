@@ -1,10 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   AsyncStorage,
   Image,
   Dimensions,
   Slider,
+  Alert
 } from "react-native";
 import {
   Form,
@@ -18,28 +19,23 @@ import {
   Card,
   CardItem,
   Body,
-  Left,
-} from 'native-base'
-import useUploadForm from '../hooks/UploadHooks'
-import useSignUpForm from '../hooks/LoginHooks'
-import FormTextInput from '../components/FormTextInput';
+  Left
+} from "native-base";
+import useUploadForm from "../hooks/UploadHooks";
+import useSignUpForm from "../hooks/LoginHooks";
+import FormTextInput from "../components/FormTextInput";
 import * as ImagePicker from "expo-image-picker";
-import {fetchAPI, uploadImage} from '../hooks/APIHooks'
-import {loginConstraints} from '../constraints/Constraints'
-import {UserContext} from '../contexts/UserContext';
+import { fetchAPI, uploadImage } from "../hooks/APIHooks";
+import { loginConstraints } from "../constraints/Constraints";
+import { UserContext } from "../contexts/UserContext";
 import BackHeader from "../components/BackHeader";
 
-const UpdateUser = ({navigation}) => {
-  const skillLevel = [
-    "Beginner",
-    "Intermediate",
-    "Advanced",
-    "Expert",
-  ];
+const UpdateUser = ({ navigation }) => {
+  const skillLevel = ["Beginner", "Intermediate", "Advanced", "Expert"];
 
   // Hooks
-  const [{user, token}, setUser] = useContext(UserContext);
-  const {handleUpload} = useUploadForm();
+  const [{ user, token }, setUser] = useContext(UserContext);
+  const { handleUpload } = useUploadForm();
   const [skillState, setSkill] = useState(skillLevel[user.skill]);
   const [skillNumber, setSkillNumber] = useState(user.skill);
 
@@ -63,18 +59,18 @@ const UpdateUser = ({navigation}) => {
     setInputs({
       username: user.username,
       email: user.email
-    })
+    });
   }, []);
 
   // Used to validate user input
   const validationProperties = {
-    username: {username: inputs.username},
-    email: {email: inputs.email},
-    password: {password: inputs.password},
+    username: { username: inputs.username },
+    email: { email: inputs.email },
+    password: { password: inputs.password },
     confirmPassword: {
       password: inputs.password,
-      confirmPassword: inputs.confirmPassword,
-    },
+      confirmPassword: inputs.confirmPassword
+    }
   };
 
   // Image picker from gallery
@@ -103,43 +99,54 @@ const UpdateUser = ({navigation}) => {
       const update = {
         username: inputs.username,
         email: inputs.email,
-        password: inputs.password,
+        password: inputs.password
       };
-      const token = await AsyncStorage.getItem('userToken');
+      const token = await AsyncStorage.getItem("userToken");
       if (avatarPic !== undefined) {
         // Send avatar picture to be set to correct file format
-        await handleUpload(avatarPic, undefined, 'sloper_avatar_' + user.user_id)
+        await handleUpload(
+          avatarPic,
+          undefined,
+          "sloper_avatar_" + user.user_id
+        );
       }
       const formData = new FormData();
-      formData.append("file", {uri: "https://placekitten.com/1024/1024", name: "placeholder.jpg", type: "image/jpeg"});
+      formData.append("file", {
+        uri: "https://placekitten.com/1024/1024",
+        name: "placeholder.jpg",
+        type: "image/jpeg"
+      });
       formData.append("description", skillNumber);
-      await uploadImage(formData, 'sloper_skill_' + user.user_id);
-      await fetchAPI('PUT', 'users', undefined, token, update); // API call to update user data
+      await uploadImage(formData, "sloper_skill_" + user.user_id);
+      await fetchAPI("PUT", "users", undefined, token, update); // API call to update user data
       await AsyncStorage.clear(); // Remove token and user from AsyncStorage
-      navigation.navigate('AuthLoading'); // Navigate to Login
+      navigation.navigate("AuthLoading"); // Navigate to Login
     } catch (e) {
-      console.log('registerAsync error: ', e.message);
+      console.log("registerAsync error: ", e.message);
       // Set error badges
-      setErrors((errors) =>
-        ({
-          ...errors,
-          fetch: e.message,
-        }));
+      setErrors(errors => ({
+        ...errors,
+        fetch: e.message
+      }));
     }
   };
 
   // UpdateUser view components
   return (
     <Container>
-      <BackHeader navigation={navigation}/>
+      <BackHeader navigation={navigation} />
       <Content padder>
         <Form>
           <CardItem bordered>
-            <Item style={{borderColor: "transparent"}}>
-              <Icon name={"ios-person"} style={{fontSize: 30}}/>
+            <Item style={{ borderColor: "transparent" }}>
+              <Icon name={"ios-person"} style={{ fontSize: 30 }} />
               <FormTextInput
                 placeholder={user.username}
-                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                style={{
+                  borderRadius: 25,
+                  borderStyle: "solid",
+                  borderWidth: 1
+                }}
                 onChangeText={handleUsernameChange}
                 onEndEditing={() => {
                   // Check if user is not updating its username
@@ -153,44 +160,56 @@ const UpdateUser = ({navigation}) => {
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{borderColor: "transparent"}}>
-              <Icon name={"ios-mail"} style={{fontSize: 30}}/>
+            <Item style={{ borderColor: "transparent" }}>
+              <Icon name={"ios-mail"} style={{ fontSize: 30 }} />
               <FormTextInput
                 placeholder={user.email}
-                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                style={{
+                  borderRadius: 25,
+                  borderStyle: "solid",
+                  borderWidth: 1
+                }}
                 onChangeText={handleEmailChange}
                 onEndEditing={() => {
-                  validateField(validationProperties.email)
+                  validateField(validationProperties.email);
                 }}
                 error={errors.email}
               />
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{borderColor: "transparent"}}>
-              <Icon name={"ios-lock"} style={{fontSize: 30}}/>
+            <Item style={{ borderColor: "transparent" }}>
+              <Icon name={"ios-lock"} style={{ fontSize: 30 }} />
               <FormTextInput
-                placeholder='Password'
-                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                placeholder="Password"
+                style={{
+                  borderRadius: 25,
+                  borderStyle: "solid",
+                  borderWidth: 1
+                }}
                 secureTextEntry={true}
                 onChangeText={handlePasswordChange}
                 onEndEditing={() => {
-                  validateField(validationProperties.password)
+                  validateField(validationProperties.password);
                 }}
                 error={errors.password}
               />
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{borderColor: "transparent"}}>
-              <Icon name={"ios-lock"} style={{fontSize: 30}}/>
+            <Item style={{ borderColor: "transparent" }}>
+              <Icon name={"ios-lock"} style={{ fontSize: 30 }} />
               <FormTextInput
-                placeholder='Confirm password'
-                style={{borderRadius: 25, borderStyle: 'solid', borderWidth: 1,}}
+                placeholder="Confirm password"
+                style={{
+                  borderRadius: 25,
+                  borderStyle: "solid",
+                  borderWidth: 1
+                }}
                 secureTextEntry={true}
                 onChangeText={handleConfirmPasswordChange}
                 onEndEditing={() => {
-                  validateField(validationProperties.confirmPassword)
+                  validateField(validationProperties.confirmPassword);
                 }}
                 error={errors.confirmPassword}
               />
@@ -200,15 +219,15 @@ const UpdateUser = ({navigation}) => {
             <Label>{skillState}</Label>
           </Body>
           <CardItem>
-            <Icon name={"ios-podium"} style={{fontSize: 30}}/>
+            <Icon name={"ios-podium"} style={{ fontSize: 30 }} />
             <Slider
-              style={{width: 300, height: 40}}
+              style={{ width: 300, height: 40 }}
               value={parseInt(user.skill)}
               minimumValue={0}
               maximumValue={3}
               minimumTrackTintColor="red"
               maximumTrackTintColor="blue"
-              onSlidingComplete={(value) => {
+              onSlidingComplete={value => {
                 if (value % 1 < 0.5) {
                   setSkill(skillLevel[Math.floor(value)]);
                   setSkillNumber(Math.floor(value));
@@ -220,25 +239,46 @@ const UpdateUser = ({navigation}) => {
             />
           </CardItem>
           <CardItem bordered>
-            <Item style={{borderColor: "transparent"}}>
-            </Item>
+            <Item style={{ borderColor: "transparent" }}></Item>
           </CardItem>
           <CardItem bordered>
             <Left>
               <Button primary rounded iconLeft onPress={pickImage}>
-                <Icon name={"ios-image"}/>
+                <Icon name={"ios-image"} />
                 <Text>Select</Text>
               </Button>
-              <Button warning rounded iconLeft onPress={async () => {
-                await updateProfileAsync();
-              }}>
-                <Icon name={"ios-cloud-upload"}/>
+              <Button
+                warning
+                rounded
+                iconLeft
+                onPress={() => {
+                  Alert.alert(
+                    "Thanks!",
+                    "After updating you will be redirected to login page and have to sign in again.",
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("canceled")
+                      },
+                      {
+                        text: "OK",
+                        onPress: async () => {
+                          console.log("OK Pressed");
+                          await updateProfileAsync();
+                        }
+                      }
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+              >
+                <Icon name={"ios-cloud-upload"} />
                 <Text>Update</Text>
               </Button>
             </Left>
-            {avatarPic &&
-            <Image source={{uri: avatarPic}} style={styles.image}/>
-            }
+            {avatarPic && (
+              <Image source={{ uri: avatarPic }} style={styles.image} />
+            )}
           </CardItem>
         </Form>
         {errors.fetch && (
@@ -258,8 +298,8 @@ const UpdateUser = ({navigation}) => {
 const styles = StyleSheet.create({
   image: {
     width: Dimensions.get("window").width * 0.15,
-    height: Dimensions.get("window").width * 0.15,
-  },
+    height: Dimensions.get("window").width * 0.15
+  }
 });
 
 export default UpdateUser;
