@@ -44,7 +44,7 @@ const List = props => {
   // List view components
   return (
     <Container style={listStyles.baseList}>
-      <Header style={listStyles.headerBar} searchBar rounded>
+      <Header style={listStyles.headerBar} searchBar rounded androidStatusBarColor="#424242">
         <Item style={listStyles.headerInput}>
           <Icon name="ios-search"/>
           <Input placeholder="Search"
