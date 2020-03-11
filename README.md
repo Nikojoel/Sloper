@@ -93,20 +93,4 @@ Running application on Android SDK built for x86.
 1. Download the [Expo client](https://expo.io/tools) from Google Play Store or App Store.
 2. Make sure you are in the same network as your computer for LAN connection or just scan the QR code for Tunnel connection.
 #### If you run into any problems while deploying, check out the full [Expo](https://expo.io/learn) documentation.
-### Routes
-  - GET /media/all
-    - All media from all users
-  - GET /media/id
-    - All media from specific user
-  - GET /favourites/file/id
-    - Get favourites
-  - POST /media
-    - Upload new media
-  - POST /favourites/file/id
-    - Post favourite
-  - DELETE /media/id
-    - Delete media
-  - DELETE /favourites/file/id
-    - Delete favourite
-  - PUT /media/id
-    - Update media
+#### [BackEnd documentation](http://media.mw.metropolia.fi/wbma/docs/)
