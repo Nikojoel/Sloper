@@ -62,7 +62,7 @@ const Update = (props) => {
       <Form>
         <Card>
           <CardItem bordered>
-            <Item style={{borderColor: 'transparent'}}>
+            <Item style={updateStyles.border}>
               <FormTextInput
                 style={updateStyles.formTextInput}
                 value={inputs.title}
@@ -76,7 +76,7 @@ const Update = (props) => {
             </Item>
           </CardItem>
           <CardItem bordered>
-            <Item style={{borderColor: 'transparent'}}>
+            <Item style={updateStyles.border}>
               <FormTextInput
                 style={updateStyles.formTextInput}
                 value={inputs.postText}

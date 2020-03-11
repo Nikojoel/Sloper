@@ -280,6 +280,9 @@ const headerStyles = StyleSheet.create({
     height: 30,
     borderRadius: 40
   },
+  headerColor: {
+    backgroundColor: 'white',
+  },
 });
 
 const loadingStyles = StyleSheet.create({
@@ -298,6 +301,9 @@ const aSyncImageStyles = StyleSheet.create({
     top: '50%',
     left: '50%',
     marginLeft: -13,
+  },
+  viewFlex: {
+    flex: 1,
   },
 });
 
@@ -332,6 +338,9 @@ const updateStyles = StyleSheet.create({
   imageSize: {
     width: windowWidth * 0.85,
     height: windowHeight * 0.45,
+  },
+  border: {
+    borderColor: 'transparent',
   },
 });
 

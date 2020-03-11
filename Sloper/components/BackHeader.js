@@ -17,7 +17,7 @@ const BackHeader = ({navigation, title}) => {
 
   // Custom header components
   return (
-    <Header style={{backgroundColor: 'white'}} androidStatusBarColor="#424242">
+    <Header style={headerStyles.headerColor} androidStatusBarColor="#424242">
       <Left>
         <Button transparent onPress={() => {
           navigation.goBack()

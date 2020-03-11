@@ -100,7 +100,7 @@ const Single = props => {
     return (
       <ListItem style={singleStyles.comments} key={comment.comment_id}>
         <Body>
-          <Item style={{borderColor: "transparent"}}>
+          <Item style={singleStyles.border}>
             <Icon name="chatbubbles"/>
             <Text style={singleStyles.username}>{comment.username}: </Text>
           </Item>

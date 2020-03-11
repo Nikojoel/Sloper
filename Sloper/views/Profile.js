@@ -40,8 +40,8 @@ const Profile = (props) => {
       <Content>
         <Card>
           <CardItem bordered>
-            <Icon name='ios-person' style={{fontSize: 30,}}/>
-            <Text style={{fontSize: 16}}>Username: {user.username}</Text>
+            <Icon name='ios-person' style={profileStyles.profileIcon}/>
+            <Text style={profileStyles.info}>Username: {user.username}</Text>
           </CardItem>
           <CardItem>
             <Body>
