@@ -238,17 +238,17 @@ const UpdateUser = ({navigation}) => {
                 iconLeft
                 onPress={() => {
                   Alert.alert(
-                    "Thanks!",
+                    "Are you sure?",
                     "After updating you will be redirected to login page and have to sign in again.",
                     [
                       {
                         text: "Cancel",
-                        onPress: () => console.log("canceled")
+                        onPress: () => console.log("Cancel pressed")
                       },
                       {
                         text: "OK",
                         onPress: async () => {
-                          console.log("OK Pressed");
+                          console.log("OK pressed");
                           await updateProfileAsync();
                         }
                       }

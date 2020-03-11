@@ -403,7 +403,7 @@ const Single = props => {
                   primary
                   rounded
                   onPress={async () => {
-                    if (inputs.comment !== "") {
+                    if (inputs.comment !== undefined && inputs.comment !== "") {
                       handleCommentChange("");
                       await postComment();
                     }
