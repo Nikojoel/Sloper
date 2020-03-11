@@ -4,6 +4,7 @@ import React from "react";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+// Gives styling to Loginscreen
 const loginStyles = StyleSheet.create({
   backgroundVideo: {
     height: windowHeight,
@@ -66,6 +67,7 @@ const loginStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Forms
 const formStyles = StyleSheet.create({
   border: {
     borderColor: 'black',
@@ -83,6 +85,7 @@ const formStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to List
 const listStyles = StyleSheet.create({
   thumbNail: {
     ...Platform.select({
@@ -159,6 +162,7 @@ const listStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Single
 const singleStyles = StyleSheet.create({
   map: {
     width: '100%',
@@ -234,6 +238,7 @@ const singleStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to myFiles
 const myFilesStyles = StyleSheet.create({
   tabFooter: {
     ...Platform.select({
@@ -245,6 +250,7 @@ const myFilesStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Header
 const headerStyles = StyleSheet.create({
   headerLogo: {
     ...Platform.select({
@@ -285,12 +291,14 @@ const headerStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Loading
 const loadingStyles = StyleSheet.create({
   activityIndicator: {
     top: '30%',
   },
 });
 
+// Gives styling to aSyncImages
 const aSyncImageStyles = StyleSheet.create({
   image: {
     height: '100%',
@@ -307,6 +315,7 @@ const aSyncImageStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Profile
 const profileStyles = StyleSheet.create({
   profilePic: {
     width: '100%',
@@ -326,6 +335,7 @@ const profileStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Updating post
 const updateStyles = StyleSheet.create({
   formTextInput: {
     borderRadius: 25,
@@ -344,6 +354,7 @@ const updateStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to updating Profile
 const updateUserStyles = StyleSheet.create({
   border: {
     borderColor: 'transparent',
@@ -366,6 +377,7 @@ const updateUserStyles = StyleSheet.create({
   },
 });
 
+// Gives styling to Upload
 const uploadStyles = StyleSheet.create({
   border: {
     borderColor: 'transparent',
