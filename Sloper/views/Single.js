@@ -21,7 +21,6 @@ import {fetchAPI, deletePost} from "../hooks/APIHooks";
 import {postFavourite, checkFavourite} from "../hooks/FavouriteHooks";
 import PropTypes from "prop-types";
 import AsyncImage from "../components/AsyncImage";
-import {Dimensions} from "react-native";
 import {Video} from "expo-av";
 import MapView from "react-native-maps";
 import useCommentForm from "../hooks/CommentHooks";
@@ -31,8 +30,6 @@ import {UserContext} from "../contexts/UserContext";
 import {modifyContext} from "../hooks/ContextHooks";
 import {loadingStyles, singleStyles} from "../styles/Style";
 import BackHeader from "../components/BackHeader";
-
-const deviceHeight = Dimensions.get("window").height;
 
 const mediaURL = "http://media.mw.metropolia.fi/wbma/uploads/";
 

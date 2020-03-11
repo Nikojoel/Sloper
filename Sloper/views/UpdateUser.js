@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {
-  StyleSheet,
   AsyncStorage,
   Image,
-  Dimensions,
   Slider,
   Alert
 } from "react-native";
@@ -25,18 +23,18 @@ import useUploadForm from "../hooks/UploadHooks";
 import useSignUpForm from "../hooks/LoginHooks";
 import FormTextInput from "../components/FormTextInput";
 import * as ImagePicker from "expo-image-picker";
-import { fetchAPI, uploadImage } from "../hooks/APIHooks";
-import { loginConstraints } from "../constraints/Constraints";
-import { UserContext } from "../contexts/UserContext";
+import {fetchAPI, uploadImage} from "../hooks/APIHooks";
+import {loginConstraints} from "../constraints/Constraints";
+import {UserContext} from "../contexts/UserContext";
 import BackHeader from "../components/BackHeader";
 import {updateUserStyles} from "../styles/Style";
 
-const UpdateUser = ({ navigation }) => {
+const UpdateUser = ({navigation}) => {
   const skillLevel = ["Beginner", "Intermediate", "Advanced", "Expert"];
 
   // Hooks
-  const [{ user, token }, setUser] = useContext(UserContext);
-  const { handleUpload } = useUploadForm();
+  const [{user, token}, setUser] = useContext(UserContext);
+  const {handleUpload} = useUploadForm();
   const [skillState, setSkill] = useState(skillLevel[user.skill]);
   const [skillNumber, setSkillNumber] = useState(user.skill);
 
@@ -65,9 +63,9 @@ const UpdateUser = ({ navigation }) => {
 
   // Used to validate user input
   const validationProperties = {
-    username: { username: inputs.username },
-    email: { email: inputs.email },
-    password: { password: inputs.password },
+    username: {username: inputs.username},
+    email: {email: inputs.email},
+    password: {password: inputs.password},
     confirmPassword: {
       password: inputs.password,
       confirmPassword: inputs.confirmPassword
@@ -137,12 +135,12 @@ const UpdateUser = ({ navigation }) => {
   // UpdateUser view components
   return (
     <Container>
-      <BackHeader navigation={navigation} />
+      <BackHeader navigation={navigation}/>
       <Content padder>
         <Form>
           <CardItem bordered>
             <Item style={updateUserStyles.border}>
-              <Icon name={"ios-person"} style={updateUserStyles.iconSize} />
+              <Icon name={"ios-person"} style={updateUserStyles.iconSize}/>
               <FormTextInput
                 placeholder={user.username}
                 style={updateUserStyles.input}
@@ -160,7 +158,7 @@ const UpdateUser = ({ navigation }) => {
           </CardItem>
           <CardItem bordered>
             <Item style={updateUserStyles.border}>
-              <Icon name={"ios-mail"} style={updateUserStyles.iconSize} />
+              <Icon name={"ios-mail"} style={updateUserStyles.iconSize}/>
               <FormTextInput
                 placeholder={user.email}
                 style={updateUserStyles.input}
@@ -174,7 +172,7 @@ const UpdateUser = ({ navigation }) => {
           </CardItem>
           <CardItem bordered>
             <Item style={updateUserStyles.border}>
-              <Icon name={"ios-lock"} style={updateUserStyles.iconSize} />
+              <Icon name={"ios-lock"} style={updateUserStyles.iconSize}/>
               <FormTextInput
                 placeholder="Password"
                 style={updateUserStyles.input}
@@ -189,7 +187,7 @@ const UpdateUser = ({ navigation }) => {
           </CardItem>
           <CardItem bordered>
             <Item style={updateUserStyles.border}>
-              <Icon name={"ios-lock"} style={updateUserStyles.iconSize} />
+              <Icon name={"ios-lock"} style={updateUserStyles.iconSize}/>
               <FormTextInput
                 placeholder="Confirm password"
                 style={updateUserStyles.input}
@@ -206,7 +204,7 @@ const UpdateUser = ({ navigation }) => {
             <Label>{skillState}</Label>
           </Body>
           <CardItem>
-            <Icon name={"ios-podium"} style={updateUserStyles.iconSize} />
+            <Icon name={"ios-podium"} style={updateUserStyles.iconSize}/>
             <Slider
               style={updateUserStyles.slider}
               value={parseInt(user.skill)}
@@ -231,7 +229,7 @@ const UpdateUser = ({ navigation }) => {
           <CardItem bordered>
             <Left>
               <Button primary rounded iconLeft onPress={pickImage}>
-                <Icon name={"ios-image"} />
+                <Icon name={"ios-image"}/>
                 <Text>Select</Text>
               </Button>
               <Button
@@ -255,16 +253,16 @@ const UpdateUser = ({ navigation }) => {
                         }
                       }
                     ],
-                    { cancelable: false }
+                    {cancelable: false}
                   );
                 }}
               >
-                <Icon name={"ios-cloud-upload"} />
+                <Icon name={"ios-cloud-upload"}/>
                 <Text>Update</Text>
               </Button>
             </Left>
             {avatarPic && (
-              <Image source={{ uri: avatarPic }} style={updateUserStyles.image} />
+              <Image source={{uri: avatarPic}} style={updateUserStyles.image}/>
             )}
           </CardItem>
         </Form>

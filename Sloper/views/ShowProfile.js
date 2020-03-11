@@ -9,13 +9,10 @@ import {
   Icon,
 } from "native-base";
 import AsyncImage from "../components/AsyncImage";
-import {Dimensions} from "react-native";
 import {UserContext} from "../contexts/UserContext";
 import BackHeader from "../components/BackHeader";
 import {fetchAPI} from "../hooks/APIHooks";
 import {profileStyles} from "../styles/Style";
-
-const deviceHeight = Dimensions.get("window").height;
 
 const ShowProfile = ({navigation}) => {
   // Hooks

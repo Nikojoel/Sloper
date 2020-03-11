@@ -12,12 +12,9 @@ import {
 import {AsyncStorage} from 'react-native';
 import PropTypes from 'prop-types';
 import AsyncImage from '../components/AsyncImage';
-import {Dimensions} from 'react-native';
 import {UserContext} from '../contexts/UserContext';
 import BackHeader from '../components/BackHeader';
 import {profileStyles} from "../styles/Style";
-
-const deviceHeight = Dimensions.get('window').height;
 
 // Skill level array
 const skillLevel = [

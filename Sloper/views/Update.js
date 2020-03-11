@@ -10,7 +10,7 @@ import {
   CardItem,
   Icon,
 } from 'native-base';
-import {Image, Dimensions, StyleSheet} from 'react-native';
+import {Image} from 'react-native';
 import FormTextInput from '../components/FormTextInput';
 import useUploadForm from '../hooks/UploadHooks';
 import {updatePost} from '../hooks/APIHooks';

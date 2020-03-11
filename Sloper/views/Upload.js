@@ -13,7 +13,7 @@ import {
   CardItem,
   Icon,
 } from "native-base";
-import {Image, Dimensions, StyleSheet,} from 'react-native';
+import {Image} from 'react-native';
 import PropTypes from 'prop-types';
 import FormTextInput from "../components/FormTextInput";
 import useUploadForm from "../hooks/UploadHooks";

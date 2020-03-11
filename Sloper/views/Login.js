@@ -10,12 +10,7 @@ import {
   Badge,
   Icon,
 } from "native-base";
-import {
-  AsyncStorage,
-  Keyboard,
-  Image,
-  Alert,
-} from "react-native";
+import {AsyncStorage, Keyboard, Image, Alert} from "react-native";
 import PropTypes from "prop-types";
 import {fetchAPI} from "../hooks/APIHooks";
 import FormTextInput from "../components/FormTextInput";
