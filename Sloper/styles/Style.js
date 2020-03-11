@@ -21,7 +21,7 @@ const loginStyles = StyleSheet.create({
         top: '20%',
       },
       android: {
-        top: '10%',
+        top: 0,
       },
     }),
   },
