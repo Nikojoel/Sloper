@@ -91,6 +91,8 @@ const UpdateUser = ({ navigation }) => {
 
   // Sends an API call to update user data
   const updateProfileAsync = async () => {
+    // Check username
+    await checkAvail();
     const regValid = validateOnSend(validationProperties);
     if (!regValid) {
       return;
@@ -224,7 +226,7 @@ const UpdateUser = ({ navigation }) => {
             />
           </CardItem>
           <CardItem bordered>
-            <Item style={updateUserStyles.border}></Item>
+            <Item style={updateUserStyles.border}/>
           </CardItem>
           <CardItem bordered>
             <Left>

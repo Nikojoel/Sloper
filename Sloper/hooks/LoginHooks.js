@@ -96,9 +96,6 @@ const useSignUpForm = (constraints = {}) => {
 
   // Validates user input before sending an API call
   const validateOnSend = (fields) => {
-    // Check username
-    checkAvail();
-
     // Iterate over all user input
     for (const [key, value] of Object.entries(fields)) {
       validateField(value);
